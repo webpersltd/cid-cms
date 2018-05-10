@@ -63,7 +63,7 @@ $route['dissemination'] = 'Dashboard/dissemination';
 $route['search'] = 'Dashboard/search';
 $route['savereview'] = 'Dashboard/saveinforeview';
 $route['viewlog'] = 'Dashboard/viewlog';
-
+$route['saveinitials']='Initials/Initial/handleInitialInfo';
 
 /* CID route defination end here */
 
@@ -77,7 +77,7 @@ $route['CMS/closecase'] = 'CMS/Dashboard/closeCase';
 
 
 
-/* CID route defination end here */
+/* CMS route defination end here */
 
 
 
