@@ -52,17 +52,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* CID route defination start here */
 
-$route['default_controller'] = 'dashboard';
-$route['initials'] = 'Dashboard';
-$route['subjects'] = 'Dashboard/subjects';
-$route['text'] = 'Dashboard/text';
-$route['handlingcode'] = 'Dashboard/handlingcode';
-$route['protectivemark'] = 'Dashboard/protectivemark';
-$route['review'] = 'Dashboard/review';
-$route['dissemination'] = 'Dashboard/dissemination';
-$route['search'] = 'Dashboard/search';
-$route['savereview'] = 'Dashboard/saveinforeview';
-$route['viewlog'] = 'Dashboard/viewlog';
+$route['default_controller'] = 'Auth';
+$route['login']              = 'auth/login';
+$route['initials']           = 'Dashboard';
+$route['subjects']           = 'Dashboard/subjects';
+$route['text']               = 'Dashboard/text';
+$route['handlingcode']       = 'Dashboard/handlingcode';
+$route['protectivemark']     = 'Dashboard/protectivemark';
+$route['review']             = 'Dashboard/review';
+$route['dissemination']      = 'Dashboard/dissemination';
+$route['search']             = 'Dashboard/search';
+$route['savereview']         = 'Dashboard/saveinforeview';
+$route['viewlog']            = 'Dashboard/viewlog';
+$route['logout']             = 'auth/logout';
 
 
 /* CID route defination end here */
@@ -70,10 +72,10 @@ $route['viewlog'] = 'Dashboard/viewlog';
 
 
 /* CMS route defination start here */
-$route['CMS'] = 'CMS/Dashboard';
-$route['CMS/newcase'] = 'CMS/Dashboard/newCase';
+$route['CMS']            = 'CMS/Dashboard';
+$route['CMS/newcase']    = 'CMS/Dashboard/newCase';
 $route['CMS/updatecase'] = 'CMS/Dashboard/updateCase';
-$route['CMS/closecase'] = 'CMS/Dashboard/closeCase';
+$route['CMS/closecase']  = 'CMS/Dashboard/closeCase';
 
 
 
@@ -81,5 +83,5 @@ $route['CMS/closecase'] = 'CMS/Dashboard/closeCase';
 
 
 
-$route['404_override'] = '';
+$route['404_override']         = '';
 $route['translate_uri_dashes'] = FALSE;
