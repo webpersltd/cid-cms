@@ -26,11 +26,17 @@ class Dashboard extends CI_Controller {
     {
 		parent::__construct();
 		$this->load->helper('CID/nav');
+		$this->load->database();
+		
 	}
 
 	public function index()
     {
-	   $this->load->view('dashboard/initials');
+	   $query = $this->db->get('departments');
+	   $data['departments']=$query;
+	   $this->load->view('dashboard/initials',$data);
+	   
+
 	}
 
 	public function subjects()
@@ -79,7 +85,10 @@ class Dashboard extends CI_Controller {
 	public function viewlog()
 	{
 		$this->load->view('dashboard/viewlog');
-	}   
+	} 
+	
+	
+	
 
 
 }

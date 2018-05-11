@@ -78,14 +78,14 @@
                 </nav>
                
                 <h2 class="main-headline" style="text-align:center">Initial information</h2>
-                <form id="initials" action="" method="post">
+                <form id="initials"  action="<?php echo base_url(); ?>saveinitials/" method="post">
                     <div class="form-group">
                         <div class="row">
                             <div style="margin-top:5px" class="col-md-6">
                                 <label for="exampleInputEmail1"></label>REPORT UNIQUE REFERENCE NUMBER(URN) : </label>
                             </div>
                             <div  class="col-md-5">
-                                <input disabled style="border:none" type="email" class="form-control" id="exampleInputEmail1" placeholder="00015152">
+                                <input readonly style="border:none" name="urn" type="text" class="form-control" id="exampleInputEmail1" value="000151512">
                             </div>
                         </div>
                     </div>
@@ -95,12 +95,13 @@
                                 DEPARTMENT :
                            </div>
                            <div class="col-md-6">
-                                <select >
-                                    <option value="Customs Intelligence & Investigation Directorate (CIID)">Customs Intelligence & Investigation Directorate (CIID</option>
-                                    <option value="Benapole Custom House">Benapole Custom House</option>
-                                    <option value="Chittagong Custom House">Chittagong Custom House</option>
-                                    <option value="Dhaka Custom House">Dhaka Custom House</option>
-                                    <option value="ICD (Dhaka) Custom House">ICD (Dhaka) Custom House</option>
+                                <select name="department">
+                                    <?php
+                                        foreach ($departments->result() as $row)
+                                        {
+                                                echo "<option value=".$row->id.">".$row->name."</option>";
+                                        }
+                                    ?>
                                 </select>
                            </div>
                        </div>
@@ -111,7 +112,7 @@
                                 DATE OF REPORT :
                             </div>
                             <div class="col-md-6">
-                                 <input type="date" name="">
+                                 <input type="date" name="date_of_report">
                             </div>
                         </div>
                     </div>
@@ -121,7 +122,7 @@
                                     INFORMATION SOURCE:
                                 </div>
                                 <div class="col-md-6">
-                                    <select id="source-selection">
+                                    <select id="source-selection" name="information_source">
                                         <option value="Anonymous Tip">Anonymous Tip</option>
                                         <option value="Customs (Bangladesh)">Customs (Bangladesh)</option>
                                         <option value="Customs (Foreign)">Customs (Foreign)</option>
@@ -132,13 +133,13 @@
                                 </div>
                             </div>
                     </div>
-                    <div id="other-source-input-field" class="form-group">
+                    <div id="other-source-input-field" style="display:none" class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
                                      INFORMATION SOURCE OTHER :
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="">
+                                    <input type="text" name="information_source_other">
                                 </div>
                             </div>
                     </div>
@@ -148,7 +149,7 @@
                                      NAME OF PERSON SUBMITTING REPORT :
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="">
+                                    <input type="text" name="submitting_person_name">
                                 </div>
                             </div>
                     </div> 
@@ -158,7 +159,7 @@
                                      TIME OF REPORT :
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="time" name="">
+                                    <input type="time" name="time_of_report">
                                 </div>
                             </div>
                     </div>  
@@ -168,7 +169,7 @@
                                      INTELLIGENCE SOURCE REFERENCE(ISR) :
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="">
+                                    <input type="text" name="ISR">
                                 </div>
                             </div>
                     </div> 
@@ -219,3 +220,4 @@
     </script>
     </body>
 </html>
+
