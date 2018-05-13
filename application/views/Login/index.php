@@ -7,7 +7,7 @@
 <title>Bangladesh Customs Intelligence Database</title>
 </head>
 <body>
-<?php echo form_open("auth/login");?>
+<?php echo form_open("login");?>
   <div class="imgcontainer">
     <img src="<?php echo base_url() ?>images/NBR-customs-logo.png" alt="Bangladesh Customs" class="avatar">
   </div>
