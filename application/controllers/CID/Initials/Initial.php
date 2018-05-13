@@ -10,7 +10,7 @@ class Initial extends CI_Controller{
     }
 
     public function handleInitialInfo(){
-        echo "<pre>";
+        
         $data['urn']=$this->input->post("urn");
         $data['department']=$this->input->post("department");
         $data['date_of_report']=$this->input->post("date_of_report");
@@ -32,7 +32,7 @@ class Initial extends CI_Controller{
         if($this->db->insert('records', $object)){
             redirect(base_url()."subjects/", 'refresh');
         }
-        print_r($data);
+        
         
             
     }

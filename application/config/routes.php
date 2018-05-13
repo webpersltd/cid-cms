@@ -63,7 +63,8 @@ $route['dissemination'] = 'Dashboard/dissemination';
 $route['search'] = 'Dashboard/search';
 $route['savereview'] = 'Dashboard/saveinforeview';
 $route['viewlog'] = 'Dashboard/viewlog';
-$route['saveinitials']='Initials/Initial/handleInitialInfo';
+$route['saveinitials']='CID/Initials/Initial/handleInitialInfo';
+$route['savesubject']='CID/subjects/Subject/handleSubject';
 
 /* CID route defination end here */
 
