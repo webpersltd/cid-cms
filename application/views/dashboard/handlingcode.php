@@ -42,7 +42,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true">&nbsp</span>Change password</a></li>                              
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-off" aria-hidden="true">&nbsp</span>Log out</a></li>
+                                <li><a href="<?php echo base_url(); ?>logout/"><span class="glyphicon glyphicon-off" aria-hidden="true">&nbsp</span>Log out</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -74,183 +74,114 @@
                     <a class="breadcrumb-item" href="#">DISSEMINATION</a>
                 </nav>
             </div>
-            <div  class="col-md-10">                    
+
+            <div class="col-md-10">
+                <?php
+                if( !empty($this->session->flashdata('textID')) ){
+                    echo $this->session->flashdata('textID');
+                }
+                ?>                    
                 <div class="well">
                     <b>Completion Note:</b> You must review each line of text and apply the correct Handling Code.
                 </div>
-                <?php echo form_open(''); ?>
                 <div class="col-md-9 handling-heading">
                     <h4>SUMMARY OF TEXT AND EVALUATIONS:</h4>
                 </div>
                 <div class="col-md-1 grade-title">
-                   
+                       
                 </div>
-                <div id="container_handling_code">
-                    <div id="text_area" class="col-md-8">
-                        <textarea id="" name="summary[]" rows="5" style="width:100%" disabled>check</textarea>
+                    <?= form_open('HandlingCode/create'); ?>
+                    <div id="container_handling_code">
+                        <div id="text_area" class="col-md-10">
+                            <textarea id="" name="summary" rows="5" style="width:100%" disabled><?= $text->summary ?></textarea>
+                        </div>
+                        <div id="grading" class="col-md-2">
+                            <h4>GRADING</h4>
+                            <table  class="table grade-table table-bordered">
+                                <tbody id="grading-body">
+                                    <tr>
+                                        <td><?= $text->src_eval ?></td>
+                                        <td><?= $text->inf_int_eval ?></td>
+                                        <td id="handlingcode">0</td>
+                                        <input type="hidden" id="handlingcodeInput" name="handlingcode" value="">
+                                        <input type="hidden" id="text_id" name="textID" value="<?= $text->id ?>">
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-10 handling-grade">
+                            <?php
+                            if( !empty($this->session->flashdata('handlingcode')) ){
+                                echo $this->session->flashdata('handlingcode');
+                            }
+                            ?>
+                            <table class="table handling-table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <b>HANDLING CODE</b>
+                                            <br>To be completed by
+                                            <br>the evaluator on
+                                            <br>receipt and prior to
+                                            <br>entry ont the
+                                            <br>intelligence system.
+                                        </td>
+                                        <td class="functional">
+                                            <b>1</b>
+                                            <br>Permits dissemination
+                                            <br>within Customs and to
+                                            <br>other law inforcement 
+                                            <br>agencies in Bangladesh 
+                                            <br>as specified.
+                                        </td>
+                                        <td class="functional">
+                                            <b>2</b>
+                                            <br>Permits
+                                            <br>dissemination to
+                                            <br>Bangladesh non
+                                            <br>prosecuting parties
+                                        </td>
+                                        <td class="functional">
+                                            <b>3</b>
+                                            <br>Permits
+                                            <br>dissemination to
+                                            <br>foreign law
+                                            <br>agencies
+                                        </td>
+                                        <td class="functional">
+                                            <b>4</b>
+                                            <br>Permits dissemination
+                                            <br>within Bangladesh
+                                            <br>Customs only: specify
+                                            <br>reasons and internal
+                                            <br>recipient(s)
+                                        </td>
+                                        <td class="functional">
+                                            <b>5</b>
+                                            <br>Permits
+                                            <br>dissemination, but
+                                            <br>receiving agency to
+                                            <br>observe conditions
+                                            <br>as specified
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-10 handling-heading">
+                            <h4>DETAILED HANDLING INSTRUCTIONS:</h4>
+                        </div>
+                        <div class="col-md-10 handling-heading">
+                            <?php
+                            if( !empty($this->session->flashdata('instruction')) ){
+                                echo $this->session->flashdata('instruction');
+                            }
+                            ?>
+                            <textarea name="instruction" class="instruction" id="hc_free_txt" style="margin-bottom:15px" class="form-control" rows="5" id="instructions"></textarea>
+                        </div>
                     </div>
-                    <div id="grading" class="col-md-2">
-                        <h4>GRADING</h4>
-                        <table  class="table grade-table table-bordered">
-                            <tbody id="grading-body">
-                                <tr>
-                                    <td>A</td>
-                                    <td>1</td>
-                                    <td id="handlingcode_1">0</td>
-                                    <input type="hidden" id="handlingcodeInput_1" name="handlingcode[]" value="">
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-10 handling-grade">
-                        <table class="table handling-table table-bordered">
-                            <tbody>
-                                <tr id="hc_data_1">
-                                    <td>
-                                        <b>HANDLING CODE</b>
-                                        <br>To be completed by
-                                        <br>the evaluator on
-                                        <br>receipt and prior to
-                                        <br>entry ont the
-                                        <br>intelligence system.
-                                    </td>
-                                    <td class="functional">
-                                        <b>1</b>
-                                        <br>Permits dissemination
-                                        <br>within Customs and to
-                                        <br>other law inforcement 
-                                        <br>agencies in Bangladesh 
-                                        <br>as specified.
-                                    </td>
-                                    <td class="functional">
-                                        <b>2</b>
-                                        <br>Permits
-                                        <br>dissemination to
-                                        <br>Bangladesh non
-                                        <br>prosecuting parties
-                                    </td>
-                                    <td class="functional">
-                                        <b>3</b>
-                                        <br>Permits
-                                        <br>dissemination to
-                                        <br>foreign law
-                                        <br>agencies
-                                    </td>
-                                    <td class="functional">
-                                        <b>4</b>
-                                        <br>Permits dissemination
-                                        <br>within Bangladesh
-                                        <br>Customs only: specify
-                                        <br>reasons and internal
-                                        <br>recipient(s)
-                                    </td>
-                                    <td class="functional">
-                                        <b>5</b>
-                                        <br>Permits
-                                        <br>dissemination, but
-                                        <br>receiving agency to
-                                        <br>observe conditions
-                                        <br>as specified
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-10 handling-heading">
-                        <h4>DETAILED HANDLING INSTRUCTIONS:</h4>
-                    </div>
-                    <div class="col-md-10 handling-heading">
-                        <textarea name="instruction[]" class="instruction" id="hc_free_txt" style="margin-bottom:15px" class="form-control" rows="5" id="instructions"></textarea>
-                    </div>
-                </div>
 
-                <div class="col-md-9 handling-heading">
-                    <h4>SUMMARY OF TEXT AND EVALUATIONS:</h4>
-                </div>
-                <div class="col-md-1 grade-title">
-                   
-                </div>
-                <div id="container_handling_code">
-                    <div id="text_area" class="col-md-8">
-                        <textarea id="" rows="5" style="width:100%" disabled>check</textarea>
-                    </div>
-                    <div id="grading" class="col-md-2">
-                        <h4>GRADING</h4>
-                        <table  class="table grade-table table-bordered">
-                            <tbody id="grading-body">
-                                <tr>
-                                    <td>A</td>
-                                    <td>1</td>
-                                    <td id="handlingcode_2">0</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-10 handling-grade">
-                        <table class="table handling-table table-bordered">
-                            <tbody>
-                                <tr id="hc_data_2">
-                                    <td>
-                                        <b>HANDLING CODE</b>
-                                        <br>To be completed by
-                                        <br>the evaluator on
-                                        <br>receipt and prior to
-                                        <br>entry ont the
-                                        <br>intelligence system.
-                                    </td>
-                                    <td class="functional">
-                                        <b>1</b>
-                                        <br>Permits dissemination
-                                        <br>within Customs and to
-                                        <br>other law inforcement 
-                                        <br>agencies in Bangladesh 
-                                        <br>as specified.
-                                    </td>
-                                    <td class="functional">
-                                        <b>2</b>
-                                        <br>Permits
-                                        <br>dissemination to
-                                        <br>Bangladesh non
-                                        <br>prosecuting parties
-                                    </td>
-                                    <td class="functional">
-                                        <b>3</b>
-                                        <br>Permits
-                                        <br>dissemination to
-                                        <br>foreign law
-                                        <br>agencies
-                                    </td>
-                                    <td class="functional">
-                                        <b>4</b>
-                                        <br>Permits dissemination
-                                        <br>within Bangladesh
-                                        <br>Customs only: specify
-                                        <br>reasons and internal
-                                        <br>recipient(s)
-                                    </td>
-                                    <td class="functional">
-                                        <b>5</b>
-                                        <br>Permits
-                                        <br>dissemination, but
-                                        <br>receiving agency to
-                                        <br>observe conditions
-                                        <br>as specified
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-10 handling-heading">
-                        <h4>DETAILED HANDLING INSTRUCTIONS:</h4>
-                    </div>
-                    <div class="col-md-10 handling-heading">
-                        <textarea class="instruction" style="margin-bottom:15px" id="hc_free_txt" onkeyup="freeText(this)"  class="form-control" value=""  rows="5" id="instructions"></textarea>
-                    </div>
-                </div>
-
-
-
-                <div class="form-group final-button">
+                    <div class="form-group final-button">
                     <div class="row">
                         <div class="col-md-7">
                             <button type="submit" class="btn btn-success">SAVE INFORMATION AND CONTINUE&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
@@ -259,8 +190,8 @@
                             <a href="#" class="btn btn-danger">CANCEL&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a>
                         </div>
                     </div>
+                    <?= form_close(); ?>
                 </div>
-                <?php echo form_close();; ?>
             </div>
         </div>
     </body>
@@ -269,19 +200,4 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="<?php echo base_url(); ?>js/custom.js" type="text/javascript"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
-<script type="text/javascript" src="<?php echo base_url(); ?>js/handlingcode.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".functional").click(function(){
-            var hc       = $(this).children("b").text();
-            var parentId = $(this).parent().attr('id');
-            var lastChar = parentId[parentId.length - 1];
-
-            $("#hc_data_"+lastChar+" .functional").removeClass("selected-handling-code");
-            $(this).addClass("selected-handling-code"); 
-            $("#handlingcode_"+lastChar).text(hc);
-            $('#handlingcodeInput_1').val(hc);
-        });
-    });
-</script>         
+<script type="text/javascript" src="<?php echo base_url(); ?>js/handlingcode.js"></script>     
