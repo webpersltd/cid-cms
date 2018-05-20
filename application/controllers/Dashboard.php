@@ -41,7 +41,9 @@ class Dashboard extends CI_Controller {
 
 	public function subjects()
 	{
-		$this->load->view('dashboard/subjects');
+		$query = $this->db->get('nationalities');
+		$data['nationalities']=$query;
+		$this->load->view('dashboard/subjects',$data);
 	}
 
 
