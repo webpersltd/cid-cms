@@ -187,7 +187,7 @@
         <!-- <script type="text/javascript" src="../../js/handlingcode.js"></script> -->
         <script type="text/javascript" src="<?php echo base_url(); ?>js/review.js"></script>
         <!-- <script type="text/javascript" src="<?php echo base_url(); ?>js/protectivemarking.js"></script> -->
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
             addEventListener('load',function(e){
                 $.ajax({
                 url : "<?php echo base_url(); ?>Rest/",
@@ -202,6 +202,6 @@
                 }
             });
             })
-       </script>
+       </script> -->
     </body>
  </html>               
