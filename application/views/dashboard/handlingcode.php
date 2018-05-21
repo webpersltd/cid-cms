@@ -102,8 +102,8 @@
                                     <tr>
                                         <td><?= $text->src_eval ?></td>
                                         <td><?= $text->inf_int_eval ?></td>
-                                        <td id="handlingcode">0</td>
-                                        <input type="hidden" id="handlingcodeInput" name="handlingcode" value="">
+                                        <td id="handlingcode"><?= (!empty($this->session->flashdata('handlingcodeInput')) ? $this->session->flashdata('handlingcodeInput') : 0) ?></td>
+                                        <input type="hidden" id="handlingcodeInput" name="handlingcode" value="<?= (!empty($this->session->flashdata('handlingcodeInput')) ? $this->session->flashdata('handlingcodeInput') : "") ?>">
                                         <input type="hidden" id="text_id" name="textID" value="<?= $text->id ?>">
                                     </tr>
                                 </tbody>
@@ -177,14 +177,14 @@
                                 echo $this->session->flashdata('instruction');
                             }
                             ?>
-                            <textarea name="instruction" class="instruction" id="hc_free_txt" style="margin-bottom:15px" class="form-control" rows="5" id="instructions"></textarea>
+                            <textarea name="instruction" class="instruction" id="hc_free_txt" style="margin-bottom:15px" class="form-control" rows="5" id="instructions"><?= (!empty($this->session->flashdata('instructionInput')) ? $this->session->flashdata('instructionInput') : "") ?></textarea>
                         </div>
                     </div>
 
                     <div class="form-group final-button">
                     <div class="row">
                         <div class="col-md-7">
-                            <button type="submit" class="btn btn-success">SAVE INFORMATION AND CONTINUE&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
+                            <button type="submit" class="btn btn-success">SAVE INFORMATION AND CONTINUE (<?= $remainingTextVeiw; ?>)&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
                         </div>
                         <div class="col-md-3">
                             <a href="#" class="btn btn-danger">CANCEL&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a>
