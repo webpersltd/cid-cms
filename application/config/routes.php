@@ -66,6 +66,7 @@ $route['savereview']         = 'Dashboard/saveinforeview';
 $route['viewlog']            = 'Dashboard/viewlog';
 $route['logout']             = 'auth/logout';
 $route['saveinitials']       = 'Initials/Initial/handleInitialInfo';
+$route['savesubject']        = 'CID/subjects/Subject/handleSubject';
 
 /* CID route defination end here */
 
