@@ -57,4 +57,10 @@ class Handling_code_model extends CI_Model {
         $this->db->update('handling_codes');
         return;
     }
+
+    public function total_unreviewed_handling_code($record_id){
+        $this->db->where('record_id', $record_id);
+        $this->db->where('reviewed', 0);
+        return $this->db->count_all_results('handling_codes');
+    }
 }

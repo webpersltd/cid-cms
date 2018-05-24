@@ -95,8 +95,12 @@ class HandlingCode extends CI_Controller {
 	}
 
 	public function review(){
-		$data['user']   = $this->ion_auth->user()->row();
-		$data['review'] = $this->Handling_code_model->handling_code_review($_SESSION['record_id']);
+		$data['user']             = $this->ion_auth->user()->row();
+		$data['review']           = $this->Handling_code_model->handling_code_review($_SESSION['record_id']);
+		if(count($data['review'])==0){
+			redirect('protectivemark/','refresh');
+		}
+		$data['total_for_review'] = $this->Handling_code_model->total_unreviewed_handling_code($_SESSION['record_id']);
 		$this->load->view('dashboard/handlingcodereview', $data);
 	}
 
@@ -105,8 +109,10 @@ class HandlingCode extends CI_Controller {
 		   exit('No direct script access allowed');
 		}else{			
 			$handlingcodeID = $this->input->post('handlingCodeID');
-			//$this->Handling_code_model->update_review_flag($handlingcodeID);
-			$review         = $this->Handling_code_model->handling_code_review($_SESSION['record_id'], $handlingcodeID);
+
+			$this->Handling_code_model->update_review_flag($handlingcodeID);
+
+			$review = $this->Handling_code_model->handling_code_review($_SESSION['record_id'], $handlingcodeID);
 
 			if(is_null($review)){
 				$finalOutput = array(

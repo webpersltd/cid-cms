@@ -73,7 +73,7 @@
                     <a class="breadcrumb-item" href="#">INITIALS&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item" href="#">SUBJECT&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item" href="#">TEXT&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
-                    <a class="breadcrumb-item active" href="#">HANDLING CODE (REVIEW)&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
+                    <a class="breadcrumb-item active" id="remaining" href="#">HANDLING CODE (REVIEW) 1/<?= $total_for_review ?>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right" style="color: black;"></span></a>
                     <a class="breadcrumb-item "  href="#">PROTECTIVE MARKING&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item " href="#">REVIEW&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item" href="dissemination.html">DISSEMINATION</a>
