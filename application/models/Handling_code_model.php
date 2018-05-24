@@ -36,4 +36,25 @@ class Handling_code_model extends CI_Model {
         $query = $this->db->get();
         return $query->row()->text_id;
     }
+
+    public function handling_code_review($record_id, $handling_code_id = NULL){
+        $this->db->select('handling_codes.id as id, code, instruction, summary, src_eval, inf_int_eval');
+        $this->db->from('handling_codes');
+        $this->db->join('texts', 'handling_codes.text_id = texts.id');
+        $this->db->where('handling_codes.record_id', $record_id);
+        $this->db->where('handling_codes.reviewed', 0);
+        if(!is_null($handling_code_id)){
+            $this->db->where('handling_codes.id >', $handling_code_id);
+        }
+        $this->db->limit(1);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function update_review_flag($id){
+        $this->db->set('reviewed', 1);
+        $this->db->where('id', $id);
+        $this->db->update('handling_codes');
+        return;
+    }
 }
