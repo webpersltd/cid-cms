@@ -11,7 +11,7 @@ class HandlingCode extends CI_Controller {
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
     	}
-    	
+
     	$_SESSION['record_id'] = 2;//This line will have to customize after completing the project
 		
 		$this->load->helper('CID/nav');
@@ -32,11 +32,11 @@ class HandlingCode extends CI_Controller {
 			$data['text']  = $this->Handling_code_model->get_text_info($record_id, $txt_id);
 			$remainingText = $this->Handling_code_model->remaining_text($record_id, $txt_id);
 			if($remainingText == 0){
-				redirect('review/','refresh');
+				redirect('handlingcodereview/','refresh');
 			}
 			$data['remainingTextVeiw'] = $remainingText - 1;
 		}else{
-			$data['text']          = $this->Handling_code_model->get_text_info($record_id);
+			$data['text']              = $this->Handling_code_model->get_text_info($record_id);
 			$data['remainingTextVeiw'] = $this->Handling_code_model->remaining_text($record_id)-1;
 		}
 
@@ -92,6 +92,39 @@ class HandlingCode extends CI_Controller {
 
         	redirect('handlingcode/','refresh');
         }
+	}
+
+	public function review(){
+		$data['user']   = $this->ion_auth->user()->row();
+		$data['review'] = $this->Handling_code_model->handling_code_review($_SESSION['record_id']);
+		$this->load->view('dashboard/handlingcodereview', $data);
+	}
+
+	public function review_done(){
+		if (!$this->input->is_ajax_request()) {
+		   exit('No direct script access allowed');
+		}else{			
+			$handlingcodeID = $this->input->post('handlingCodeID');
+			//$this->Handling_code_model->update_review_flag($handlingcodeID);
+			$review         = $this->Handling_code_model->handling_code_review($_SESSION['record_id'], $handlingcodeID);
+
+			if(is_null($review)){
+				$finalOutput = array(
+					'summaryInfo'    => "none"
+				);
+				echo json_encode($finalOutput);
+			}else{
+				$finalOutput = array(
+					'summaryInfo'    => $review->summary,
+					'src_eval'       => $review->src_eval,
+					'inf_int_eval'   => $review->inf_int_eval,
+					'codeInfo'       => $review->code,
+					'instruction'    => $review->instruction,
+					'handlingCodeid' => $review->id
+				);
+				echo json_encode($finalOutput);
+			}
+		}
 	}
 
 }
