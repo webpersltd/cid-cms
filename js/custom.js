@@ -142,6 +142,20 @@ var TextBoxHandle = /** @class */ (function () {
     };
     return TextBoxHandle;
 }());
+
+/* save text to database using ajax call function start */
+
+document.getElementById("save_text_to_database").addEventListener('click',function(e){
+   // e.preventDefault();
+    alert("Hellow save call.....")
+})
+
+/* save text to database using ajax call function end */
+
+
+
+
+
 var obj = new TextBoxHandle();
 document.getElementById("s_and_r").addEventListener("click", function () {
     //alert("GOTCH..");
@@ -149,6 +163,12 @@ document.getElementById("s_and_r").addEventListener("click", function () {
     localStorage.setItem("data", JSON.stringify(obj.data));
 });
 console.log(localStorage.getItem("data"));
+
+
+
+
+
+
 
 
 

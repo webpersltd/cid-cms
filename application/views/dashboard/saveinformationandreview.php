@@ -138,7 +138,7 @@
                                 <div class="col-md-6">
                                     <div style="margin-top:30px"  class="row">
                                         <div class="col-md-6">
-                                            <a id="add_box" type="submit" href="<?php echo base_url(); ?>handlingcode/" class="btn btn-success" id="search">SAVE AND CONTINUE &nbsp&nbsp<span class="glyphicon glyphicon-ok"></span></a> 
+                                            <a id="save_text_to_database" type="" href="<?php echo base_url(); ?>handlingcode/" class="btn btn-success">SAVE AND CONTINUE &nbsp&nbsp<span class="glyphicon glyphicon-ok"></span></a> 
                                         </div>
                                         <div class="col-md-6">
                                             <button class="btn btn-danger">CANCEL&nbsp&nbsp<span class="glyphicon glyphicon-remove"></span></button>
