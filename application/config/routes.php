@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* CID route defination start here */
 
-<<<<<<< HEAD
+
 $route['default_controller'] = 'dashboard';
 $route['initials'] = 'Dashboard';
 $route['subjects'] = 'Dashboard/subjects';
@@ -68,23 +68,8 @@ $route['saveinitials']='CID/Initials/Initial/handleInitialInfo';
 $route['savesubject']='CID/subjects/Subject/handleSubject';
 $route['savetext']='CID/Text/Text/saveText';
 $route['textController']='CID/Text/Text';
-=======
-$route['default_controller'] = 'Auth';
-$route['login']              = 'auth/login';
-$route['initials']           = 'Dashboard';
-$route['subjects']           = 'Dashboard/subjects';
-$route['text']               = 'Dashboard/text';
-$route['handlingcode']       = 'HandlingCode';
-$route['protectivemark']     = 'Dashboard/protectivemark';
-$route['review']             = 'Dashboard/review';
-$route['dissemination']      = 'Dashboard/dissemination';
-$route['search']             = 'Dashboard/search';
-$route['savereview']         = 'Dashboard/saveinforeview';
-$route['viewlog']            = 'Dashboard/viewlog';
-$route['logout']             = 'auth/logout';
-$route['saveinitials']       = 'Initials/Initial/handleInitialInfo';
-$route['savesubject']        = 'CID/subjects/Subject/handleSubject';
->>>>>>> 6713331c2eab086cdbead4ec7076828dd152b2e4
+
+
 
 /* CID route defination end here */
 
