@@ -151,7 +151,7 @@
                                     <div class="col-md-6">
                                         <div style="margin-top:30px"  class="row">
                                             <div class="col-md-6">
-                                                <a type="submit" id="s_and_r" href="<?php echo base_url(); ?>savereview/" class="btn btn-success">SAVE AND REVIEW &nbsp&nbsp<span class="glyphicon glyphicon-ok"></span></a> 
+                                                <a type="submit" id="s_and_r" href="#" class="btn btn-success">SAVE AND REVIEW &nbsp&nbsp<span class="glyphicon glyphicon-ok"></span></a> 
                                             </div>
                                             <div class="col-md-6">
                                                 <button class="btn btn-danger">CANCEL&nbsp&nbsp<span class="glyphicon glyphicon-remove"></span></button>
@@ -165,7 +165,7 @@
                     </div>
                 </div>
             </div>
-            
+           
         </div>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -182,6 +182,12 @@
                 }
             })
         
+
+
+            
+    
+    
+
         </script>
     </body>
 </html>

@@ -66,6 +66,7 @@ $route['viewlog'] = 'Dashboard/viewlog';
 $route['saveinitials']='CID/Initials/Initial/handleInitialInfo';
 $route['savesubject']='CID/subjects/Subject/handleSubject';
 $route['savetext']='CID/Text/Text/saveText';
+$route['textController']='CID/Text/Text';
 
 /* CID route defination end here */
 

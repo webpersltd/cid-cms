@@ -28,20 +28,7 @@ function appendText(id) {
    // alert("Hellow")     // Append the new elements 
 }
 
-/* Add dynamic textbox in text.html page  end */
 
-/* load data from text.html page in saveinformation and review page start */
-addEventListener('load',appendTextBox)
-function appendTextBox() {
-    var data=JSON.parse(localStorage.getItem("data"));
-    
-   for(var i=0;i<data.length;i++){
-        var txt1 ='<div  class="row"><div class="col-md-7"><textarea id="'+data[i].id+'" rows="5" style="width:100%" disabled>'+data[i].value+'</textarea></div> <div class="col-md-2"><ul class="textReview"><li>'+data[i].grading[0]+'</li><li>'+data[i].grading[1]+'</li></ul></div><div class="col-md-3"><div class="pretty p-default p-curve"><input type="radio"  class="gCheck" name="'+data[i].id+'" /><div class="state p-success-o"><label>OKEY</label></div></div> <div class="pretty p-default p-curve"> <input class="gCheck" data-toggle="modal" data-target="#myModal" type="radio" name="'+data[i].id+'" /><div class="state p-danger-o"><label>EDIT</label></div></div></div></div>';               
-        $("#text_summery").append(txt1); 
-   }
-    
-   // alert("Hellow")     // Append the new elements 
-}
 
 
 
@@ -145,10 +132,6 @@ var TextBoxHandle = /** @class */ (function () {
 
 /* save text to database using ajax call function start */
 
-document.getElementById("save_text_to_database").addEventListener('click',function(e){
-   // e.preventDefault();
-    alert("Hellow save call.....")
-})
 
 /* save text to database using ajax call function end */
 
@@ -157,19 +140,33 @@ document.getElementById("save_text_to_database").addEventListener('click',functi
 
 
 var obj = new TextBoxHandle();
+
+
+
+
+/* Add dynamic textbox in text.html page  end */
+
+/* load data from text.html page in saveinformation and review page start */
+addEventListener('load',appendTextBox)
+function appendTextBox() {
+    var data=JSON.parse(localStorage.getItem("data"));
+    
+   for(var i=0;i<data.length;i++){
+        var txt1 ='<div  class="row"><div class="col-md-7"><textarea id="'+data[i].id+'" rows="5" style="width:100%" disabled>'+data[i].value+'</textarea></div> <div class="col-md-2"><ul class="textReview"><li>'+data[i].grading[0]+'</li><li>'+data[i].grading[1]+'</li></ul></div><div class="col-md-3"><div class="pretty p-default p-curve"><input type="radio"  class="gCheck" name="'+data[i].id+'" /><div class="state p-success-o"><label>OKEY</label></div></div> <div class="pretty p-default p-curve"> <input class="gCheck" data-toggle="modal" data-target="#myModal" type="radio" name="'+data[i].id+'" /><div class="state p-danger-o"><label>EDIT</label></div></div></div></div>';               
+        $("#text_summery").append(txt1); 
+   }
+    
+   // alert("Hellow")     // Append the new elements 
+}
+
+
 document.getElementById("s_and_r").addEventListener("click", function () {
-    //alert("GOTCH..");
+    alert("GOTCH..");
     obj.setData(gradingsrcArray,gradinginfoArray);
     localStorage.setItem("data", JSON.stringify(obj.data));
+    //location.href="./save"
 });
 console.log(localStorage.getItem("data"));
-
-
-
-
-
-
-
 
 
 

@@ -250,10 +250,33 @@
           
             </div>
           </div>
+          <button id="test_post">Click</button>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>js/custom.js"></script>
+        <script type="text/javascript">
+            document.getElementById("test_post").addEventListener("click",function(e){
+        
+                //console.log(localStorage.getItem("data"));
+                $.ajax({
+                    url : "<?php echo base_url(); ?>Rest/",
+                    type : "POST",
+                    dataType : "json",
+                    data : {"info" :JSON.parse(localStorage.getItem("data"))},
+                    success : function(data) {
+                    console.log(data);
+                    },
+                    error : function(data) {
+                        console.log(data);
+                    }
+                });
+            })
+       
+    
+        
+        
+        </script>
     </body>
 </html>

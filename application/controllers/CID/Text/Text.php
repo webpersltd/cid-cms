@@ -8,7 +8,7 @@ class Text extends CI_Controller{
     function __construct(){}
 
     public function index(){
-        echo "Index function";
+       print_r($this->input->post('name'));
     }  
     
     
