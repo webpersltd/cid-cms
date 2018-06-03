@@ -33,6 +33,9 @@ td:hover{
 }
 
 
+#grading{
+  margin-top: -39px;
+}
 
 
 .btn-black{
@@ -68,6 +71,11 @@ nav{
 .main-headline{
     margin-top: -5px;
     margin-bottom: 96px;
+}
+
+.error{
+  background-color: red;
+  color: white;
 }
 
 #initials{
@@ -324,7 +332,7 @@ textarea {
 }
 
 .instruction{
-    width:79.5%;
+    width:1072px;
     margin-left:15px; 
 }
 

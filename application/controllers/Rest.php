@@ -9,7 +9,9 @@ class Rest extends CI_Controller {
     	//$this->load->view('rest');
     	$account = $this->input->post('info');
 		//$passwd  = $this->input->post('department');
+
 		$data=array($account);
+		
     	echo json_encode($data);
 	}
 }
