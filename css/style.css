@@ -345,11 +345,15 @@ textarea {
     cursor: pointer;
 }
 
+.protective-mark{
+  padding-left: 8px;
+}
+
 .protective-mark > li{
     display: inline-block;
-    border: 2px solid black;
+    border: 1px solid black;
     margin-left: -6px;
-    padding: 12px;
+    padding: 43px;
     padding-top:19px;
     padding-bottom:19px;
 
