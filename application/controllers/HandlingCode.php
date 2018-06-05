@@ -19,6 +19,7 @@ class HandlingCode extends CI_Controller {
 		$this->load->model('Handling_code_model');
 
 		$text_exists = $this->Handling_code_model->remaining_text($_SESSION['record_id']);
+		
     	if($text_exists == 0){
     		redirect('text','refresh');
     	}
