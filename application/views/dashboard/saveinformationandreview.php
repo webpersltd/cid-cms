@@ -266,10 +266,14 @@
                     dataType : "json",
                     data : {"info" :JSON.parse(localStorage.getItem("data"))},
                     success : function(data) {
-                    console.log(data);
+                        if(data.responseText==="added"){
+                            location.href="../handlingcode/";
+                        }
                     },
                     error : function(data) {
-                        console.log(data);
+                        if(data.responseText==="added"){
+                         location.href="../handlingcode/";
+                        }
                     }
                 });
             })
