@@ -43,6 +43,5 @@ class Protective_Marking_Model extends CI_Model {
 
     public function record_protective_marking($data){
         $this->db->insert('protective_markings', $data);
-    }
-    
+    }    
 }
