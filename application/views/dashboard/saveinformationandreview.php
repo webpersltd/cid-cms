@@ -250,14 +250,14 @@
           
             </div>
           </div>
-          <button id="test_post">Click</button>
+          <!-- <button id="test_post">Click</button> -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>js/custom.js"></script>
         <script type="text/javascript">
-            document.getElementById("test_post").addEventListener("click",function(e){
+            document.getElementById("save_text_to_database").addEventListener("click",function(e){
         
                 //console.log(localStorage.getItem("data"));
                 $.ajax({

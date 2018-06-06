@@ -161,10 +161,9 @@ function appendTextBox() {
 
 
 document.getElementById("s_and_r").addEventListener("click", function () {
-    alert("GOTCH..");
     obj.setData(gradingsrcArray,gradinginfoArray);
     localStorage.setItem("data", JSON.stringify(obj.data));
-    //location.href="./save"
+    location.href="../savereview/";
 });
 console.log(localStorage.getItem("data"));
 
