@@ -38,7 +38,9 @@
                         
                     <ul class="nav navbar-nav navbar-right">                          
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp</span>Hi , Jon Doe <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp</span>Hi, <?= $user->first_name." ".$user->last_name ?> <span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true">&nbsp</span>Change password</a></li>                              
                                 <li role="separator" class="divider"></li>
@@ -73,7 +75,7 @@
                     <a class="breadcrumb-item" href="#">TEXT&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item" href="#">HANDLING CODE&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item" href="#">PROTECTIVE MARKING&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
-                    <a class="breadcrumb-item active" href="#">REVIEW&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right" style="color: black;"></span></a>
+                    <a class="breadcrumb-item active" id="remaining" href="#">REVIEW <?= $remaining_text ?>/<?= $total_text ?><span class="glyphicon glyphicon-menu-right" style="color: black; margin-left: 14px;"></span></a>
                     <a class="breadcrumb-item" href="dissemination.html">DISSEMINATION</a>
                 </nav>
             </div>

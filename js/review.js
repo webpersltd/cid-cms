@@ -2,12 +2,8 @@ $(document).ready(function(){
     $(document).on("click","#pm_confirm_ok, #review_info_ok",function(){
         var htmlID = $(this).attr('id');
         var tid    = $("input[name=tid]").val();
-        var url    = "http://localhost/CID/reviewProcess/";
-        /*var remaining         = $('#remaining').text().charAt(23);
-        var remainingInt      = parseInt(remaining);
-        remainingInt++;
-        var fullRemainingText = $('#remaining').text();
-        fullRemainingText     = setCharAt(fullRemainingText,23,remainingInt);*/
+        var url    = "http://localhost/CID/reviewProcess/";        
+
         $.post(
             url, 
             {textid: tid, updateData: htmlID}, 
@@ -28,9 +24,10 @@ $(document).ready(function(){
                     $("#code").text(result.codeInfo);
                     $("#instruction").text(result.instruction);
                     $("input[name=tid]").val(result.txtID);
-                    $('.decission').html('<button type="button" id="pm_confirm_ok" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>');
-                    $('.decission2').html('&nbsp;&nbsp;<button type="button" id="review_info_ok" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>');
-                    //$("#remaining").text(fullRemainingText);
+                    $('.decission').html('<button type="button" id="pm_confirm_ok" class="btn btn-default" style="margin-right: 4px;"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>');
+                    $('.decission2').html('<button type="button" id="review_info_ok" class="btn btn-default" style="margin-right: 4px;"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>');
+                    $("#remaining").text(setCharAt($("#remaining").text(),7,result.remainingText));
+                    $("#remaining").append('<span class="glyphicon glyphicon-menu-right" style="color: black; margin-left: 14px;"></span>');
                 }
             }, "json"
         );
