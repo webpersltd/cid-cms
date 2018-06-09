@@ -138,7 +138,7 @@
                                 <div class="col-md-6">
                                     <div style="margin-top:30px"  class="row">
                                         <div class="col-md-6">
-                                            <a id="add_box" type="submit" href="<?php echo base_url(); ?>handlingcode/" class="btn btn-success" id="search">SAVE AND CONTINUE &nbsp&nbsp<span class="glyphicon glyphicon-ok"></span></a> 
+                                            <a id="save_text_to_database" type="" href="<?php echo base_url(); ?>handlingcode/" class="btn btn-success">SAVE AND CONTINUE &nbsp&nbsp<span class="glyphicon glyphicon-ok"></span></a> 
                                         </div>
                                         <div class="col-md-6">
                                             <button class="btn btn-danger">CANCEL&nbsp&nbsp<span class="glyphicon glyphicon-remove"></span></button>
@@ -250,10 +250,37 @@
           
             </div>
           </div>
+          <!-- <button id="test_post">Click</button> -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>js/custom.js"></script>
+        <script type="text/javascript">
+            document.getElementById("save_text_to_database").addEventListener("click",function(e){
+        
+                //console.log(localStorage.getItem("data"));
+                $.ajax({
+                    url : "<?php echo base_url(); ?>Rest/",
+                    type : "POST",
+                    dataType : "json",
+                    data : {"info" :JSON.parse(localStorage.getItem("data"))},
+                    success : function(data) {
+                        if(data.responseText==="added"){
+                            location.href="../handlingcode/";
+                        }
+                    },
+                    error : function(data) {
+                        if(data.responseText==="added"){
+                         location.href="../handlingcode/";
+                        }
+                    }
+                });
+            })
+       
+    
+        
+        
+        </script>
     </body>
 </html>
