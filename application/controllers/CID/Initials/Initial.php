@@ -31,9 +31,6 @@ class Initial extends CI_Controller{
         $object['isr']=$data['ISR'];
         if($this->db->insert('records', $object)){
             redirect(base_url()."subjects/", 'refresh');
-        }
-        
-        
-            
+        }           
     }
 }

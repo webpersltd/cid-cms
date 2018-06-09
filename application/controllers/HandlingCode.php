@@ -6,46 +6,58 @@ class HandlingCode extends CI_Controller {
 	public function __construct()
     {
 		parent::__construct();
-		if (!$this->ion_auth->logged_in())
-    	{
+		
+		if (!$this->ion_auth->logged_in()){
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
     	}
+
     	$_SESSION['record_id'] = 2;//This line will have to customize after completing the project
+		
 		$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
-		$this->load->model('Handling_code_model');		
+		$this->load->model('Handling_code_model');
+
+		$text_exists = $this->Handling_code_model->remaining_text($_SESSION['record_id']);
+		
+    	if($text_exists == 0){
+    		redirect('text','refresh');
+    	}
 	}
 
 	public function index(){
 		$record_id  = $_SESSION['record_id'];
+		$txt_id     = $this->Handling_code_model->next($record_id);
 
-		if($this->session->has_userdata('txt_id')){
-			$txt_id = $_SESSION['txt_id'];
-		}
-
-		if(isset($txt_id)){
-			$data['text'] = $this->Handling_code_model->get_text_info($record_id, $txt_id);
+		if(!is_null($txt_id)){
+			$data['text']  = $this->Handling_code_model->get_text_info($record_id, $txt_id);
+			$remainingText = $this->Handling_code_model->remaining_text($record_id, $txt_id);
+			if($remainingText == 0){
+				redirect('handlingcodereview/','refresh');
+			}
+			$data['remainingTextVeiw'] = $remainingText - 1;
 		}else{
-			$data['text'] = $this->Handling_code_model->get_text_info($record_id);
+			$data['text']              = $this->Handling_code_model->get_text_info($record_id);
+			$data['remainingTextVeiw'] = $this->Handling_code_model->remaining_text($record_id)-1;
 		}
+
 		$this->load->view('dashboard/handlingcode', $data);
 	}
 
 	public function create(){
 		$config = array(
 		        array(
-		                'field' => 'handlingcode',
-		                'label' => 'Handling Code',
-		                'rules' => 'required',
+		                'field'  => 'handlingcode',
+		                'label'  => 'Handling Code',
+		                'rules'  => 'required',
 		                'errors' => array(
 		                        'required' => 'Please select a handling code.',
 		                ),
 		        ),
 		        array(
-		                'field' => 'textID',
-		                'label' => 'Text ID',
-		                'rules' => 'required',
+		                'field'  => 'textID',
+		                'label'  => 'Text ID',
+		                'rules'  => 'required',
 		                'errors' => array(
 		                        'required' => 'Sorry, you can\'t submit the form without text ID.',
 		                ),
@@ -53,7 +65,7 @@ class HandlingCode extends CI_Controller {
 		        array(
 		                'field' => 'instruction',
 		                'label' => 'Instruction',
-		                'rules' => 'required'
+		                'rules' => 'required|trim'
 		        )
 		);
 
@@ -66,18 +78,60 @@ class HandlingCode extends CI_Controller {
 			$this->session->set_flashdata('textID', form_error('textID'));
 			$this->session->set_flashdata('instruction', form_error('instruction'));
 
-			$_SESSION['handlingcodeInput'] = $this->input->post('handlingcode');
-        	$_SESSION['instructionInput']  = $this->input->post('instruction');
+			$this->session->set_flashdata('handlingcodeInput', $this->input->post('handlingcode'));
+        	$this->session->set_flashdata('instructionInput', $this->input->post('instruction'));
 
             redirect('handlingcode/','refresh');
 
         }else{
+        	$data['record_id']   = $_SESSION['record_id'];
+        	$data['text_id']     = $this->input->post('textID');
+        	$data['code']        = $this->input->post('handlingcode');
+        	$data['instruction'] = $this->input->post('instruction');
 
-        	$handlingcode = $this->input->post('handlingcode');
-        	$txt_id       = $this->input->post('textID');
-        	$instruction  = $this->input->post('instruction');
+        	$this->Handling_code_model->record_handling_code($data);
 
+        	redirect('handlingcode/','refresh');
         }
+	}
+
+	public function review(){
+		$data['user']             = $this->ion_auth->user()->row();
+		$data['review']           = $this->Handling_code_model->handling_code_review($_SESSION['record_id']);
+		if(count($data['review'])==0){
+			redirect('protectivemark/','refresh');
+		}
+		$data['total_for_review'] = $this->Handling_code_model->total_unreviewed_handling_code($_SESSION['record_id']);
+		$this->load->view('dashboard/handlingcodereview', $data);
+	}
+
+	public function review_done(){
+		if (!$this->input->is_ajax_request()) {
+		   exit('No direct script access allowed');
+		}else{			
+			$handlingcodeID = $this->input->post('handlingCodeID');
+
+			$this->Handling_code_model->update_review_flag($handlingcodeID);
+
+			$review = $this->Handling_code_model->handling_code_review($_SESSION['record_id'], $handlingcodeID);
+
+			if(is_null($review)){
+				$finalOutput = array(
+					'summaryInfo'    => "none"
+				);
+				echo json_encode($finalOutput);
+			}else{
+				$finalOutput = array(
+					'summaryInfo'    => $review->summary,
+					'src_eval'       => $review->src_eval,
+					'inf_int_eval'   => $review->inf_int_eval,
+					'codeInfo'       => $review->code,
+					'instruction'    => $review->instruction,
+					'handlingCodeid' => $review->id
+				);
+				echo json_encode($finalOutput);
+			}
+		}
 	}
 
 }

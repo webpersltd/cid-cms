@@ -52,24 +52,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* CID route defination start here */
 
-
-$route['default_controller'] = 'dashboard';
-$route['initials'] = 'Dashboard';
-$route['subjects'] = 'Dashboard/subjects';
-$route['text'] = 'Dashboard/text';
-$route['handlingcode'] = 'Dashboard/handlingcode';
-$route['protectivemark'] = 'Dashboard/protectivemark';
-$route['review'] = 'Dashboard/review';
-$route['dissemination'] = 'Dashboard/dissemination';
-$route['search'] = 'Dashboard/search';
-$route['savereview'] = 'Dashboard/saveinforeview';
-$route['viewlog'] = 'Dashboard/viewlog';
-$route['saveinitials']='CID/Initials/Initial/handleInitialInfo';
-$route['savesubject']='CID/subjects/Subject/handleSubject';
-$route['savetext']='CID/Text/Text/saveText';
-$route['textController']='CID/Text/Text';
-
-
+$route['default_controller']   = 'Auth';
+$route['login']                = 'auth/login';
+$route['initials']             = 'Dashboard';
+$route['subjects']             = 'Dashboard/subjects';
+$route['text']                 = 'Dashboard/text';
+$route['handlingcode']         = 'HandlingCode';
+$route['protectivemark']       = 'CID/protectivemarking/ProtectiveMarking';
+$route['submitprotectivemark'] = 'CID/protectivemarking/ProtectiveMarking/create';
+$route['review']               = 'CID/review/Review';
+$route['reviewProcess']        = 'CID/review/Review/reviewProcess';
+$route['handlingcodereview']   = 'HandlingCode/review';
+$route['reviewdone']           = 'HandlingCode/review_done';
+$route['dissemination']        = 'Dashboard/dissemination';
+$route['search']               = 'Dashboard/search';
+$route['savereview']           = 'Dashboard/saveinforeview';
+$route['viewlog']              = 'Dashboard/viewlog';
+$route['logout']               = 'auth/logout';
+$route['saveinitials']         = 'CID/Initials/Initial/handleInitialInfo';
+$route['savesubject']          = 'CID/subjects/Subject/handleSubject';
+$route['savetext']             = 'CID/Text/Text/saveText';
+$route['textController']       = 'CID/Text/Text';
 
 /* CID route defination end here */
 
@@ -84,8 +87,5 @@ $route['CMS/closecase']  = 'CMS/Dashboard/closeCase';
 
 
 /* CMS route defination end here */
-
-
-
 $route['404_override']         = '';
 $route['translate_uri_dashes'] = FALSE;

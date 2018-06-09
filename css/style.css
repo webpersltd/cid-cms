@@ -2,6 +2,24 @@ p{
     text-align: justify;
 }
 
+#pm-title{
+  background-color: #EBEBE4;
+  height: 40px;
+  width: 426px;
+  text-align: center;
+  padding-top: 9px;
+}
+
+#pm-heading{
+  margin-right: -85px;
+  padding-left: 1px;
+}
+
+#pm-confirm{
+  margin-top: 10px;
+  padding-left: 1px;
+}
+
 td:hover{
     cursor:pointer; 
 }
@@ -345,11 +363,15 @@ textarea {
     cursor: pointer;
 }
 
+.protective-mark{
+  padding-left: 8px;
+}
+
 .protective-mark > li{
     display: inline-block;
-    border: 2px solid black;
+    border: 1px solid black;
     margin-left: -6px;
-    padding: 12px;
+    padding: 43px;
     padding-top:19px;
     padding-bottom:19px;
 
@@ -684,4 +706,30 @@ ul#review_page_p_marking li {
 
 .modal-backdrop.in{
     display:none;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid blue;
+  border-right: 16px solid green;
+  border-bottom: 16px solid red;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  z-index: 10000;
+  margin-left: 618px;
+  margin-top: -164px;
+  display: none;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
