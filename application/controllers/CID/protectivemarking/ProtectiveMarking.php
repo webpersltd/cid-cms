@@ -56,6 +56,11 @@ class ProtectiveMarking extends CI_Controller {
 		                'field' => 'pi',
 		                'label' => 'Protective Marking',
 		                'rules' => 'required'
+		        ),
+		        array(
+		                'field' => 'textID',
+		                'label' => 'Text ID',
+		                'rules' => 'required'
 		        )
 		);
 
@@ -66,6 +71,7 @@ class ProtectiveMarking extends CI_Controller {
 
 			$this->session->set_flashdata('handlingcode', form_error('hid'));
 			$this->session->set_flashdata('ProtectiveMarking', form_error('pi'));
+			$this->session->set_flashdata('textID', form_error('textID'));
 
             redirect('protectivemark/','refresh');
 
@@ -73,6 +79,7 @@ class ProtectiveMarking extends CI_Controller {
         	$data['record_id']     = $_SESSION['record_id'];
         	$data['handling_id']   = $this->input->post('hid');
         	$data['protective_id'] = $this->input->post('pi');
+        	$data['text_id']       = $this->input->post('textID');
 
         	$this->Protective_Marking_Model->record_protective_marking($data);
 
