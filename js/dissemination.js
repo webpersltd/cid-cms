@@ -8,9 +8,8 @@ $(document).ready(function(){
             url, 
             {textid: tid, updateData: htmlID}, 
             function(result){
-                //alert(result);
                 if(result.summaryInfo=="none"){
-                    window.location.href = "http://localhost/CID/";
+                    window.location.href = "http://localhost/CID/disseminationFinal";
                 }else if(result.summaryInfo == "notfinished"){
                     if(htmlID == "handling_code_ok"){
                         $('.decission1').html("<h4>YES</h4>");
@@ -44,5 +43,15 @@ $(document).ready(function(){
     $(document).on({
         ajaxStart: function() { $(".loader").show(); },
         ajaxStop: function() { $(".loader").hide(); }    
+    });
+
+    $("#disseminated_to").autocomplete({
+        source: "http://localhost/CID/getName",
+        select: function( event, ui ) {
+            event.preventDefault();
+            $('.error').remove();
+            $("#disseminated_to").val(ui.item.value);
+            $("#user").val(ui.item.id);
+        }
     });
 });

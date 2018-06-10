@@ -115,7 +115,23 @@ class Dissemination_model extends CI_Model {
     public function total_text($record_id){
         $this->db->where('record_id', $record_id);
         $query = $this->db->get('texts');
-
         return $query->num_rows();
+    }
+
+    public function get_user_name($term){
+        $this->db->like('first_name', $term);
+        $query = $this->db->get('users');
+        return $query->result();
+    }
+
+    public function final_submission($data){
+        $this->db->insert('dissemination_reviews', $data);
+
+        $this->db->reset_query();
+
+        $this->db->set('fully_submitted', 1);
+        $this->db->where('id', $data['record_id']);
+        $this->db->update('records');
+        return;
     }
 }

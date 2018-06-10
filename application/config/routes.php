@@ -66,12 +66,15 @@ $route['handlingcodereview']   = 'HandlingCode/review';
 $route['reviewdone']           = 'HandlingCode/review_done';
 $route['dissemination']        = 'CID/dissemination/Dissemination';
 $route['disseminationProcess'] = 'CID/dissemination/Dissemination/dissemination_process';
+$route['disseminationFinal']   = 'CID/dissemination/DisseminationFinal';
+$route['getName']              = 'CID/dissemination/DisseminationFinal/get_name';
 $route['search']               = 'Dashboard/search';
 $route['savereview']           = 'Dashboard/saveinforeview';
 $route['viewlog']              = 'Dashboard/viewlog';
 $route['logout']               = 'auth/logout';
 $route['saveinitials']         = 'Initials/Initial/handleInitialInfo';
 $route['savesubject']          = 'CID/subjects/Subject/handleSubject';
+$route['done']                 = 'CID/dissemination/DisseminationFinal/submit_final_record';
 
 /* CID route defination end here */
 
