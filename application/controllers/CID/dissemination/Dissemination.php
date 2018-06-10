@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Review extends CI_Controller {
+class Dissemination extends CI_Controller {
 		
 	public function __construct()
     {
@@ -16,44 +16,44 @@ class Review extends CI_Controller {
 
     	$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
-		$this->load->model('Review_model');
+		$this->load->model('Dissemination_model');
 
-		$remaining_review = $this->Review_model->count_final_review_data($_SESSION['record_id']);
-		$total_text       = $this->Review_model->total_text($_SESSION['record_id']);
+		$remaining_review = $this->Dissemination_model->count_dissemination_data($_SESSION['record_id']);
+		$total_text       = $this->Dissemination_model->total_text($_SESSION['record_id']);
 
-		if($remaining_review==$total_text){
+		if($remaining_review == $total_text){
 			redirect('dissemination/','refresh');
 		}
     }
 
     public function index()
 	{
-		$data['user']         = $this->ion_auth->user()->row();
-		$record_id            = $_SESSION['record_id'];
-		$data['info']         = $this->Review_model->get_details($record_id);
-		$data['final_review'] = $this->Review_model->get_details($record_id);
-		$data['total_text']   = $this->Review_model->total_text($record_id);
+		$record_id             = $_SESSION['record_id']; 
+		$data['user']          = $this->ion_auth->user()->row();
+		$data['info']          = $this->Dissemination_model->get_details($record_id);
+		$data['total_text']    = $this->Dissemination_model->total_text($record_id);
 
-		$get_remaining_text     = $this->Review_model->count_final_review_data($record_id);
+		$get_remaining_text     = $this->Dissemination_model->count_dissemination_data($record_id);
 		$data['remaining_text'] = $get_remaining_text+1;
 
-		$this->load->view('dashboard/review-main', $data);
+		$this->load->view('dashboard/dissemination', $data);
 	}
 
-	public function reviewProcess(){
+	public function dissemination_process(){
 		if (!$this->input->is_ajax_request()){
 		   exit('No direct script access allowed');
 		}else{
-			$data            = array();			
-			$data['text_id'] = $this->input->post('textid');
-			$infoFor         = $this->input->post('updateData');
+			$data              = array();
+			$data['record_id'] = $_SESSION['record_id'];			
+			$data['text_id']   = $this->input->post('textid');
+			$infoFor           = $this->input->post('updateData');
 
-			$this->Review_model->finalReview($data, $infoFor);
+			$this->Dissemination_model->disseminationReview($data, $infoFor);
 
-			$review        = $this->Review_model->get_details($_SESSION['record_id']);
-			$checkFinished = $this->Review_model->check_finish($data['text_id']);
+			$review        = $this->Dissemination_model->get_details($_SESSION['record_id']);
+			$checkFinished = $this->Dissemination_model->check_finish($data['text_id']);
 
-			$remaining_text       = $this->Review_model->count_final_review_data($_SESSION['record_id']);  
+			$remaining_text       = $this->Dissemination_model->count_dissemination_data($_SESSION['record_id']);  
 			$remaining_text_count = $remaining_text+1;
 
 			if(is_null($review)){
