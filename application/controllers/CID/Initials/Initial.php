@@ -11,7 +11,7 @@ class Initial extends CI_Controller{
 
     public function handleInitialInfo(){
         
-        $data['urn']=$this->input->post("urn");
+        $data['urn']=uniqid();//$this->input->post("urn");
         $data['department']=$this->input->post("department");
         $data['date_of_report']=$this->input->post("date_of_report");
         $data['information_source']=$this->input->post("information_source");
@@ -30,7 +30,11 @@ class Initial extends CI_Controller{
         $object['other_source']=$data['other_information_source'];
         $object['isr']=$data['ISR'];
         if($this->db->insert('records', $object)){
+            $this->session->set_userdata('urn',$data['urn']);
             redirect(base_url()."subjects/", 'refresh');
-        }           
+      }
+            
     }
+
+
 }

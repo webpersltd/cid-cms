@@ -13,21 +13,21 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
     <script type="text/javascript">
-    /* addEventListener('load',function(e){
+    addEventListener('load',function(e){
         $.ajax({
         url : "<?php echo base_url(); ?>Rest/",
         type : "GET",
         dataType : "json",
         data : {"account" :"account", "passwd" :"password"},
         success : function(data) {
-            alert("hellow");
+            alert(data.responseText);
         },
         error : function(data) {
-            console.log(data);
+            console.log(data.responseText);
         }
     });
      })
-       */
+       
     
     </script>
     </body>
