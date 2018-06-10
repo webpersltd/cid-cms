@@ -22,7 +22,7 @@ class Dissemination extends CI_Controller {
 		$total_text       = $this->Dissemination_model->total_text($_SESSION['record_id']);
 
 		if($remaining_review == $total_text){
-			redirect('dissemination/','refresh');
+			redirect('disseminationFinal/','refresh');
 		}
     }
 
