@@ -32,10 +32,14 @@ class Initial extends CI_Controller{
         if($this->db->insert('records', $object)){
             $this->session->set_userdata('urn',$data['urn']);
             redirect(base_url()."subjects/", 'refresh');
+<<<<<<< HEAD
             
         }
         
         
             
+=======
+        }           
+>>>>>>> 9f5b1a14520c668e886973ffd435cf49deac8a7d
     }
 }

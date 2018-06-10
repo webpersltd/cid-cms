@@ -66,7 +66,7 @@ class Dashboard extends CI_Controller {
 
 	public function review()
 	{
-		$this->load->view('dashboard/review');
+		$this->load->view('dashboard/review-main');
 	}
 	
 	public function dissemination()
