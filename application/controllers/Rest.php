@@ -22,10 +22,11 @@ class Rest extends CI_Controller {
 
 
 		//print_r($data[0]);
+
 	$pointer=0;
 		for($i=0;$i<count($data[0]);$i++){
-			$object['record_id']=$this->Initial->getRecordId($this->session->urn)[0]->id;
-			$object['summery']=$data[0][$i]['value'];
+			$object['record_id']=$_SESSION['urn'];
+			$object['summary']=$data[0][$i]['value'];
 			$object['serial']=$data[0][$i]['id'];
 			$object['src_eval']=$data[0][$i]['grading'][0];
 			$object['inf_int_eval']=$data[0][$i]['grading'][1];
