@@ -6,6 +6,7 @@ class Subject extends CI_Controller{
     function __construct(){
         Parent::__construct();
         $this->load->database();
+        $this->load->model('./CID/Initial/Initial');
         
     }
 
@@ -31,7 +32,7 @@ class Subject extends CI_Controller{
 
 
         $object=array();
-        $object['record_id']=9;
+        $object['record_id']=$this->Initial->getRecordId($this->session->urn)[0]->id;
         $object['fname']=$data['firstname'];
         $object['surname']=$data['surname'];
         $object['father_name']=$data['fathersname'];
