@@ -1,42 +1,26 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
-
-   
-
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
-    
+class Dashboard extends CI_Controller {    
 		
 	public function __construct()
     {
 		parent::__construct();
 		$this->load->helper('CID/nav');
-		$this->load->database();
-		
+		$this->load->database();		
 	}
 
 	public function index()
     {
-	   $query = $this->db->get('departments');
-	   $data['departments']=$query;
-	   $this->load->view('dashboard/initials',$data);
-	   
+	   $data['departments'] = $this->db->get('departments');
+	   $data['inf_src']     = $this->db->order_by('name')->get('inf_sources');
+	   $user                = $this->ion_auth->user()->row();
 
+	   $this->load->js(base_url()."js/initials.js");
+	   $this->output->set_output_data("user", $user);	   
+	   $this->output->prepend_title("Initials");
+	   $this->output->set_template('default');
+	   $this->load->view('dashboard/initials',$data);
 	}
 
 	public function subjects()
@@ -46,32 +30,9 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard/subjects',$data);
 	}
 
-
 	public function text()
 	{
 		$this->load->view('dashboard/text');
-	}
-
-	public function handlingcode()
-	{
-		$this->load->view('dashboard/handlingcode');
-		
-	}
-
-	public function protectivemark()
-	{
-		$this->load->view('dashboard/protectivemark');
-	}
-
-
-	public function review()
-	{
-		$this->load->view('dashboard/review-main');
-	}
-	
-	public function dissemination()
-	{
-		$this->load->view('dashboard/dissemination');
 	}
 
 	public function saveinforeview()
@@ -87,10 +48,5 @@ class Dashboard extends CI_Controller {
 	public function viewlog()
 	{
 		$this->load->view('dashboard/viewlog');
-	} 
-	
-	
-	
-
-
+	}
 }

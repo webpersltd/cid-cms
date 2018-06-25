@@ -9,7 +9,7 @@
 <body>
 <?php echo form_open("login");?>
   <div class="imgcontainer">
-    <img src="<?php echo base_url() ?>images/NBR-customs-logo.png" alt="Bangladesh Customs" class="avatar">
+    <img src="<?php echo base_url() ?>assets/images/NBR-customs-logo.png" alt="Bangladesh Customs" class="avatar">
   </div>
 
   <div class="container">

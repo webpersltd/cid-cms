@@ -1,60 +1,57 @@
-var data=JSON.parse(localStorage.getItem("data"))
-var protectiveMark=["RESTRICTED","CONFIDENTIAL","SECRET","TOP SECRET"]
+$(document).ready(function(){
+    $(document).on("click","#handling_code_ok, #handling_instruction_ok, #pro_mark_ok",function(){
+        var htmlID = $(this).attr('id');
+        var tid    = $("input[name=tid]").val();
+        var url    = "http://localhost/CID/disseminationProcess/";        
 
-
-class Dissemination{
-
-     
-     onLoad(){
-            addEventListener("load",function(e){
-                document.getElementById("des_protect").textContent=protectiveMark[data[0].protecTiveMark];
-                document.getElementById("temp_d_p").textContent+=" "+protectiveMark[data[0].protecTiveMark];
-            })
-            this.protectiveMarkPointer=null;
-            for(var i=0;i<data.length;i++){
-                //document.getElementById("dissemination-container").innerHTML+='<div class="col-md-8"><h4>SUMMERY OF TEXT:</h4></div><div style="vertical-align:top" class="col-md-4"><h4 style="margin-left:35px">GRADING</h4><ul class="des_grading" style="display:inline-block"><li style="display:inline-block">'+data[i].grading[0]+'</li><li style="display:inline-block">'+data[i].grading[1]+'</li><li style="display:inline-block">'+data[i].grading[2]+'</li></ul></div><div class="col-md-12"><textarea rows="10" disabled id="diss_s_'+i+'" style="width:70%">"'+data[i].value+'"</textarea></div><div class="col-md-6"><h4>Detailed handling instruction</h4></div><div class="col-md-12"><textarea rows="7" disabled id="diss_h_'+i+'" style="width:70%">"'+data[i].freeText+'"</textarea></div><div style="border-bottom: 2px solid black;margin-bottom: 30px;padding-bottom: 45px;margin-top: 10px;" class="col-md-12"><h3>CAN THIS INFORMATION BE DISSEMINATED IN LINE WITH THE HANDLING CODE APPLIED: </h3><div class="pretty p-default p-curve"><input  type="radio" class="gCheck" name="h_c_a'+i+'"><div class="state p-success-o"><label>YES</label></div></div> <div class="pretty p-default p-curve"> <input class="gCheck" data-toggle="modal" data-target="#myModal1" type="radio" name="h_c_a'+i+'"><div class="state p-danger-o"><label>NO</label></div></div><h3>ARE ADDITIONAL DETAILED HANDLING INSTRUCTIONS REQUIRED: </h3><div class="pretty p-default p-curve"><input  type="radio" class="gCheck"  data-toggle="modal" data-target="#myModal1" name="h_i_'+i+'"><div class="state p-success-o"><label>YES</label></div></div> <div class="pretty p-default p-curve"> <input class="gCheck"  type="radio" name="h_i_'+i+'"><div class="state p-danger-o"><label>NO</label></div></div><h3>CAN THIS INFORMATION BE DISSEMINATED IN LINE WITH THE PROTECTIVE MARKING APPLIED: </h3><div class="pretty p-default p-curve"><input  type="radio" class="gCheck" data-toggle="modal" data-target="#myModal1" name="d_p_m'+i+'"><div class="state p-success-o"><label>YES</label></div></div> <div class="pretty p-default p-curve"> <input class="gCheck"  type="radio" name="d_p_m'+i+'"><div class="state p-danger-o"><label>NO</label></div></div></div>'
-                document.getElementById("dissemination-container").innerHTML+='<div class="col-md-8"><h4>SUMMERY OF TEXT:</h4></div><div style="vertical-align:top" class="col-md-4"><h4 style="margin-left:35px">GRADING</h4><ul class="des_grading" style="display:inline-block"><li style="display:inline-block">'+data[i].grading[0]+'</li><li style="display:inline-block">'+data[i].grading[1]+'</li><li style="display:inline-block">'+data[i].grading[2]+'</li></ul></div><div class="col-md-12"><textarea rows="10" disabled id="diss_s_'+i+'" style="width:70%">"'+data[i].value+'"</textarea></div><div class="col-md-6"><h4>Detailed handling instruction</h4></div><div class="col-md-12"><textarea rows="7" disabled id="diss_h_'+i+'" style="width:70%">"'+data[i].freeText+'"</textarea></div>';
-            }
-    }
-
-    onChangeProtectiveMark(){
-        addEventListener('click',function(e){
-            if(e.target.getAttribute("class")==="p_mark"){
-                //console.log(data[0].protecTiveMark=e.target.getAttribute("dissemination_mark"))
-                this.protectiveMarkPointer=e.target.getAttribute("dissemination_mark")
-                //localStorage.setItem("data",JSON.stringify(data));
-                //location.reload();
-                var nodes=document.getElementById("protective-mark-id").childNodes;
-                console.log(nodes)
-                for(var i=0;i<nodes.length;i++){
-                    //console.log(nodes[i].childNodes[0].innerHTML)
-                    if(nodes[i].nodeName!=="text"){
-                        nodes[i].style="color:black"
+        $.post(
+            url, 
+            {textid: tid, updateData: htmlID}, 
+            function(result){
+                if(result.summaryInfo=="none"){
+                    window.location.href = "http://localhost/CID/disseminationFinal";
+                }else if(result.summaryInfo == "notfinished"){
+                    if(htmlID == "handling_code_ok"){
+                        $('.decission1').html("<h4>YES</h4>");
+                    }else if(htmlID == "handling_instruction_ok"){
+                        $('.decission2').html("<h4>NO</h4>");
+                    }else{
+                        $('.decission3').html("<h4>YES</h4>");
                     }
-                   
+                }else{
+                    $("#pm-title").html("<b>"+result.pmname+"</b>");
+                    $("#summary").text(result.summaryInfo);
+                    $("#src_eval").text(result.src_eval);
+                    $("#inf_int_eval").text(result.inf_int_eval);
+                    $("#code").text(result.codeInfo);
+                    $("#instruction").text(result.instruction);
+                    $("input[name=tid]").val(result.txtID);
+                    $('.decission1').html('<button type="button" id="handling_code_ok" class="btn btn-default" style="margin-right: 4px;"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>');
+                    $('.decission2').html('<button type="button" class="btn btn-default" style="margin-right: 4px;"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button><button type="button" id="handling_instruction_ok" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>');
+                    $('.decission3').html('<button type="button" id="pro_mark_ok" class="btn btn-default" style="margin-right: 4px;"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>');
+                    $("#remaining").text(setCharAt($("#remaining").text(),15,result.remainingText));
                 }
-                e.target.style="color:red !important;font-weight:bold"
-                //e.target.style="font-weight:bold"
-                document.getElementById("temp_d_p").textContent="Protective mark is: "+protectiveMark[e.target.getAttribute("dissemination_mark")];
+            }, "json"
+        );
+    });
 
-                
-            }
-            if(e.target.getAttribute("id")==="d_p_m"){
-                console.log(this.protectiveMarkPointer)
-                data[0].protecTiveMark=this.protectiveMarkPointer;
-                localStorage.setItem("data",JSON.stringify(data));
-                location.reload();
-            }
-           
-            
-        //localStorage.setItem("data",JSON.stringify(data));
-            //
-        })
+    function setCharAt(str,index,chr) {
+        if(index > str.length-1) return str;
+        return str.substr(0,index) + chr + str.substr(index+1);
     }
-}
 
+    $(document).on({
+        ajaxStart: function() { $(".loader").show(); },
+        ajaxStop: function() { $(".loader").hide(); }    
+    });
 
-
-var obj= new Dissemination();
-obj.onLoad();
-obj.onChangeProtectiveMark();
+    $("#disseminated_to").autocomplete({
+        source: "http://localhost/CID/getName",
+        select: function( event, ui ) {
+            event.preventDefault();
+            $('.error').remove();
+            $("#disseminated_to").val(ui.item.value);
+            $("#user").val(ui.item.id);
+        }
+    });
+});

@@ -13,10 +13,17 @@ class Review extends CI_Controller {
     	}
 
     	$_SESSION['record_id'] = 2;//This line will have to customize after completing the project
-		
-		$this->load->helper('CID/nav');
+
+    	$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
 		$this->load->model('Review_model');
+
+		$remaining_review = $this->Review_model->count_final_review_data($_SESSION['record_id']);
+		$total_text       = $this->Review_model->total_text($_SESSION['record_id']);
+
+		if($remaining_review==$total_text){
+			redirect('dissemination/','refresh');
+		}
     }
 
     public function index()

@@ -4,8 +4,10 @@
         <title>Review - Handling Code</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="<?= base_url() ?>js/handlingcodereview.js" type="text/javascript"></script>
         <link type="text/css" rel="stylesheet" href="../css/style.css"/>
-        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
     </head>
 
     <body>
@@ -109,7 +111,7 @@
 
                     <div class="col-md-3">
                         <button type="button" id="review_ok" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
+                        <button id="recheck" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
                     </div>
                 </div>
                 <div class="col-md-9 handling-heading">
@@ -122,8 +124,54 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Modal for text recheck -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog" style="width: 100% !important">            
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Handling Code Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h4>Handling Code</h4>
+                            </div>
+                            <div class="col-md-8">
+                                <?php
+                                $options = array(
+                                        '1' => '1 - Permits dissemination within Customs and to other law inforcement agencies in Bangladesh as specified.',
+                                        '2' => '2 - Permits dissemination to Bangladesh non prosecuting parties',
+                                        '3' => '3 - Permits dissemination to foreign law agencies',
+                                        '4' => '4 - Permits dissemination within Bangladesh Customs only: specify reasons and internal recipient(s)',
+                                        '5' => '5 - Permits dissemination, but receiving agency to observe conditions as specified'
+                                );
+
+                                echo form_dropdown('handling_codes', $options, $review->code, 'id="selected_hc" style = "width: 594px"');
+                                ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h4>Handling Instruction</h4>
+                            </div>
+                            <div class="col-md-12">
+                                <textarea id="updated_hi" rows="5" style="width: 100%"><?= $review->instruction ?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="update_info" type="button" class="btn btn-success">OK</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>              
+            </div>
+        </div>
+        <!-- End Modal for text recheck -->
+
     </body>
     <div class="loader"></div>
 </html>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script src="<?= base_url() ?>js/handlingcodereview.js" type="text/javascript"></script>

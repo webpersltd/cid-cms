@@ -1,7 +1,7 @@
 <?php
 class Protective_Marking_Model extends CI_Model {
 
-	public function get_text_info($record_id = NULL, $handling_id = NULL)
+    public function get_text_info($record_id = NULL, $handling_id = NULL)
     {
   		if(!is_null($record_id)){
   			$this->db->select('*, handling_codes.id as hid');
@@ -13,8 +13,8 @@ class Protective_Marking_Model extends CI_Model {
    			$this->db->where('handling_codes.id >',$handling_id);
    		}
    		$this->db->limit(1);
-        $query = $this->db->get();
-        return $query->row();
+      $query = $this->db->get();
+      return $query->row();
     }
 
     public function get_protective_mark(){
