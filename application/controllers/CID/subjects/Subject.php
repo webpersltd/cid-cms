@@ -1,4 +1,4 @@
-<?php 
+ <?php 
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -32,7 +32,7 @@ class Subject extends CI_Controller{
 
 
         $object=array();
-        $object['record_id']=$this->Initial->getRecordId($this->session->urn)[0]->id;
+        $object['record_id']=$_SESSION['record_id'];
         $object['fname']=$data['firstname'];
         $object['surname']=$data['surname'];
         $object['father_name']=$data['fathersname'];
