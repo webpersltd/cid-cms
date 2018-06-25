@@ -11,8 +11,6 @@ class HandlingCode extends CI_Controller {
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
     	}
-
-    	$_SESSION['record_id'] = 2;//This line will have to customize after completing the project
 		
 		$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
@@ -26,8 +24,8 @@ class HandlingCode extends CI_Controller {
 	}
 
 	public function index(){
-		$record_id  = $_SESSION['record_id'];
-		$txt_id     = $this->Handling_code_model->next($record_id);
+		$record_id = $_SESSION['record_id'];
+		$txt_id    = $this->Handling_code_model->next($record_id);
 
 		if(!is_null($txt_id)){
 			$data['text']  = $this->Handling_code_model->get_text_info($record_id, $txt_id);
@@ -38,7 +36,7 @@ class HandlingCode extends CI_Controller {
 			$data['remainingTextVeiw'] = $remainingText - 1;
 		}else{
 			$data['text']              = $this->Handling_code_model->get_text_info($record_id);
-			$data['remainingTextVeiw'] = $this->Handling_code_model->remaining_text($record_id)-1;
+			$data['remainingTextVeiw'] = $this->Handling_code_model->remaining_text($record_id) - 1;
 		}
 
 		$this->load->view('dashboard/handlingcode', $data);
@@ -98,7 +96,7 @@ class HandlingCode extends CI_Controller {
 	public function review(){
 		$data['user']             = $this->ion_auth->user()->row();
 		$data['review']           = $this->Handling_code_model->handling_code_review($_SESSION['record_id']);
-		if(count($data['review'])==0){
+		if(count($data['review']) == 0){
 			redirect('protectivemark/','refresh');
 		}
 		$data['total_for_review'] = $this->Handling_code_model->total_unreviewed_handling_code($_SESSION['record_id']);
@@ -117,7 +115,7 @@ class HandlingCode extends CI_Controller {
 
 			if(is_null($review)){
 				$finalOutput = array(
-					'summaryInfo'    => "none"
+					'summaryInfo' => "none"
 				);
 				echo json_encode($finalOutput);
 			}else{
@@ -132,6 +130,10 @@ class HandlingCode extends CI_Controller {
 				echo json_encode($finalOutput);
 			}
 		}
+	}
+
+	public function recheck_handling_code($id){
+		echo $id;
 	}
 
 }

@@ -165,7 +165,7 @@ document.getElementById("s_and_r").addEventListener("click", function () {
     localStorage.setItem("data", JSON.stringify(obj.data));
     location.href="../savereview/";
 });
-console.log(localStorage.getItem("data"));
+//console.log(localStorage.getItem("data"));
 
 
 

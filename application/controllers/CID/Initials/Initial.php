@@ -17,7 +17,7 @@ class Initial extends CI_Controller{
                         'label'  => 'Department',
                         'rules'  => 'required',
                         'errors' => array(
-                                'required' => 'Please select a department.',
+                            'required' => 'Please select a department.',
                         ),
                 ),
                 array(
@@ -25,7 +25,7 @@ class Initial extends CI_Controller{
                         'label'  => 'Date of Report',
                         'rules'  => 'required',
                         'errors' => array(
-                                'required' => 'Please pick a date of report.',
+                            'required' => 'Please pick a date of report.',
                         ),
                 ),
                 array(
@@ -88,17 +88,17 @@ class Initial extends CI_Controller{
         $data['ISR']                      = $this->input->post("ISR");
         $object                           = array();
         $object['urn']                    = $data['urn'];
-        $object['user_id']                = 1;
+        $object['user_id']                = $this->ion_auth->user()->row()->id;
         $object['department']             = $data['department'];
         $object['report_submitted_by']    = $data['submitting_person_name'];
         $object['date_of_report']         = $data['date_of_report'];
         $object['time_of_report']         = $data['time_of_report'];
-        $object['inf_source']             = 2;//$data['information_source'];
+        $object['inf_source']             = $data['information_source'];
         $object['other_source']           = $data['other_information_source'];
         $object['isr']                    = $data['ISR'];
 
         if($this->db->insert('records', $object)){
-            $this->session->set_userdata('urn',$data['urn']);
+            $this->session->set_userdata('record_id', $this->db->insert_id());
             redirect(base_url()."subjects/", 'refresh');
         }                    
     }
