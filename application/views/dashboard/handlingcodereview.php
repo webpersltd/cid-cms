@@ -133,7 +133,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Update Handling Code Info</h4>
+                        <h4 class="modal-title">Recheck Handling Code Info</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -150,7 +150,7 @@
                                         '5' => '5 - Permits dissemination, but receiving agency to observe conditions as specified'
                                 );
 
-                                echo form_dropdown('handling_codes', $options, $review->code, 'id="selected_hc" style = "width: 594px"');
+                                echo form_dropdown('handling_codes', $options, '', 'id="selected_hc" style = "width: 594px"');
                                 ?>
                             </div>
                         </div>
@@ -159,12 +159,12 @@
                                 <h4>Handling Instruction</h4>
                             </div>
                             <div class="col-md-12">
-                                <textarea id="updated_hi" rows="5" style="width: 100%"><?= $review->instruction ?></textarea>
+                                <textarea id="updated_hi" rows="5" style="width: 100%"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="update_info" type="button" class="btn btn-success">OK</button>
+                        <button id="update_info" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>              

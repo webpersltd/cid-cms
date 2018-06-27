@@ -12,11 +12,12 @@ class Review extends CI_Controller {
     		redirect('login', 'refresh');
     	}
 
-    	$_SESSION['record_id'] = 2;//This line will have to customize after completing the project
+    	//$_SESSION['record_id'] = 2;//This line will have to customize after completing the project
 
     	$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
 		$this->load->model('Review_model');
+		$this->load->model('Protective_Marking_Model');
 
 		$remaining_review = $this->Review_model->count_final_review_data($_SESSION['record_id']);
 		$total_text       = $this->Review_model->total_text($_SESSION['record_id']);
@@ -28,14 +29,15 @@ class Review extends CI_Controller {
 
     public function index()
 	{
-		$data['user']         = $this->ion_auth->user()->row();
-		$record_id            = $_SESSION['record_id'];
-		$data['info']         = $this->Review_model->get_details($record_id);
-		$data['final_review'] = $this->Review_model->get_details($record_id);
-		$data['total_text']   = $this->Review_model->total_text($record_id);
+		$data['user']           = $this->ion_auth->user()->row();
+		$record_id              = $_SESSION['record_id'];
+		$data['info']           = $this->Review_model->get_details($record_id);
+		//$data['final_review']   = $this->Review_model->get_details($record_id);
+		$data['total_text']     = $this->Review_model->total_text($record_id);
+		$data['protectivemark'] = $this->Protective_Marking_Model->get_protective_mark();
 
 		$get_remaining_text     = $this->Review_model->count_final_review_data($record_id);
-		$data['remaining_text'] = $get_remaining_text+1;
+		$data['remaining_text'] = $get_remaining_text + 1;
 
 		$this->load->view('dashboard/review-main', $data);
 	}
@@ -80,5 +82,20 @@ class Review extends CI_Controller {
 				echo json_encode($finalOutput);
 			}
 		}
+	}
+
+	public function recheck_pro_mark(){
+		$textID = $this->input->post('textID');
+		$data   = $this->Review_model->get_pro_mark($textID);
+		echo json_encode($data);
+	}
+
+	public function update_pro_mark(){
+		$protective_mark = $this->input->post('protective_mark');
+		$tid             = $this->input->post('tid');
+
+		$this->Review_model->update_pro_mark($protective_mark, $tid);
+		$data = $this->Review_model->get_pro_mark($tid);
+		echo json_encode($data);
 	}
 }

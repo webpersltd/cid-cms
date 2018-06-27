@@ -188,7 +188,7 @@
                 </div>
                 <!-- Modal -->
                 <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">            
+                    <div class="modal-dialog" style="width: 100% !important;">            
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header">

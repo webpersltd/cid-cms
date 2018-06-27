@@ -38,6 +38,31 @@ $(document).ready(function(){
         return str.substr(0,index) + chr + str.substr(index+1);
     }
 
+    $("#update_pro_mark").click(function(){
+        var id              = $("input[name=tid]").val();
+        var protective_mark = $("#updated_hi").val();
+        var url             = "http://localhost/CID/update_pro_mark/";        
+        $.post(
+            url, 
+            {protectiveMark: protective_mark, tid: id}, 
+            function(result){
+                $("#p_mark_name").text(result.name);
+            }, "json"
+        );
+    });
+
+    $("#recheck_pro").click(function(){
+        var id  = $("input[name=tid]").val();
+        var url = "http://localhost/CID/collectRecheckDataForPro/";
+        $.post(
+            url, 
+            {textID: id}, 
+            function(result){
+                $("#selected_pm").val(result.protective_id);
+            }, "json"
+        );
+    });
+
     $(document).on({
         ajaxStart: function() { $(".loader").show(); },
         ajaxStop: function() { $(".loader").hide(); }    
