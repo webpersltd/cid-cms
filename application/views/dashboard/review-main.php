@@ -6,6 +6,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <link type="text/css" rel="stylesheet" href="../css/style.css"/>
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="<?= base_url() ?>js/review.js" type="text/javascript"></script>
     </head>
 
     <body>
@@ -88,7 +91,7 @@
                     <h4>THE PROTECTIVE MARKING FOR THIS RECORD IS SET AS:</h4>
                 </div>
                 <div class="col-md-1" id="pm-title">
-                    <b><?= $info->name; ?></b>
+                    <b id="p_mark_name"><?= $info->name; ?></b>
                 </div>
                 <div class="col-md-10" id="pm-confirm">
                     <div class="col-md-7 handling-heading" style="margin-right: -57px">
@@ -103,7 +106,7 @@
                         }else{
                         ?>
                         <button type="button" id="pm_confirm_ok" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
+                        <button id="recheck_pro" type="button" class="btn btn-default" data-toggle="modal" data-target="#pro_mark"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
                         <?php
                         }
                         ?>
@@ -160,9 +163,40 @@
                 <input type="hidden" name="tid" value="<?= $info->txtID ?>">
             </div>
         </div>
+
+        <!-- Modal for text recheck -->
+        <div class="modal fade" id="pro_mark" role="dialog">
+            <div class="modal-dialog" style="width: 100% !important">            
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Recheck Protective Markings</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h4>Protective Markings</h4>
+                            </div>
+                            <div class="col-md-8">
+                                <?php
+                                $options = array();
+                                foreach ($protectivemark as $value) {
+                                    $options[$value->id] = $value->name;
+                                }
+                                echo form_dropdown('pm', $options, '', 'id="selected_pm" style = "width: 594px"');
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="update_pro_mark" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>              
+            </div>
+        </div>
+        <!-- End Modal for text recheck -->
     </body>
     <div class="loader"></div>
 </html>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="<?= base_url() ?>js/review.js" type="text/javascript"></script>

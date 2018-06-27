@@ -52,31 +52,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* CID route defination start here */
 
-$route['default_controller']   = 'Auth';
-$route['login']                = 'auth/login';
-$route['initials']             = 'Dashboard';
-$route['subjects']             = 'Dashboard/subjects';
-$route['text']                 = 'Dashboard/text';
-$route['handlingcode']         = 'HandlingCode';
-$route['protectivemark']       = 'CID/protectivemarking/ProtectiveMarking';
-$route['submitprotectivemark'] = 'CID/protectivemarking/ProtectiveMarking/create';
-$route['review']               = 'CID/review/Review';
-$route['reviewProcess']        = 'CID/review/Review/reviewProcess';
-$route['handlingcodereview']   = 'HandlingCode/review';
-$route['reviewdone']           = 'HandlingCode/review_done';
-$route['dissemination']        = 'CID/dissemination/Dissemination';
-$route['disseminationProcess'] = 'CID/dissemination/Dissemination/dissemination_process';
-$route['disseminationFinal']   = 'CID/dissemination/DisseminationFinal';
-$route['getName']              = 'CID/dissemination/DisseminationFinal/get_name';
-$route['search']               = 'Dashboard/search';
-$route['savereview']           = 'Dashboard/saveinforeview';
-$route['viewlog']              = 'Dashboard/viewlog';
-$route['logout']               = 'auth/logout';
-$route['saveinitials']         = 'CID/Initials/Initial/handleInitialInfo';
-$route['savesubject']          = 'CID/subjects/Subject/handleSubject';
-$route['done']                 = 'CID/dissemination/DisseminationFinal/submit_final_record';
-$route['savetext']             = 'CID/Text/Text/saveText';
-$route['textController']       = 'CID/Text/Text';
+$route['default_controller']       = 'Auth';
+$route['login']                    = 'auth/login';
+$route['initials']                 = 'Dashboard';
+$route['subjects']                 = 'Dashboard/subjects';
+$route['text']                     = 'Dashboard/text';
+$route['handlingcode']             = 'HandlingCode';
+$route['protectivemark']           = 'CID/protectivemarking/ProtectiveMarking';
+$route['submitprotectivemark']     = 'CID/protectivemarking/ProtectiveMarking/create';
+$route['review']                   = 'CID/review/Review';
+$route['reviewProcess']            = 'CID/review/Review/reviewProcess';
+$route['collectRecheckDataForPro'] = 'CID/review/Review/recheck_pro_mark';
+$route['update_pro_mark']          = 'CID/review/Review/update_pro_mark';
+$route['handlingcodereview']       = 'HandlingCode/review';
+$route['reviewdone']               = 'HandlingCode/review_done';
+$route['collectRecheckData']       = 'HandlingCode/recheck_handling_code';
+$route['update_info']              = 'HandlingCode/update_handling_code';
+$route['dissemination']            = 'CID/dissemination/Dissemination';
+$route['disseminationProcess']     = 'CID/dissemination/Dissemination/dissemination_process';
+$route['disseminationFinal']       = 'CID/dissemination/DisseminationFinal';
+$route['getName']                  = 'CID/dissemination/DisseminationFinal/get_name';
+$route['search']                   = 'Dashboard/search';
+$route['savereview']               = 'Dashboard/saveinforeview';
+$route['viewlog']                  = 'Dashboard/viewlog';
+$route['logout']                   = 'auth/logout';
+$route['saveinitials']             = 'CID/Initials/Initial/handleInitialInfo';
+$route['savesubject']              = 'CID/subjects/Subject/handleSubject';
+$route['done']                     = 'CID/dissemination/DisseminationFinal/submit_final_record';
+$route['savetext']                 = 'CID/Text/Text/saveText';
+$route['textController']           = 'CID/Text/Text';
 
 /* CID route defination end here */
 
