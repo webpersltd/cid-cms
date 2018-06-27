@@ -5,10 +5,11 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <link type="text/css" rel="stylesheet" href="../css/style.css"/>
+        <link type="text/css" rel="stylesheet" href="../css/navbar-fixed-left.min.css"/>
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
     </head>    
-    <body>
-        <nav class="navbar navbar-default">
+    <body style="padding-top: 70px">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -50,7 +51,7 @@
             </div><!-- /.container-fluid -->
         </nav>
         <div class="container-fluid">
-            <div class="col-md-2">
+            <div class="col-md-2 navbar-fixed-left" style="margin-top: 67px">
                 <ul class="list-group">
                     <li  class="list-group-item">
                         <a href="<?php echo base_url(); ?>initials/"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp&nbspInitials</a>
@@ -93,7 +94,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-13">
                 <nav class="breadcrumb">
                     <a class="breadcrumb-item" href="#">INITIALS&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item" href="#">SUBJECT&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
@@ -104,7 +105,7 @@
                     <a class="breadcrumb-item" href="dissemination.html">DISSEMINATION</a>
                 </nav>
             </div>
-            <div  class="col-md-10">
+            <div  class="col-md-13">
                 <?php
                 if( !empty($this->session->flashdata('handlingcode')) ){
                     echo $this->session->flashdata('handlingcode');
@@ -187,7 +188,7 @@
                     <?= form_close(); ?>
                 </div>
                 <!-- Modal -->
-                <div id="myModal" class="modal fade" role="dialog">
+                <div id="myModal" class="modal fade" role="dialog" style="z-index: 999999">
                     <div class="modal-dialog" style="width: 100% !important;">            
                         <!-- Modal content-->
                         <div class="modal-content">

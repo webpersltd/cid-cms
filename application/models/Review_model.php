@@ -109,7 +109,7 @@ class Review_model extends CI_Model {
     }
 
     public function get_pro_mark($id){
-        $this->db->select('protective_id', 'name');
+        $this->db->select('protective_id, name');
         $this->db->from('protective_markings');
         $this->db->where('text_id',$id);
         $this->db->join('protective_marking_lists', 'protective_marking_lists.id = protective_markings.protective_id');
