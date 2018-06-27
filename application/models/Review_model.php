@@ -107,4 +107,20 @@ class Review_model extends CI_Model {
 
         return $query->num_rows();
     }
+
+    public function get_pro_mark($id){
+        $this->db->select('protective_id', 'name');
+        $this->db->from('protective_markings');
+        $this->db->where('text_id',$id);
+        $this->db->join('protective_marking_lists', 'protective_marking_lists.id = protective_markings.protective_id');
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function update_pro_mark($protective_mark, $id){
+        $this->db->set('protective_id', $protective_mark);
+        $this->db->where('text_id', $id);
+        $this->db->update('protective_markings');
+        return;
+    }
 }

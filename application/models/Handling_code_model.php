@@ -63,4 +63,18 @@ class Handling_code_model extends CI_Model {
         $this->db->where('reviewed', 0);
         return $this->db->count_all_results('handling_codes');
     }
+
+    public function get_handling_code($id){
+        $this->db->where('id',$id);
+        $query = $this->db->get('handling_codes');
+        return $query->row();
+    }
+
+    public function update_handling_code($code, $instruction, $id){
+        $this->db->set('code', $code);
+        $this->db->set('instruction', $instruction);
+        $this->db->where('id', $id);
+        $this->db->update('handling_codes');
+        return;
+    }
 }
