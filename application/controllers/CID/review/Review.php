@@ -91,7 +91,7 @@ class Review extends CI_Controller {
 	}
 
 	public function update_pro_mark(){
-		$protective_mark = $this->input->post('protective_mark');
+		$protective_mark = $this->input->post('protectiveMark');
 		$tid             = $this->input->post('tid');
 
 		$this->Review_model->update_pro_mark($protective_mark, $tid);

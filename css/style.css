@@ -370,7 +370,7 @@ textarea {
 .protective-mark > li{
     display: inline-block;
     border: 1px solid black;
-    margin-left: -6px;
+    margin-left: -5px;
     padding: 43px;
     padding-top:19px;
     padding-bottom:19px;

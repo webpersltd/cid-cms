@@ -133,6 +133,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <p class="text-info" style="margin-top: -13px; display: none;">Double Click on those gradings information to change.</p>
                     </div>
                 </div>
                 <div class="col-md-9 handling-heading">
@@ -155,7 +156,7 @@
                     }else{
                     ?>
                     <button type="button" id="review_info_ok" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button>
-                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
+                    <button type="button" id="changeDetails" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
                     <?php
                     }
                     ?>
@@ -190,13 +191,69 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="update_pro_mark" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>              
             </div>
         </div>
         <!-- End Modal for text recheck -->
+
+        <!-- Modal For Details about Portective Marking -->
+        <div id="modalDetails" class="modal fade" role="dialog">
+            <div class="modal-dialog" style="width: 100% !important;">            
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="p_mark_head" class="modal-title"></h4>
+                    </div>
+                    <div  class="modal-body">
+                        <h5 style="font-weight:bold">In your Assestment, the accidental loss or disclosure of this information may :</h5>
+                        <ul id="p_mark_body">                            
+                        </ul>
+                        <h5 style="font-weight:bold"><span style="color:red">WARNING : </span>&nbsp;&nbsp;APPLYING THIS PROTECTIVE MARKING WILL SIGNIFICANTLY IMPEDE WHO THE INFORMATION CAN BE SHARED WITH AND HOW </h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="update_pro_mark"  data-dismiss="modal" class="btn btn-success">THIS ASSESMENT IS CORRECT&nbsp;&nbsp<span class="glyphicon glyphicon-ok"></span></button>
+                        <button type="button"   class="btn btn-danger" id="close_protective_btn" data-dismiss="modal">MAKE A DIFFERENT SELECTION&nbsp;&nbsp<span class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                </div>               
+            </div>
+        </div>
+        <!-- End Modal For Details about Portective Marking -->
+
+        <!-- Modal For Details about -->
+        <div id="sourcheOfEval" class="modal fade" role="dialog">
+            <div class="modal-dialog" style="width: 100% !important">            
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Recheck Protective Markings</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h4>Protective Markings</h4>
+                            </div>
+                            <div class="col-md-8">
+                                <?php
+                                $options = array();
+                                foreach ($protectivemark as $value) {
+                                    $options[$value->id] = $value->name;
+                                }
+                                echo form_dropdown('pm', $options, '', 'id="selected_pm" style = "width: 594px"');
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>              
+            </div>
+        </div>
+        <!-- End Modal For Details about -->
+
     </body>
     <div class="loader"></div>
 </html>
