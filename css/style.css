@@ -94,6 +94,7 @@ nav{
 .error{
   background-color: red;
   color: white;
+  margin-bottom: 5px;
 }
 
 #initials{
@@ -686,6 +687,12 @@ ul#review_page_p_marking li {
     padding: 20px;
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
+}
+
+hr{
+    border: 0;
+    border-bottom: 2px dashed #fff;
+    background: #e20909;
 }
 
 /* The Close Button */

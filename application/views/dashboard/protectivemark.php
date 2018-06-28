@@ -107,13 +107,16 @@
             </div>
             <div  class="col-md-13">
                 <?php
-                if( !empty($this->session->flashdata('handlingcode')) ){
-                    echo $this->session->flashdata('handlingcode');
+                if( !empty($this->session->flashdata('ProtectiveMarking')) ){
+                    echo $this->session->flashdata('ProtectiveMarking');
                 }
                 ?>                    
                 <div class="well">
                     <b>Completion Note:</b> You must review each line of text and apply a Protective Marking to the overall record. This Protective Marking will apply to all of the text and will directly impact whether information can be Disseminated. You must ensure you take appropriate care when apply the correct Protective Marking.
                 </div>
+                <?php
+                foreach ($text as $info) {
+                ?>
                 <div class="col-md-9 handling-heading">
                     <h4>SUMMARY OF RECORD:</h4>
                 </div>
@@ -123,20 +126,18 @@
                 </div>
 
                 <?= form_open('submitprotectivemark/'); ?>
-                <input type="hidden" name="hid" value="<?= $text->hid ?>">
                 <div id="container_handling_code">
                     <div id="text_area" class="col-md-10">
-                        <textarea id="" name="summary" rows="5" style="width:100%" disabled><?= $text->summary ?></textarea>
+                        <textarea id="" name="summary" rows="5" style="width:100%" disabled><?= $info->summary ?></textarea>
                     </div>
                     <div id="grading" class="col-md-2">
                         <h4>GRADING</h4>
                         <table  class="table grade-table table-bordered">
                             <tbody id="grading-body">
                                 <tr>
-                                    <td><?= $text->src_eval ?></td>
-                                    <td><?= $text->inf_int_eval ?></td>
-                                    <td><?= $text->code ?></td>
-                                    <input type="hidden" id="text_id" name="textID" value="<?= $text->id ?>">
+                                    <td><?= $info->src_eval ?></td>
+                                    <td><?= $info->inf_int_eval ?></td>
+                                    <td><?= $info->code ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -149,8 +150,12 @@
                     <div id="container_handling_code">                    
                     </div>
                     <div id="text_area" class="col-md-10">
-                        <textarea id="" name="instruction" rows="5" style="width:100%" disabled><?= $text->instruction ?></textarea>
+                        <textarea id="" name="instruction" rows="5" style="width:100%" disabled><?= $info->instruction ?></textarea>
+                        <hr>
                     </div>
+                    <?php
+                    }
+                    ?>
                     <div class="col-md-10 handling-heading">
                         <h4>PROTECTIVE MARKING:</h4>
                     </div>
@@ -178,7 +183,7 @@
                     <div class="form-group final-button">
                         <div class="row">
                             <div class="col-md-7">
-                                <button type="submit" id="save_protective_code_data" class="btn btn-success">SAVE INFORMATION AND REVIEW (<?= $remaining; ?>)&nbsp;&nbsp<span class="glyphicon glyphicon-ok"></span></button>
+                                <button type="submit" id="save_protective_code_data" class="btn btn-success">SAVE INFORMATION AND CONTINUE &nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
                             </div>
                             <div class="col-md-3">
                                 <a href="#" class="btn btn-danger">CANCEL&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a>

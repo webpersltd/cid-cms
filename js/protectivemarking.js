@@ -47,7 +47,7 @@ var protecTiveMark={
 
 $(document).ready(function(){
     $(".p_mark").click(function(){
-        $(this).closest(".col-md-10").children(".error").remove();
+        $(".error").remove();
         var clicked           = $(this).attr("flag");
         var data              = protecTiveMark[clicked];
         var aboutToBeSelected = protecTiveMark[clicked][1];
