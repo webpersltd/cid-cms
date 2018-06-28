@@ -23,67 +23,40 @@ class ProtectiveMarking extends CI_Controller {
 	{
 		$data['user'] = $this->ion_auth->user()->row();
 		$record_id    = $_SESSION['record_id'];
-		$handling_id  = $this->Protective_Marking_Model->next($record_id);
 
-		if(!is_null($handling_id)){
-			$data['text']           = $this->Protective_Marking_Model->get_text_info($record_id, $handling_id);
-			$remaining              = $this->Protective_Marking_Model->remaining($record_id, $handling_id);
-			$data['protectivemark'] = $this->Protective_Marking_Model->get_protective_mark();
-			if($remaining == 0){
-				redirect('review/','refresh');
-			}
-			$data['remaining'] = $remaining - 1;
-		}else{
-			$data['text']           = $this->Protective_Marking_Model->get_text_info($record_id);
-			$data['protectivemark'] = $this->Protective_Marking_Model->get_protective_mark();
-			$data['remaining']      = $this->Protective_Marking_Model->remaining($record_id)-1;
-		}
+		$data['text']           = $this->Protective_Marking_Model->get_info($record_id);
+		$data['protectivemark'] = $this->Protective_Marking_Model->get_protective_mark();
 
 		$this->load->view('dashboard/protectivemark', $data);
 	}
 
 	public function create(){
 		$config = array(
-		        array(
-		                'field'  => 'hid',
-		                'label'  => 'Handling Code',
-		                'rules'  => 'required',
-		                'errors' => array(
-		                        'required' => 'Sorry, you can\'t submit the form without Handling ID.',
-		                ),
-		        ),
-		        array(
-		                'field' => 'pi',
-		                'label' => 'Protective Marking',
-		                'rules' => 'required'
-		        ),
-		        array(
-		                'field' => 'textID',
-		                'label' => 'Text ID',
-		                'rules' => 'required'
-		        )
-		);
+			        array(
+			                'field' => 'pi',
+			                'label' => 'Protective Marking',
+			                'rules' => 'required',
+			                'errors' => array(
+			                        'required' => 'Please Select a Protective Mark for this Record.',
+			                ),
+			        )
+				);
 
 		$this->form_validation->set_rules($config);
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
 		if($this->form_validation->run() == FALSE){
 
-			$this->session->set_flashdata('handlingcode', form_error('hid'));
 			$this->session->set_flashdata('ProtectiveMarking', form_error('pi'));
-			$this->session->set_flashdata('textID', form_error('textID'));
-
             redirect('protectivemark/','refresh');
 
         }else{
         	$data['record_id']     = $_SESSION['record_id'];
-        	$data['handling_id']   = $this->input->post('hid');
         	$data['protective_id'] = $this->input->post('pi');
-        	$data['text_id']       = $this->input->post('textID');
 
         	$this->Protective_Marking_Model->record_protective_marking($data);
 
-        	redirect('protectivemark/','refresh');
+        	redirect('review/','refresh');
         }
 	}
 }

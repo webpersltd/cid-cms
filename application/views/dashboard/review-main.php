@@ -87,31 +87,6 @@
                 <div class="well">
                     <b>Completion Note:</b> You must carefully review the Source Evaluation and Information Evaluation for each entry.
                 </div>
-                <div class="col-md-7" id="pm-heading">
-                    <h4>THE PROTECTIVE MARKING FOR THIS RECORD IS SET AS:</h4>
-                </div>
-                <div class="col-md-1" id="pm-title">
-                    <b id="p_mark_name"><?= $info->name; ?></b>
-                </div>
-                <div class="col-md-10" id="pm-confirm">
-                    <div class="col-md-7 handling-heading" style="margin-right: -57px">
-                        <h4>IS THIS PROTECTIVE MARKING CORRECT?</h4>
-                    </div>
-                    <div class="col-md-2 decission" style="padding-left: 0px">
-                        <?php
-                        if( isset($info->pm_reviewed) && $info->pm_reviewed == 1 ){
-                        ?>
-                        <h4>YES</h4>
-                        <?php
-                        }else{
-                        ?>
-                        <button type="button" id="pm_confirm_ok" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button>
-                        <button id="recheck_pro" type="button" class="btn btn-default" data-toggle="modal" data-target="#pro_mark"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
-                        <?php
-                        }
-                        ?>
-                    </div>
-                </div>
                 <div class="col-md-9 handling-heading">
                     <h4>SUMMARY OF RECORD:</h4>
                 </div>
@@ -147,112 +122,66 @@
                 <div class="col-md-10 handling-heading" style="margin-right: -57px">
                     <h4>I HAVE REVIEWED THIS ENTRY AND BELIEVE THAT IT HAS BEEN EVALUATED CORRECTLY:</h4>
                 </div>
-                <div class="col-md-2 decission2" style="padding-left: 0px">
-                    <?php
-                    if( isset($info->details_reviewed) && $info->details_reviewed == 1){
-                    ?>
-                    <h4>YES</h4>
-                    <?php
-                    }else{
-                    ?>
+                <div class="col-md-2 decission" style="padding-left: 0px">
                     <button type="button" id="review_info_ok" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button>
-                    <button type="button" id="changeDetails" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
-                    <?php
-                    }
-                    ?>
+                    <button type="button" id="review_eval" class="btn btn-default" data-toggle="modal" data-target="#evaluation_info"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
                 </div>
                 <input type="hidden" name="tid" value="<?= $info->txtID ?>">
             </div>
         </div>
 
         <!-- Modal for text recheck -->
-        <div class="modal fade" id="pro_mark" role="dialog">
-            <div class="modal-dialog" style="width: 100% !important">            
+        <div class="modal fade" id="evaluation_info" role="dialog">
+            <div class="modal-dialog" style="width: 90% !important">            
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Recheck Protective Markings</h4>
+                        <h4 class="modal-title">Review the Source Evaluation and Information Evaluation</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-5">
-                                <h4>Protective Markings</h4>
+                                <h4>Source Evaluation</h4>
                             </div>
                             <div class="col-md-8">
                                 <?php
-                                $options = array();
-                                foreach ($protectivemark as $value) {
-                                    $options[$value->id] = $value->name;
-                                }
-                                echo form_dropdown('pm', $options, '', 'id="selected_pm" style = "width: 594px"');
+                                $options = array(
+                                    'A' => 'A - Always reliable',
+                                    'B' => 'B - Mostly reliable',
+                                    'C' => 'C - Unreliable',
+                                    'D' => 'D - Untested Source'
+                                );
+                                echo form_dropdown('pm', $options, '', 'id="src_of_eval" style = "width: 500px"');
+                                ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h4>Information Evaluation</h4>
+                            </div>
+                            <div class="col-md-8">
+                                <?php
+                                $options = array(
+                                    '1' => '1 - Known to be true without reservation',
+                                    '2' => '2 - Known personally to source but not the person reporting',
+                                    '3' => '3 - Not known personally to the source, but corroborated',
+                                    '4' => '4 - Cannot be judged',
+                                    '5' => '5 - Suspected to be false'
+                                );
+                                echo form_dropdown('pm', $options, '', 'id="inf_of_eval" style = "width: 500px"');
                                 ?>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button id="update_info" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>              
             </div>
         </div>
         <!-- End Modal for text recheck -->
-
-        <!-- Modal For Details about Portective Marking -->
-        <div id="modalDetails" class="modal fade" role="dialog">
-            <div class="modal-dialog" style="width: 100% !important;">            
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 id="p_mark_head" class="modal-title"></h4>
-                    </div>
-                    <div  class="modal-body">
-                        <h5 style="font-weight:bold">In your Assestment, the accidental loss or disclosure of this information may :</h5>
-                        <ul id="p_mark_body">                            
-                        </ul>
-                        <h5 style="font-weight:bold"><span style="color:red">WARNING : </span>&nbsp;&nbsp;APPLYING THIS PROTECTIVE MARKING WILL SIGNIFICANTLY IMPEDE WHO THE INFORMATION CAN BE SHARED WITH AND HOW </h5>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="update_pro_mark"  data-dismiss="modal" class="btn btn-success">THIS ASSESMENT IS CORRECT&nbsp;&nbsp<span class="glyphicon glyphicon-ok"></span></button>
-                        <button type="button"   class="btn btn-danger" id="close_protective_btn" data-dismiss="modal">MAKE A DIFFERENT SELECTION&nbsp;&nbsp<span class="glyphicon glyphicon-remove"></span></button>
-                    </div>
-                </div>               
-            </div>
-        </div>
-        <!-- End Modal For Details about Portective Marking -->
-
-        <!-- Modal For Details about -->
-        <div id="sourcheOfEval" class="modal fade" role="dialog">
-            <div class="modal-dialog" style="width: 100% !important">            
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Recheck Protective Markings</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <h4>Protective Markings</h4>
-                            </div>
-                            <div class="col-md-8">
-                                <?php
-                                $options = array();
-                                foreach ($protectivemark as $value) {
-                                    $options[$value->id] = $value->name;
-                                }
-                                echo form_dropdown('pm', $options, '', 'id="selected_pm" style = "width: 594px"');
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                </div>              
-            </div>
-        </div>
-        <!-- End Modal For Details about -->
 
     </body>
     <div class="loader"></div>

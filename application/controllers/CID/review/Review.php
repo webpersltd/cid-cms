@@ -12,8 +12,6 @@ class Review extends CI_Controller {
     		redirect('login', 'refresh');
     	}
 
-    	//$_SESSION['record_id'] = 2;//This line will have to customize after completing the project
-
     	$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
 		$this->load->model('Review_model');
@@ -32,9 +30,7 @@ class Review extends CI_Controller {
 		$data['user']           = $this->ion_auth->user()->row();
 		$record_id              = $_SESSION['record_id'];
 		$data['info']           = $this->Review_model->get_details($record_id);
-		//$data['final_review']   = $this->Review_model->get_details($record_id);
 		$data['total_text']     = $this->Review_model->total_text($record_id);
-		$data['protectivemark'] = $this->Protective_Marking_Model->get_protective_mark();
 
 		$get_remaining_text     = $this->Review_model->count_final_review_data($record_id);
 		$data['remaining_text'] = $get_remaining_text + 1;
@@ -44,33 +40,24 @@ class Review extends CI_Controller {
 
 	public function reviewProcess(){
 		if (!$this->input->is_ajax_request()){
-		   exit('No direct script access allowed');
+		   show_404();
 		}else{
 			$data            = array();			
 			$data['text_id'] = $this->input->post('textid');
-			$infoFor         = $this->input->post('updateData');
 
-			$this->Review_model->finalReview($data, $infoFor);
+			$this->Review_model->finalReview($data);
 
-			$review        = $this->Review_model->get_details($_SESSION['record_id']);
-			$checkFinished = $this->Review_model->check_finish($data['text_id']);
-
+			$review               = $this->Review_model->get_details($_SESSION['record_id']);
 			$remaining_text       = $this->Review_model->count_final_review_data($_SESSION['record_id']);  
-			$remaining_text_count = $remaining_text+1;
+			$remaining_text_count = $remaining_text + 1;
 
 			if(is_null($review)){
 				$finalOutput = array(
 					'summaryInfo'    => "none"
 				);
 				echo json_encode($finalOutput);
-			}else if($checkFinished == 0){
-				$finalOutput = array(
-					'summaryInfo'    => "notfinished"
-				);
-				echo json_encode($finalOutput);
 			}else{
 				$finalOutput = array(
-					'pmname'        => $review->name,
 					'summaryInfo'   => $review->summary,
 					'src_eval'      => $review->src_eval,
 					'inf_int_eval'  => $review->inf_int_eval,
@@ -84,18 +71,28 @@ class Review extends CI_Controller {
 		}
 	}
 
-	public function recheck_pro_mark(){
-		$textID = $this->input->post('textID');
-		$data   = $this->Review_model->get_pro_mark($textID);
-		echo json_encode($data);
+	public function get_eval(){
+		if (!$this->input->is_ajax_request()){
+			show_404();
+		}else{
+			$tid  = $this->input->post('txtID');
+			$eval = $this->Review_model->get_txt_eval($tid);
+			echo json_encode($eval);
+		}
 	}
 
-	public function update_pro_mark(){
-		$protective_mark = $this->input->post('protectiveMark');
-		$tid             = $this->input->post('tid');
+	public function update_eval(){
+		if (!$this->input->is_ajax_request()){
+			show_404();
+		}else{
+			$tid = $this->input->post('txtID');
+			$src = $this->input->post('src');
+			$inf = $this->input->post('inf');
 
-		$this->Review_model->update_pro_mark($protective_mark, $tid);
-		$data = $this->Review_model->get_pro_mark($tid);
-		echo json_encode($data);
+			$this->Review_model->update_txt_eval($tid, $src, $inf);
+			$eval = $this->Review_model->get_txt_eval($tid);
+
+			echo json_encode($eval);
+		}
 	}
 }
