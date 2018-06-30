@@ -21,7 +21,7 @@ class Review extends CI_Controller {
 		$total_text       = $this->Review_model->total_text($_SESSION['record_id']);
 
 		if($remaining_review==$total_text){
-			redirect('dissemination/','refresh');
+			redirect('review_protective_mark/','refresh');
 		}
     }
 
