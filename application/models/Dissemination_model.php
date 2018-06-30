@@ -9,7 +9,7 @@ class Dissemination_model extends CI_Model {
         $this->db->select('*, texts.id as txtID');
         $this->db->from('texts');
         $this->db->join('handling_codes', 'handling_codes.text_id = texts.id');
-        $this->db->join('protective_markings', 'protective_markings.handling_id = handling_codes.id');
+        $this->db->join('protective_markings', 'protective_markings.record_id = handling_codes.record_id');
         $this->db->join('protective_marking_lists', 'protective_marking_lists.id = protective_markings.protective_id');
         $this->db->where('texts.record_id', $record_id);
         

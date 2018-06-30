@@ -7,7 +7,7 @@ $(document).ready(function(){
             {textid: tid}, 
             function(result){
                 if(result.summaryInfo=="none"){
-                    window.location.href = "http://localhost/CID/dissemination/";
+                    window.location.href = "http://localhost/CID/review_protective_mark/";
                 }else{
                     $("#summary").text(result.summaryInfo);
                     $("#src_eval").text(result.src_eval);
@@ -53,6 +53,39 @@ $(document).ready(function(){
                 $("#src_eval").text(result.src_eval);
                 $("#inf_int_eval").text(result.inf_int_eval);
             }, "json"
+        );
+    });
+
+    $("#recheck_pro").click(function(){
+        var url = "http://localhost/CID/collectProMark/";
+        $.post(
+            url, 
+            function(result){
+                $("#pro_marking").val(result.pid);
+            }, "json"
+        );
+    });
+
+    $("#update_pro_mark").click(function(){
+        var pro_mark = $("#pro_marking").val();
+        var url      = "http://localhost/CID/updateProMark/";
+        $.post(
+            url,
+            {proMark: pro_mark}, 
+            function(result){
+                $('#p_mark_name').text(result.name);
+            }, "json"
+        );
+    });
+
+    $("#pm_confirm_ok").click(function(){
+        var url = "http://localhost/CID/confirmProMark/";
+        $.post(
+            url, 
+            function(result){
+                $('#p_mark_name').text(result.name);
+                window.location.href = "http://localhost/CID/dissemination/";
+            }
         );
     });
 

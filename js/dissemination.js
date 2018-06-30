@@ -9,7 +9,7 @@ $(document).ready(function(){
             {textid: tid, updateData: htmlID}, 
             function(result){
                 if(result.summaryInfo=="none"){
-                    window.location.href = "http://localhost/CID/disseminationFinal";
+                    window.location.href = "http://localhost/CID/disseminationFinal/";
                 }else if(result.summaryInfo == "notfinished"){
                     if(htmlID == "handling_code_ok"){
                         $('.decission1').html("<h4>YES</h4>");

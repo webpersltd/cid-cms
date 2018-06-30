@@ -12,8 +12,6 @@ class DisseminationFinal extends CI_Controller {
     		redirect('login', 'refresh');
     	}
 
-    	$_SESSION['record_id'] = 2;//This line will have to customize after completing the project
-
     	$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
 		$this->load->model('Dissemination_model');
