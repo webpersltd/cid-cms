@@ -12,11 +12,10 @@ class Dissemination extends CI_Controller {
     		redirect('login', 'refresh');
     	}
 
-    	//$_SESSION['record_id'] = 2;//This line will have to customize after completing the project
-
     	$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
 		$this->load->model('Dissemination_model');
+		$this->load->model('Protective_Marking_Model');
 
 		$remaining_review = $this->Dissemination_model->count_dissemination_data($_SESSION['record_id']);
 		$total_text       = $this->Dissemination_model->total_text($_SESSION['record_id']);
@@ -28,10 +27,11 @@ class Dissemination extends CI_Controller {
 
     public function index()
 	{
-		$record_id             = $_SESSION['record_id']; 
-		$data['user']          = $this->ion_auth->user()->row();
-		$data['info']          = $this->Dissemination_model->get_details($record_id);
-		$data['total_text']    = $this->Dissemination_model->total_text($record_id);
+		$record_id                     = $_SESSION['record_id']; 
+		$data['user']                  = $this->ion_auth->user()->row();
+		$data['info']                  = $this->Dissemination_model->get_details($record_id);
+		$data['total_text']            = $this->Dissemination_model->total_text($record_id);
+		$data['protective_mark_lists'] = $this->Protective_Marking_Model->get_all_protective_marks();
 
 		$get_remaining_text     = $this->Dissemination_model->count_dissemination_data($record_id);
 		$data['remaining_text'] = $get_remaining_text+1;
@@ -79,6 +79,76 @@ class Dissemination extends CI_Controller {
 				);
 				echo json_encode($finalOutput);
 			}
+		}
+	}
+
+	public function get_selected_handling_code(){
+		if(!$this->input->is_ajax_request()){
+			show_404();
+		}else{
+			$txtID        = $this->input->post('txtID');
+			$handlingCode = $this->Dissemination_model->get_selected_handling_code_for_this_text($txtID);
+			echo $handlingCode;
+		}
+	}
+
+	public function update_handling_code(){
+		if(!$this->input->is_ajax_request()){
+			show_404();
+		}else{
+			$code  = $this->input->post('code');
+			$txtID = $this->input->post('txtID');
+
+			$this->Dissemination_model->update_handling_code_for_this_text($txtID, $code);
+
+			$updated_code = $this->Dissemination_model->get_selected_handling_code_for_this_text($txtID);
+			echo $updated_code;
+		}
+	}
+
+	public function get_handling_instruction(){
+		if(!$this->input->is_ajax_request()){
+			show_404();
+		}else{
+			$tid = $this->input->post('txtID');
+			$handling_instruction = $this->Dissemination_model->get_handling_instruction_for_this_text($tid);
+			echo $handling_instruction;
+		}
+	}
+
+	public function update_handling_instruction(){
+		if(!$this->input->is_ajax_request()){
+			show_404();
+		}else{
+			$tid = $this->input->post('txtID');
+			$hi  = trim($this->input->post('instruction'));
+			if($hi == ""){
+				echo "empty";
+			}else{
+				$this->Dissemination_model->update_handling_instruction_for_this_text($tid, $hi);
+				$handling_instruction = $this->Dissemination_model->get_handling_instruction_for_this_text($tid);
+				echo $handling_instruction;
+			}
+		}
+	}
+
+	public function get_selected_pro_mark(){
+		if(!$this->input->is_ajax_request()){
+			show_404();
+		}else{
+			$pro_mark = $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id']);
+			echo json_encode($pro_mark);
+		}
+	}
+
+	public function update_pro_mark(){
+		if(!$this->input->is_ajax_request()){
+			show_404();
+		}else{
+			$pro_mark = $this->input->post('proMark');
+			$this->Protective_Marking_Model->update_pro_mark($pro_mark);
+			$new_pro_mark = $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id']);
+			echo json_encode($new_pro_mark);
 		}
 	}
 }

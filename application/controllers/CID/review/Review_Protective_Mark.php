@@ -22,7 +22,7 @@ class Review_Protective_Mark extends CI_Controller {
 		$data['user']                  = $this->ion_auth->user()->row();
 		$record_id                     = $_SESSION['record_id'];
 		$data['info']                  = $this->Protective_Marking_Model->get_info($record_id);
-		$data['protective_mark_lists'] = $this->Protective_Marking_Model->get_protective_mark($record_id);
+		$data['protective_mark_lists'] = $this->Protective_Marking_Model->get_all_protective_marks();
 		$data['p_mark']                = $this->Protective_Marking_Model->get_protective_marking_for_the_record($record_id);
 		$this->load->view('dashboard/review_protective_marking', $data);
 	}

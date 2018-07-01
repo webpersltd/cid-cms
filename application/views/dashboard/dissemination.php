@@ -23,7 +23,6 @@
                 </div>
                   
                 <!-- Collect the nav links, forms, and other content for toggling -->
-
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href=""></a></li>
@@ -75,8 +74,8 @@
                     <a class="breadcrumb-item" href="#">TEXT&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item" href="#">HANDLING CODE&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item" href="#">PROTECTIVE MARKING&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
-                    <a class="breadcrumb-item" id="remaining" href="#">REVIEW&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a></a>
-                    <a class="breadcrumb-item active" href="#">DISSEMINATION <?= $remaining_text ?>/<?= $total_text ?></a>
+                    <a class="breadcrumb-item" href="#">REVIEW&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a></a>
+                    <a class="breadcrumb-item active" id="remaining" href="#">DISSEMINATION <?= $remaining_text ?>/<?= $total_text ?></a>
                 </nav>
             </div>
 
@@ -88,7 +87,7 @@
                     <h4 style="color: red">THE FOLLOWING PROTECTIVE MARKING HAS BEEN APPLIED TO THIS RECORD:</h4>
                 </div>
                 <div class="col-md-1" id="pm-title" style="width: 301px !important">
-                    <b><?= $info->name ?></b>
+                    <b id="p_mark_name"><?= $info->name ?></b>
                 </div>
                 <div class="col-md-9 handling-heading">
                     <h4>SUMMARY OF RECORD:</h4>
@@ -133,11 +132,12 @@
                     }else{
                     ?>
                     <button type="button" id="handling_code_ok" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button>
-                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
+                    <button id="review_handling_code" type="button" class="btn btn-default" data-toggle="modal" data-target="#handling_code"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
                     <?php
                     }
                     ?>
                 </div>
+
                 <div class="col-md-10 handling-heading" style="margin-right: -57px; margin-top: 7px;">
                     <h4>ARE ADDITIONAL DETAILED HANDLING INSTRUCTIONS REQUIRED:</h4>
                 </div>
@@ -149,12 +149,13 @@
                     <?php
                     }else{
                     ?>
-                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button>
+                    <button type="button" id="review_handling_instruction" class="btn btn-default" data-toggle="modal" data-target="#handling_instruction"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button>
                     <button type="button" id="handling_instruction_ok" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
                     <?php
                     }
                     ?>
                 </div>
+
                 <div class="col-md-10 handling-heading" style="margin-right: -57px; margin-top: 7px;">
                     <h4>CAN THIS INFORMATION BE DISSEMINATED IN LINE WITH THE PROTECTIVE MARKING APPLIED:</h4>
                 </div>
@@ -167,13 +168,104 @@
                     }else{
                     ?>
                     <button type="button" id="pro_mark_ok" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: green;"></span></button>
-                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
+                    <button id="recheck_pro" data-toggle="modal" data-target="#pro_mark" type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" style="color: red;"></span></button>
                     <?php
                     }
                     ?>
                 </div>
                 <input type="hidden" name="tid" value="<?= $info->txtID ?>">
             </div>
+
+            <!-- Modal for handling code -->
+            <div class="modal fade" id="handling_code" style="z-index: 999999" role="dialog">
+                <div class="modal-dialog" style="width: 100% !important">            
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Review the Handling Code</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <?php
+                                    $options = array(
+                                            '1' => '1 - Permits dissemination within Customs and to other law inforcement agencies in Bangladesh as specified.',
+                                            '2' => '2 - Permits dissemination to Bangladesh non prosecuting parties',
+                                            '3' => '3 - Permits dissemination to foreign law agencies',
+                                            '4' => '4 - Permits dissemination within Bangladesh Customs only: specify reasons and internal recipient(s)',
+                                            '5' => '5 - Permits dissemination, but receiving agency to observe conditions as specified'
+                                    );
+                                    echo form_dropdown('pm', $options, '', 'id="selected_hc" style = "width: 600px"');
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="update_hc" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>              
+                </div>
+            </div>
+            <!-- End Modal for handling code -->
+
+            <!-- Modal for handling instruction -->
+            <div class="modal fade" id="handling_instruction" style="z-index: 999999" role="dialog">
+                <div class="modal-dialog" style="width: 100% !important">            
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Review the Handling Instruction</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <textarea id="review_instruction" name="instruction" rows="5" style="width:100%" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="update_hi" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>              
+                </div>
+            </div>
+            <!-- End Modal for handling instruction -->
+
+            <!-- Modal for Protective Marking -->
+            <div class="modal fade" id="pro_mark" style="z-index: 999999" role="dialog">
+                <div class="modal-dialog" style="width: 80% !important">            
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Review the Protective Mark</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <?php
+                                    $options = array();
+                                    foreach ($protective_mark_lists as $value) {
+                                        $options[$value->id] = $value->name;
+                                    }
+                                    echo form_dropdown('pm', $options, '', 'id="pro_marking" style = "width: 480px"');
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="update_pro_mark" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>              
+                </div>
+            </div>
+            <!-- End Modal for Protective Marking -->
+
         </div>
     </body>
     <div class="loader"></div>

@@ -134,4 +134,30 @@ class Dissemination_model extends CI_Model {
         $this->db->update('records');
         return;
     }
+
+    public function get_selected_handling_code_for_this_text($txtID){
+        $this->db->where('text_id', $txtID);
+        $query = $this->db->get('handling_codes');
+        return $query->row()->code;
+    }
+
+    public function update_handling_code_for_this_text($txtID, $code){
+        $this->db->set('code', $code);
+        $this->db->where('text_id', $txtID);
+        $this->db->update('handling_codes');
+        return;
+    }
+
+    public function get_handling_instruction_for_this_text($txtID){
+        $this->db->where('text_id', $txtID);
+        $query = $this->db->get('handling_codes');
+        return $query->row()->instruction;
+    }
+
+    public function update_handling_instruction_for_this_text($tid, $hi){
+        $this->db->set('instruction', $hi);
+        $this->db->where('text_id', $tid);
+        $this->db->update('handling_codes');
+        return; 
+    }
 }
