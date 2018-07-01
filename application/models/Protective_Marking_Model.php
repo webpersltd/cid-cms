@@ -13,7 +13,7 @@ class Protective_Marking_Model extends CI_Model {
         return $query->result();
     }
 
-    public function get_protective_mark(){
+    public function get_all_protective_marks(){
     	$query = $this->db->get('protective_marking_lists');
     	return $query->result();
     }

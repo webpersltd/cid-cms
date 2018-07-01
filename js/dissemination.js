@@ -35,15 +35,91 @@ $(document).ready(function(){
         );
     });
 
+    $(document).on("click","#review_handling_code",function(){
+        var id  = $("input[name=tid]").val();
+        var url = "http://localhost/CID/collectHandlingCode/";
+        $.post(
+            url, 
+            {txtID: id}, 
+            function(result){
+                $("#selected_hc").val(result);
+            }
+        );
+    });
+
+    $(document).on("click","#update_hc",function(){
+        var cd  = $("#selected_hc").val();
+        var id  = $("input[name=tid]").val();
+        var url = "http://localhost/CID/reviewHandlingCode/";
+        $.post(
+            url, 
+            {code: cd, txtID: id}, 
+            function(result){
+                $("#code").text(result);
+            }
+        );
+    });
+
+    $(document).on("click","#review_handling_instruction",function(){
+        var id  = $("input[name=tid]").val();
+        var url = "http://localhost/CID/reviewHandlingInstruction/";
+        $.post(
+            url, 
+            {txtID: id}, 
+            function(result){
+                $("#review_instruction").val(result);
+            }
+        );
+    });
+
+    $(document).on("click","#update_hi",function(){
+        var id  = $("input[name=tid]").val();
+        var ins = $("#review_instruction").val();
+        var url = "http://localhost/CID/updateHandlingInstruction/";
+        $.post(
+            url, 
+            {txtID: id, instruction: ins}, 
+            function(result){
+                if(result == "empty"){
+                    alert("Sorry, The Handling Instruction Field is Required.");
+                }else{
+                    $("#instruction").val(result);
+                }
+            }
+        );
+    });
+
+    $(document).on("click", "#recheck_pro", function(){
+        var url = "http://localhost/CID/collectProMark/";
+        $.post(
+            url, 
+            function(result){
+                $("#pro_marking").val(result.pid);
+            }, "json"
+        );
+    });
+
+    $(document).on("click", "#update_pro_mark", function(){
+        var pro_mark = $("#pro_marking").val();
+        var url      = "http://localhost/CID/updateProMark/";
+        $.post(
+            url,
+            {proMark: pro_mark}, 
+            function(result){
+                $('#p_mark_name').text(result.name);
+            }, "json"
+        );
+    });
+
+    $(document).on({
+        ajaxStart: function() { $(".loader").show(); },
+        ajaxStop:  function() { $(".loader").hide(); }    
+    });
+
     function setCharAt(str,index,chr) {
         if(index > str.length-1) return str;
         return str.substr(0,index) + chr + str.substr(index+1);
     }
-
-    $(document).on({
-        ajaxStart: function() { $(".loader").show(); },
-        ajaxStop: function() { $(".loader").hide(); }    
-    });
 
     $("#disseminated_to").autocomplete({
         source: "http://localhost/CID/getName",

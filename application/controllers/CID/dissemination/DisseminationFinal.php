@@ -67,7 +67,7 @@ class DisseminationFinal extends CI_Controller {
         	$this->Dissemination_model->final_submission($data);
 
         	unset($_SESSION['record_id']);
-
+        	
         	redirect('initials','refresh');
         }
 	}
