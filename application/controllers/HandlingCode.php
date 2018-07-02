@@ -105,7 +105,7 @@ class HandlingCode extends CI_Controller {
 
 	public function review_done(){
 		if (!$this->input->is_ajax_request()) {
-		   exit('No direct script access allowed');
+		   show_404();
 		}else{			
 			$handlingcodeID = $this->input->post('handlingCodeID');
 
@@ -133,19 +133,27 @@ class HandlingCode extends CI_Controller {
 	}
 
 	public function recheck_handling_code(){
-		$handlingCodeID = $this->input->post('handlingCodeID');
-		$data           = $this->Handling_code_model->get_handling_code($handlingCodeID);
-		echo json_encode($data);
+		if (!$this->input->is_ajax_request()) {
+		   show_404();
+		}else{
+			$handlingCodeID = $this->input->post('handlingCodeID');
+			$data           = $this->Handling_code_model->get_handling_code($handlingCodeID);
+			echo json_encode($data);
+		}
 	}
 
 	public function update_handling_code(){
-		$handlingInstruction = $this->input->post('handlingInstruction');
-		$handlingCode        = $this->input->post('handlingCode');
-		$handlingCodeID      = $this->input->post('hid');
+		if (!$this->input->is_ajax_request()) {
+		   show_404();
+		}else{
+			$handlingInstruction = $this->input->post('handlingInstruction');
+			$handlingCode        = $this->input->post('handlingCode');
+			$handlingCodeID      = $this->input->post('hid');
 
-		$this->Handling_code_model->update_handling_code($handlingCode, $handlingInstruction, $handlingCodeID);
-		$data = $this->Handling_code_model->get_handling_code($handlingCodeID);
-		echo json_encode($data);
+			$this->Handling_code_model->update_handling_code($handlingCode, $handlingInstruction, $handlingCodeID);
+			$data = $this->Handling_code_model->get_handling_code($handlingCodeID);
+			echo json_encode($data);
+		}
 	}
 
 }

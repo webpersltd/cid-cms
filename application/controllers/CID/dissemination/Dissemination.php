@@ -68,7 +68,6 @@ class Dissemination extends CI_Controller {
 				echo json_encode($finalOutput);
 			}else{
 				$finalOutput = array(
-					'pmname'        => $review->name,
 					'summaryInfo'   => $review->summary,
 					'src_eval'      => $review->src_eval,
 					'inf_int_eval'  => $review->inf_int_eval,

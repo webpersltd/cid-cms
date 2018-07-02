@@ -25,7 +25,7 @@ class ProtectiveMarking extends CI_Controller {
 		$record_id    = $_SESSION['record_id'];
 
 		$data['text']           = $this->Protective_Marking_Model->get_info($record_id);
-		$data['protectivemark'] = $this->Protective_Marking_Model->get_protective_mark();
+		$data['protectivemark'] = $this->Protective_Marking_Model->get_all_protective_marks();
 
 		$this->load->view('dashboard/protectivemark', $data);
 	}
