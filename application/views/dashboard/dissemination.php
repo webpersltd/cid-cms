@@ -258,13 +258,35 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="update_pro_mark" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </div>              
                 </div>
             </div>
             <!-- End Modal for Protective Marking -->
+
+            <!-- Modal For Details about Portective Marking -->
+            <div id="modalDetails" class="modal fade" role="dialog" style="z-index: 999999">
+                <div class="modal-dialog" style="width: 100% !important;">            
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 id="p_mark_head" class="modal-title"></h4>
+                        </div>
+                        <div  class="modal-body">
+                            <h5 style="font-weight:bold">In your Assestment, the accidental loss or disclosure of this information may :</h5>
+                            <ul id="p_mark_body">                            
+                            </ul>
+                            <h5 style="font-weight:bold"><span style="color:red">WARNING : </span>&nbsp;&nbsp;APPLYING THIS PROTECTIVE MARKING WILL SIGNIFICANTLY IMPEDE WHO THE INFORMATION CAN BE SHARED WITH AND HOW </h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="update_pro_mark"  data-dismiss="modal" class="btn btn-success">THIS ASSESMENT IS CORRECT&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
+                            <button type="button"   class="btn btn-danger" id="close_protective_btn" data-dismiss="modal">MAKE A DIFFERENT SELECTION&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></button>
+                        </div>
+                    </div>               
+                </div>
+            </div>
+            <!-- End Modal For Details about Portective Marking -->
 
         </div>
     </body>
