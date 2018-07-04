@@ -17,10 +17,21 @@ class Review extends CI_Controller {
 		$this->load->model('Review_model');
 		$this->load->model('Protective_Marking_Model');
 
+		$protective_marking_done = 0;
+
+		if(isset($_SESSION['record_id'])){
+			$protective_marking_done = $this->Review_model->protective_marking_done($_SESSION['record_id']);
+		}
+		
+    	if($protective_marking_done == 0){
+    		$this->session->set_flashdata('warning', "Please select a protective mark to process further.");
+    		redirect('protectivemark/','refresh');
+    	}
+
 		$remaining_review = $this->Review_model->count_final_review_data($_SESSION['record_id']);
 		$total_text       = $this->Review_model->total_text($_SESSION['record_id']);
 
-		if($remaining_review==$total_text){
+		if($remaining_review == $total_text){
 			redirect('review_protective_mark/','refresh');
 		}
     }

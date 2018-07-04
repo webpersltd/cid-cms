@@ -40,5 +40,17 @@ class Protective_Marking_Model extends CI_Model {
         $this->db->where('record_id', $_SESSION['record_id']);
         $this->db->update('protective_markings');
         return;
+    }
+
+    public function check_handling_code_review_done($record_id){
+        $this->db->where('reviewed', 0);
+        $this->db->where('record_id', $record_id);
+        $num_rows = $this->db->count_all_results('handling_codes');
+        
+        if($num_rows == 0){
+            return true;
+        }else{
+            return false;
+        }
     }    
 }

@@ -75,6 +75,17 @@
                     <a class="breadcrumb-item" href="#">REVIEW&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item" href="#">DISSEMINATION</a>
                 </nav>
+
+                <?php
+                if(!empty($this->session->flashdata('warning'))){
+                ?>
+                <div class="alert alert-warning">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Sorry!</strong> <?= $this->session->flashdata('warning') ?>
+                </div>
+                <?php
+                }
+                ?>
                
                 <div class="col-md-10">
                     <p class="well"><span>Completion note : </span>You must ensure that each material fact and statement is entered in a new line of text and the information evaluated </h2>
@@ -181,13 +192,6 @@
                     console.log("No data found");
                 }
             })
-        
-
-
-            
-    
-    
-
         </script>
     </body>
 </html>

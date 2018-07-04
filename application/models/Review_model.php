@@ -68,4 +68,9 @@ class Review_model extends CI_Model {
         $this->db->update('texts');
         return;
     }
+
+    public function protective_marking_done($record_id){
+        $this->db->where('record_id', $record_id);
+        return $this->db->count_all_results('protective_markings');
+    }
 }

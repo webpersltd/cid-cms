@@ -11,12 +11,28 @@ class ProtectiveMarking extends CI_Controller {
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
     	}
-
-    	//$_SESSION['record_id'] = 2;//This line will have to customize after completing the project
 		
 		$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
 		$this->load->model('Protective_Marking_Model');
+
+		$handling_code_exists = 0;
+
+		if(isset($_SESSION['record_id'])){
+			$handling_code_exists = count($this->Protective_Marking_Model->get_info($_SESSION['record_id']));
+		}
+		
+    	if($handling_code_exists == 0){
+    		$this->session->set_flashdata('warning', "Processing Handling Code is Required to Process Protective Marking.");
+    		redirect('handlingcode/','refresh');
+    	}
+
+    	$handling_code_review_done = $this->Protective_Marking_Model->check_handling_code_review_done($_SESSION['record_id']);
+
+    	if(!$handling_code_review_done){
+    		$this->session->set_flashdata('warning', "Please follow the completion note.");
+    		redirect('handlingcodereview/','refresh');
+    	}
     }
 
     public function index()
