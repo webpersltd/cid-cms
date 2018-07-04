@@ -77,4 +77,20 @@ class Handling_code_model extends CI_Model {
         $this->db->update('handling_codes');
         return;
     }
+
+    public function check_all_handling_code_processed($record_id){
+        $this->db->where('record_id', $record_id);
+        $total_text = $this->db->count_all_results('texts');
+
+        $this->db->reset_query();
+
+        $this->db->where('record_id', $record_id);
+        $total_handling_code = $this->db->count_all_results('handling_codes');
+
+        if($total_text == $total_handling_code){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

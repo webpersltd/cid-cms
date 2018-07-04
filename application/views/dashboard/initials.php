@@ -12,6 +12,7 @@
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <div class="row">
                 <div class="col-md-6">
@@ -22,16 +23,23 @@
                     if( !empty($this->session->flashdata('department')) ){
                         echo $this->session->flashdata('department');
                     }
+
+                    $options     = array();
+                    $options[''] = "Select a Department";
+
+                    foreach ($departments->result() as $row)
+                    {
+                        $options[$row->id] = $row->name;
+                    }
+
+                    if(isset($_SESSION['old_value']['department']) && !empty($_SESSION['old_value']['department'])){
+                        $old_value = $_SESSION['old_value']['department'];
+                    }else{
+                        $old_value = '';
+                    }
+
+                    echo form_dropdown('department', $options, $old_value, 'style="width: 417px"');
                     ?>
-                    <select name="department">
-                        <option value="">Select a Department</option>
-                        <?php
-                        foreach ($departments->result() as $row)
-                        {
-                            echo "<option value=".$row->id.">".$row->name."</option>";
-                        }
-                        ?>
-                    </select>
                 </div>
             </div>
         </div>
@@ -47,7 +55,7 @@
                         echo $this->session->flashdata('date_of_report');
                     }
                     ?>
-                     <input type="date" name="date_of_report" value="<?= set_value('date_of_report') ?>">
+                     <input type="date" name="date_of_report" value="<?= (isset($_SESSION['old_value'])) ? $_SESSION['old_value']['date_of_report'] : '' ?>" style="width: 417px">
                 </div>
             </div>
         </div>
@@ -62,21 +70,26 @@
                     if( !empty($this->session->flashdata('information_source')) ){
                         echo $this->session->flashdata('information_source');
                     }
+                    $options     = array();
+                    $options[''] = "Select an Information Source";
+
+                    foreach ($inf_src->result() as $row)
+                    {
+                        $options[$row->id] = $row->name;
+                    }
+
+                    if(isset($_SESSION['old_value']['information_source']) && !empty($_SESSION['old_value']['information_source'])){
+                        $old_value = $_SESSION['old_value']['information_source'];
+                    }else{
+                        $old_value = '';
+                    }
+                    echo form_dropdown('information_source', $options, $old_value, 'id="source-selection", style="width: 417px"');
                     ?>
-                    <select id="source-selection" name="information_source">
-                        <option value="">Select an Information Source</option>
-                        <?php
-                        foreach ($inf_src->result() as $row)
-                        {
-                            echo "<option value=".$row->id.">".$row->name."</option>";
-                        }
-                        ?>
-                    </select>
                 </div>
             </div>
         </div>
 
-        <div id="other-source-input-field" style="<?= (empty($this->session->flashdata('information_source_other'))) ? 'display:none':'display:block'; ?>" class="form-group">
+        <div id="other-source-input-field" style="<?= (!empty($this->session->flashdata('information_source_other')) || (isset($_SESSION['old_value']['information_source_other']) && !empty($_SESSION['old_value']['information_source_other'])) ) ? 'display:block':'display:none'; ?>" class="form-group">
             <div class="row">
                 <div class="col-md-6">
                     INFORMATION SOURCE OTHER :
@@ -87,7 +100,7 @@
                         echo $this->session->flashdata('information_source_other');
                     }
                     ?>
-                    <input type="text" name="information_source_other">
+                    <input type="text" name="information_source_other" value="<?= (isset($_SESSION['old_value'])) ? $_SESSION['old_value']['information_source_other'] : '' ?>" style="width: 417px">
                 </div>
             </div>
         </div>
@@ -103,7 +116,7 @@
                         echo $this->session->flashdata('submitting_person_name');
                     }
                     ?>
-                    <input type="text" name="submitting_person_name" value="<?= set_value('submitting_person_name') ?>">
+                    <input type="text" name="submitting_person_name" value="<?= (isset($_SESSION['old_value'])) ? $_SESSION['old_value']['submitting_person_name'] : '' ?>" style="width: 417px">
                 </div>
             </div>
         </div> 
@@ -119,7 +132,7 @@
                         echo $this->session->flashdata('time_of_report');
                     }
                     ?>
-                    <input type="time" name="time_of_report" value="<?= set_value('time_of_report') ?>">
+                    <input type="time" name="time_of_report" value="<?= (isset($_SESSION['old_value'])) ? $_SESSION['old_value']['time_of_report'] : '' ?>" style="width: 417px">
                 </div>
             </div>
         </div>
@@ -135,7 +148,7 @@
                         echo $this->session->flashdata('ISR');
                     }
                     ?>
-                    <input type="text" name="ISR" value="<?= (isset($_SESSION['old_value'])) ? $_SESSION['old_value']['ISR'] : '' ?>">
+                    <input type="text" name="ISR" value="<?= (isset($_SESSION['old_value'])) ? $_SESSION['old_value']['ISR'] : '' ?>" style="width: 417px">
                 </div>
             </div>
         </div>
