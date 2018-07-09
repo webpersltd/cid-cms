@@ -87,4 +87,11 @@ class Protective_Marking_Model extends CI_Model {
         $this->db->where('record_id', $record_id);
         return $this->db->count_all_results('protective_markings');
     }
+
+    public function get_urn($record_id){
+        $this->db->where('id', $record_id);
+        $query = $this->db->get('records');
+
+        return $query->row()->urn;
+    }
 }
