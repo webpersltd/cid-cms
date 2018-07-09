@@ -5,6 +5,11 @@ class Rest extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('./CID/Initial/Initial');
+
+		if (!$this->ion_auth->logged_in()){
+		    $this->session->set_flashdata('message', "Please login first!!");
+		    redirect('login', 'refresh');
+		}
 	}
 
 	public function index(){

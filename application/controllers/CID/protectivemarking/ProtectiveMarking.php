@@ -11,6 +11,13 @@ class ProtectiveMarking extends CI_Controller {
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
     	}
+
+    	$group = array("Level-1","Level-2","Level-3","Level-4");
+
+    	if(!$this->ion_auth->in_group($group)){
+    		$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
+    		redirect('dashboard', 'refresh');
+    	}
 		
 		$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
@@ -32,6 +39,13 @@ class ProtectiveMarking extends CI_Controller {
     	if(!$handling_code_review_done){
     		$this->session->set_flashdata('warning', "Please follow the completion note.");
     		redirect('handlingcodereview/','refresh');
+    	}
+
+    	$protectivemark_exist = $this->Protective_Marking_Model->protective_markings_exist($_SESSION['record_id']);
+
+    	if($protectivemark_exist == 1){
+    		$this->session->set_flashdata('warning', "Protective Marking has already selected for this record.");
+    		redirect('review/','refresh');
     	}
     }
 

@@ -12,9 +12,26 @@ class Review_Protective_Mark extends CI_Controller {
     		redirect('login', 'refresh');
     	}
 
+    	if(!$this->user_management->has_review_permission()){
+			$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
+    		redirect('dashboard', 'refresh');
+		}
+
     	$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
 		$this->load->model('Protective_Marking_Model');
+
+		$review_completed = 0;
+
+		if(isset($_SESSION['record_id'])){
+			$review_completed = $this->Protective_Marking_Model->check_review_is_completed($_SESSION['record_id']);
+		}
+		
+    	if(!$review_completed){
+    		$this->session->set_flashdata('warning', "Please follow the completion note.");
+    		redirect('review/','refresh');
+    	}
+    	
     }
 
     public function index()

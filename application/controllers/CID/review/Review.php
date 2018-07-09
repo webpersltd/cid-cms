@@ -10,7 +10,10 @@ class Review extends CI_Controller {
 		if (!$this->ion_auth->logged_in()){
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
-    	}
+    	}else if(isset($_SESSION['record_id']) && !$this->user_management->has_review_permission()){
+			$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
+    		redirect('dashboard', 'refresh');
+		}
 
     	$this->load->helper('CID/nav');
 		$this->load->library('form_validation');

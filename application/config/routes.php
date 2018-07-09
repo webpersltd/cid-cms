@@ -54,6 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller']        = 'Auth';
 $route['login']                     = 'auth/login';
+$route['dashboard']                 = 'CID/Home';
 $route['initials']                  = 'Dashboard';
 $route['subjects']                  = 'Dashboard/subjects';
 $route['text']                      = 'Dashboard/text';

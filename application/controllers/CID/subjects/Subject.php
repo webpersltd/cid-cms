@@ -1,4 +1,4 @@
- <?php 
+<?php 
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -7,6 +7,11 @@ class Subject extends CI_Controller{
         Parent::__construct();
         $this->load->database();
         $this->load->model('./CID/Initial/Initial');
+
+        if (!$this->ion_auth->logged_in()){
+            $this->session->set_flashdata('message', "Please login first!!");
+            redirect('login', 'refresh');
+        }
         
     }
 

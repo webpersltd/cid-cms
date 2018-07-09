@@ -17,6 +17,17 @@ class Dissemination extends CI_Controller {
 		$this->load->model('Dissemination_model');
 		$this->load->model('Protective_Marking_Model');
 
+		$protective_mark_review_done = 0;
+
+		if(isset($_SESSION['record_id'])){
+			$protective_mark_review_done = $this->Protective_Marking_Model->check_review_protective_mark_is_completed($_SESSION['record_id']);
+		}
+		
+    	if($protective_mark_review_done == 0){
+    		$this->session->set_flashdata('warning', "Please follow the completion note.");
+    		redirect('review_protective_mark/','refresh');
+    	}
+
 		$remaining_review = $this->Dissemination_model->count_dissemination_data($_SESSION['record_id']);
 		$total_text       = $this->Dissemination_model->total_text($_SESSION['record_id']);
 

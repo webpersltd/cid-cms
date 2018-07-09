@@ -15,6 +15,17 @@ class DisseminationFinal extends CI_Controller {
     	$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
 		$this->load->model('Dissemination_model');
+
+		$dissemination_done = false;
+
+		if(isset($_SESSION['record_id'])){
+			$dissemination_done = $this->Dissemination_model->check_dissemination_is_completed($_SESSION['record_id']);
+		}
+		
+    	if(!$dissemination_done){
+    		$this->session->set_flashdata('warning', "Please follow the WARNING instruction.");
+    		redirect('dissemination/','refresh');
+    	}
     }
 
     public function index()

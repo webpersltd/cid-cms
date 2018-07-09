@@ -6,7 +6,11 @@ class Initial extends CI_Controller{
     function __construct(){
         Parent::__construct();
         $this->load->database();
-        
+
+        if (!$this->ion_auth->logged_in()){
+            $this->session->set_flashdata('message', "Please login first!!");
+            redirect('login', 'refresh');
+        }        
     }
 
     public function handleInitialInfo(){

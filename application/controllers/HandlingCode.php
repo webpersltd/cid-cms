@@ -11,6 +11,13 @@ class HandlingCode extends CI_Controller {
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
     	}
+
+    	$group = array("Level-1","Level-2","Level-3","Level-4");
+
+    	if(!$this->ion_auth->in_group($group)){
+    		$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
+    		redirect('dashboard', 'refresh');
+    	}
 		
 		$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
