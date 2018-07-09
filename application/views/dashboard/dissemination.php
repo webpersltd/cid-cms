@@ -77,6 +77,17 @@
                     <a class="breadcrumb-item" href="#">REVIEW&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a></a>
                     <a class="breadcrumb-item active" id="remaining" href="#">DISSEMINATION <?= $remaining_text ?>/<?= $total_text ?></a>
                 </nav>
+
+                <?php
+                if(!empty($this->session->flashdata('warning'))){
+                ?>
+                <div class="alert alert-warning">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Sorry!</strong> <?= $this->session->flashdata('warning') ?>
+                </div>
+                <?php
+                }
+                ?>
             </div>
 
             <div  class="col-md-10">                    

@@ -81,6 +81,17 @@
                     <a class="breadcrumb-item active" id="remaining" href="#">REVIEW<span class="glyphicon glyphicon-menu-right" style="color: black; margin-left: 14px;"></span></a>
                     <a class="breadcrumb-item" href="dissemination.html">DISSEMINATION</a>
                 </nav>
+
+                <?php
+                if(!empty($this->session->flashdata('warning'))){
+                ?>
+                <div class="alert alert-warning">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Sorry!</strong> <?= $this->session->flashdata('warning') ?>
+                </div>
+                <?php
+                }
+                ?>
             </div>
 
             <div  class="col-md-13">                    
