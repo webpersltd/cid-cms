@@ -9,8 +9,13 @@ class User_management
 		$this->load->model('Protective_Marking_Model');
 	}
 
-	public function has_review_permission(){
-		$pro_mark = $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id']);
+	public function has_review_permission($record_id = NULL){
+
+		if(is_null($record_id)){
+			$record_id = $_SESSION['record_id'];
+		}
+
+		$pro_mark = $this->Protective_Marking_Model->get_protective_marking_for_the_record($record_id)->name;
 		
 		if($pro_mark == "RESTRICTED" && $this->ion_auth->in_group( array("Level-2","Level-3","Level-4") ) ) {
 			return true;
@@ -20,13 +25,15 @@ class User_management
 			return true;
 		}else if($pro_mark == "TOP SECRET" && $this->ion_auth->in_group( array("Level-4") ) ){
 			return true;
+		}else if(is_null($pro_mark)){
+			return true;
 		}else{
-			return true; //It will be false later
+			return false;
 		}
 	}
 
 	public function has_dissemination_permission(){
-		$pro_mark = $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id']);
+		$pro_mark = $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id'])->name;
 		
 		if($pro_mark == "RESTRICTED" && $this->ion_auth->in_group( array("Level-2","Level-3","Level-4") ) ) {
 			return true;
@@ -36,8 +43,18 @@ class User_management
 			return true;
 		}else if($pro_mark == "TOP SECRET" && $this->ion_auth->in_group( array("Level-4") ) ){
 			return true;
+		}else if(is_null($pro_mark)){
+			return true;
 		}else{
-			return true; //It will be false later
+			return false; //It will be false later
+		}
+	}
+
+	public function has_user_log_permission(){
+		if($this->ion_auth->in_group( array("Level-3","Level-4") ) ){
+			return true;
+		}else{
+			return false;
 		}
 	}
 

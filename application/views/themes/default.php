@@ -75,6 +75,7 @@
         <div class="container-fluid">
             <div class="col-md-2">
                 <ul class="list-group">
+                    <li  class="list-group-item"><a href="<?php echo base_url(); ?>dashboard"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp&nbspDashboard</a></li>
                     <li  class="list-group-item"><a href="<?php echo base_url(); ?>initials/"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp&nbspInitials</a></li>
                     <li class="list-group-item"><a href="<?php echo base_url(); ?>subjects/"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp&nbspSubjects</a></li>
                     <li class="list-group-item"><a href="<?php echo base_url(); ?>text/"><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>&nbsp&nbspText</a></li>
@@ -86,7 +87,9 @@
                     <li class="list-group-item"><a href="<?php echo base_url(); ?>viewlog/"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp&nbspView log</a></li>
                 </ul>
             </div>
-
+            <?php
+            if(!isset($top_navigation)){
+            ?>
             <div class="col-md-10">
                 <nav class="breadcrumb">
                     <a class="breadcrumb-item <?= ($this->uri->uri_string() == "initials") ? 'active':'' ?>" href="#">INITIALS<span class="glyphicon glyphicon-menu-right" style="color: black; margin-left: 14px;"></span></a>
@@ -98,6 +101,9 @@
                     <a class="breadcrumb-item" href="#">DISSEMINATION</a>
                 </nav>
             </div>
+            <?php
+            }
+            ?>
             <?= $output ?>
         </div>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"

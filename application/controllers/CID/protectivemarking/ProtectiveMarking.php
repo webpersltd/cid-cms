@@ -85,8 +85,12 @@ class ProtectiveMarking extends CI_Controller {
         	$data['protective_id'] = $this->input->post('pi');
 
         	$this->Protective_Marking_Model->record_protective_marking($data);
+        	$urn = $this->Protective_Marking_Model->get_urn($_SESSION['record_id']);
 
-        	redirect('review/','refresh');
+        	$this->session->set_flashdata('success', "The record has been stored successfully with URN: ".$urn);
+        	unset($_SESSION['record_id']);
+        	
+        	redirect('dashboard','refresh');
         }
 	}
 }
