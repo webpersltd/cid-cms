@@ -10,9 +10,13 @@ class Dissemination extends CI_Controller {
 		if (!$this->ion_auth->logged_in()){
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
-    	}else if(isset($_SESSION['record_id']) && !$this->user_management->has_dissemination_permission()){
+    	}else if(isset($_SESSION['record_id']) 
+    				&& $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id'])
+    				&& !$this->user_management->has_dissemination_permission()){
+
 			$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
     		redirect('dashboard', 'refresh');
+    		
 		}
 
     	$this->load->helper('CID/nav');

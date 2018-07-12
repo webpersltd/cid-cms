@@ -33,4 +33,36 @@ class Home extends CI_Controller {
 	   	$this->load->view('dashboard/home', $data);
 	}
 
+	public function view_record($urn = NULL){
+		$user                   = $this->ion_auth->user()->row();
+    	$data['top_navigation'] = 0;
+
+    	$data['info'] = $this->Home_model->view_the_record($urn);
+
+    	/*var_dump($data['info']);
+    	exit();*/
+
+    	if($data['info'] == NULL){
+    		$this->session->set_flashdata('warning', "No data found.");
+    		redirect('dashboard', 'refresh');
+    	}
+
+	   	$this->output->set_output_data("user", $user);
+	   	$this->output->set_template('default');
+	   	$this->load->view('dashboard/view_record', $data);
+	}
+
+	public function continue($urn = NULL){
+		$record_id = $this->Home_model->get_record_id($urn);
+		
+		if(!is_null($record_id)){
+			$_SESSION['record_id'] = $record_id;
+			redirect('protectivemark/','refresh');
+		}else{
+			$this->session->set_flashdata('warning', "No data found.");
+    		redirect('dashboard', 'refresh');
+		}
+		
+	}
+
 }

@@ -22,6 +22,7 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-theme.min.css">
         <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css"/>
+        <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>assets/css/navbar-fixed-left.min.css"/>
         <?php
         foreach($css as $file){
          	echo "\n\t\t";
@@ -29,8 +30,8 @@
         } echo "\n\t";
         ?>
     </head>
-    <body>    
-        <nav class="navbar navbar-default">
+    <body style="padding-top: 70px">    
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -73,7 +74,7 @@
         </nav>
 
         <div class="container-fluid">
-            <div class="col-md-2">
+            <div class="col-md-2 navbar-fixed-left" style="margin-top: 67px">
                 <ul class="list-group">
                     <li  class="list-group-item"><a href="<?php echo base_url(); ?>dashboard"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp&nbspDashboard</a></li>
                     <li  class="list-group-item"><a href="<?php echo base_url(); ?>initials/"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp&nbspInitials</a></li>
@@ -90,7 +91,7 @@
             <?php
             if(!isset($top_navigation)){
             ?>
-            <div class="col-md-10">
+            <div class="col-md-13">
                 <nav class="breadcrumb">
                     <a class="breadcrumb-item <?= ($this->uri->uri_string() == "initials") ? 'active':'' ?>" href="#">INITIALS<span class="glyphicon glyphicon-menu-right" style="color: black; margin-left: 14px;"></span></a>
                     <a class="breadcrumb-item" href="#">SUBJECT<span class="glyphicon glyphicon-menu-right" style="color: black; margin-left: 14px;"></span></a>

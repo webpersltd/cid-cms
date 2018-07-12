@@ -6,19 +6,23 @@ class Review extends CI_Controller {
 	public function __construct()
     {
     	parent::__construct();
+    	$this->load->model('Protective_Marking_Model');
 		
 		if (!$this->ion_auth->logged_in()){
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
-    	}else if(isset($_SESSION['record_id']) && !$this->user_management->has_review_permission()){
+    	}else if(isset($_SESSION['record_id']) 
+    				&& $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id']) 
+    				&& !$this->user_management->has_review_permission()){
+
 			$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
     		redirect('dashboard', 'refresh');
+    		
 		}
 
     	$this->load->helper('CID/nav');
 		$this->load->library('form_validation');
 		$this->load->model('Review_model');
-		$this->load->model('Protective_Marking_Model');
 
 		$protective_marking_done = 0;
 
