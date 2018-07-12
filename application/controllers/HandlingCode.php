@@ -30,7 +30,7 @@ class HandlingCode extends CI_Controller {
 		}
 		
     	if($text_exists == 0){
-    		$this->session->set_flashdata('warning', "Text is Required to Process Handling Code.");
+    		$this->session->set_flashdata('warning', "Please follow the completion note.");
     		redirect('text/','refresh');
     	}
 	}

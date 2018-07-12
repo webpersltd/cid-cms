@@ -30,7 +30,7 @@ class ProtectiveMarking extends CI_Controller {
 		}
 		
     	if($handling_code_exists == 0){
-    		$this->session->set_flashdata('warning', "Processing Handling Code is Required to Process Protective Marking.");
+    		$this->session->set_flashdata('warning', "Please follow the completion note.");
     		redirect('handlingcode/','refresh');
     	}
 

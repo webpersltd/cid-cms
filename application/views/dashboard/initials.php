@@ -1,6 +1,6 @@
 <!-- output -->
-<div  class="col-md-10">
-    <h2 class="main-headline" style="text-align:center">Initial information</h2>
+<div  class="col-md-13">
+    <h2 class="main-headline" style="text-align:center; margin-bottom: 5px !important;">Initial information</h2>
     <form id="initials"  action="<?php echo base_url(); ?>saveinitials/" method="post">
         <div class="form-group">
             <div class="row">

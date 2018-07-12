@@ -28,7 +28,13 @@ class Protective_Marking_Model extends CI_Model {
         $this->db->join('protective_marking_lists', 'protective_markings.protective_id = protective_marking_lists.id');
         $this->db->where('record_id', $record_id);
         $query = $this->db->get();
-        return $query->row();
+        
+        if($query->num_rows() != 0){
+            return $query->row();
+        }else{
+            return false;
+        }
+        
     }
 
     public function update_pro_mark($pro_mark, $confirm = NULL){

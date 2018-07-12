@@ -88,11 +88,13 @@ nav{
 
 .main-headline{
     margin-top: -5px;
+    margin-bottom: 96px;
 }
 
 .error{
   background-color: red;
   color: white;
+  margin-bottom: 5px;
 }
 
 #initials{
@@ -369,7 +371,7 @@ textarea {
 .protective-mark > li{
     display: inline-block;
     border: 1px solid black;
-    margin-left: -6px;
+    margin-left: -5px;
     padding: 43px;
     padding-top:19px;
     padding-bottom:19px;
@@ -685,6 +687,12 @@ ul#review_page_p_marking li {
     padding: 20px;
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
+}
+
+hr{
+    border: 0;
+    border-bottom: 2px dashed #fff;
+    background: #e20909;
 }
 
 /* The Close Button */
