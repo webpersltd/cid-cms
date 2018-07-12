@@ -12,6 +12,305 @@
     <div class="col-md-13">
         <hr>
     </div>
+    <div class="col-md-13" id="pm-heading">
+        <div class="row">
+            <div class="col-md-2"><b>Department</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->department_name ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Date of Report</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= date('d-M-Y',strtotime($value->date_of_report)) ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Information Source:</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->inf_src_name ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Report Submitted by</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->report_submitted_by ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Time of Report</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->time_of_report ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>ISR</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->isr ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>First Name</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->fname ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Surname</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->surname ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Father's Name</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->father_name ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Gender</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->gender ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Date of Birth</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= date('d-M-Y',strtotime($value->dob)) ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Place of Birth</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->pob ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Nationality</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->natlty ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Identification Type</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->id_type ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>ID Number</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->id_number ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Home Address</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->home_address ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Business Name</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->business_name ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Business Address</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->business_address ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>BIN/TIN</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->bin_tin ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Telephone</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->telephone ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Decription of Subject</b></div>
+            <div class="col-md-1"><b>:</b></div>
+            <div class="col-md-8">
+                <?php
+                foreach ($info as $value) {
+                ?>
+                <b><?= $value->description ?></b>
+                <?php
+                break;
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-13">
+        <hr>
+    </div>
     <div class="col-md-9" id="pm-heading">
         <h4 style="color: red">THE FOLLOWING PROTECTIVE MARKING HAS BEEN APPLIED TO THIS RECORD:</h4>
     </div>
@@ -130,4 +429,25 @@
     break;
     }
     ?>
+    <?php
+    foreach ($info as $value) {
+    if($this->user_management->has_review_permission($value->rid) && $value->fully_submitted == 0){
+    ?>
+    <div class="col-md-8">
+        <a href="#" type="button" class="btn btn-success">Review & Approve&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></a>
+    </div>
+    <?php
+    }else if($this->user_management->has_review_permission($value->rid, "check_continue") === "continue"){
+    ?>
+    <div class="col-md-8">
+        <a href="#" type="button" class="btn btn-success">Continue&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></a>
+    </div>
+    <?php   
+    }
+    break;
+    }
+    ?>
+    <div class="col-md-4">
+        <a href="<?= base_url() ?>dashboard" type="button" class="btn btn-danger">Cancel&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a>
+    </div>
 </div>

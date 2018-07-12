@@ -39,12 +39,28 @@ class Home extends CI_Controller {
 
     	$data['info'] = $this->Home_model->view_the_record($urn);
 
-    	/*var_dump($data['info']);
-    	exit();*/
-
     	if($data['info'] == NULL){
     		$this->session->set_flashdata('warning', "No data found.");
     		redirect('dashboard', 'refresh');
+    	}else{
+    		foreach ($data['info'] as $value) {
+    			$record_id = $value->rid;
+    			$user_id   = $value->user_id;
+    			break;
+    		}
+
+    		$record_accessible = false;
+
+    		if($user_id == $this->ion_auth->user()->row()->id){
+    			$record_accessible = true;
+    		}else if($this->user_management->has_review_permission($record_id)){
+    			$record_accessible = true;
+    		}
+
+    		if(!$record_accessible){
+    			$this->session->set_flashdata('warning', "Record is not accessible.");
+    			redirect('dashboard','refresh');
+    		}
     	}
 
 	   	$this->output->set_output_data("user", $user);
@@ -61,8 +77,7 @@ class Home extends CI_Controller {
 		}else{
 			$this->session->set_flashdata('warning', "No data found.");
     		redirect('dashboard', 'refresh');
-		}
-		
+		}		
 	}
 
 }

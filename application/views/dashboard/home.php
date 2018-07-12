@@ -56,7 +56,7 @@
                     <?php
                     if(is_null($value->protective_id)){
                     ?>
-                    <a href="<?= base_url() ?>continue/<?= $value->urn ?>">
+                    <a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>">
                         <span class="glyphicon  glyphicon-forward" aria-hidden="true" style="color: red">&nbsp</span>
                     </a>
                     <?php    

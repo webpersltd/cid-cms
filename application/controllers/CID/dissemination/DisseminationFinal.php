@@ -15,8 +15,7 @@ class DisseminationFinal extends CI_Controller {
     				&& !$this->user_management->has_dissemination_permission()){
 
 			$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
-    		redirect('dashboard', 'refresh');
-    		
+    		redirect('dashboard', 'refresh');    		
 		}
 
     	$this->load->helper('CID/nav');
