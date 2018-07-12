@@ -66,7 +66,7 @@
                 <li class="list-group-item"><a href="<?php echo base_url(); ?>viewlog/"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp&nbspView log</a></li>
             </ul>
             </div>
-            <div class="col-md-8 container">
+            <div class="col-md-10 container">
                 <nav class="breadcrumb">
                     <a class="breadcrumb-item " href="#">INITIALS&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
                     <a class="breadcrumb-item active" href="#">SUBJECT&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>

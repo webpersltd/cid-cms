@@ -9,7 +9,21 @@ class User_management
 		$this->load->model('Protective_Marking_Model');
 	}
 
-	public function has_review_permission($record_id = NULL){
+	/*public function check_protective_marking_exist($record_id){
+		$pro_mark = NULL;
+
+		if($this->Protective_Marking_Model->get_protective_marking_for_the_record($record_id)){
+			$pro_mark = $this->Protective_Marking_Model->get_protective_marking_for_the_record($record_id)->name;
+		}
+
+		if(!is_null($pro_mark)){
+			return true;
+		}else{
+			return false;
+		}
+	}*/
+
+	public function has_review_permission($record_id = NULL, $check_continue = NULL){
 
 		if(is_null($record_id)){
 			$record_id = $_SESSION['record_id'];
@@ -36,6 +50,9 @@ class User_management
 				return false;
 			}
 		}else{
+			if(!is_null($check_continue)){
+				return "continue";
+			}
 			return false;
 		}
 	}
@@ -65,7 +82,6 @@ class User_management
 		}else{
 			return false;
 		}
-
 	}
 
 	public function has_user_log_permission(){
