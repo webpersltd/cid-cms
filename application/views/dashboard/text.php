@@ -89,21 +89,22 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="text-box">
-                                <div class="form-group">
-                                    <label class="control-label col-md-1" for="email">TEXT :</label>
-                                    <div class="col-md-10">
-                                        <textarea class="text_box" id="0"  rows="5" style="width:97.5%"></textarea>
+                            <form method="post" action="<?php echo base_url(); ?>savetext/" >
+                                <div id="text-box">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-1" for="email">TEXT :</label>
+                                        <div class="col-md-10">
+                                            <textarea class="text_box" id="0" name="texts[]" rows="5" style="width:97.5%"></textarea>
+                                        </div>
+                                    <div style="margin-left:0px">
+                                        <h4>GRADING</h5>
+                                        <ul style="margin-left:0px">
+                                            <li  style="margin-left:-6px;width:2%"><input id="s0" style="width:213%;border:none;background-color:white" type="text" name="gradingSrc[]" value="0" /></li>
+                                            <li  style="margin-left:-6px;width:2%"><input id="i0" style="width:213%;border:none;background-color:white" type="text" name="gradingInf[]" value="0" /></li>
+                                        </ul>
                                     </div>
-                                   <div style="margin-left:0px">
-                                       <h4>GRADING</h5>
-                                       <ul style="margin-left:0px">
-                                          <li id="s0" style="margin-left:-6px">0</li>
-                                          <li  id="i0" style="margin-left:-6px">0</li>
-                                       </ul>
-                                   </div>
+                                    </div>
                                 </div>
-                            </form>
                             
                            
                            
@@ -151,7 +152,7 @@
                                     <div class="col-md-6">
                                         <div style="margin-top:30px"  class="row">
                                             <div class="col-md-6">
-                                                <a type="submit" id="s_and_r" href="#" class="btn btn-success">SAVE AND REVIEW &nbsp&nbsp<span class="glyphicon glyphicon-ok"></span></a> 
+                                                <button type="submit"   class="btn btn-success">SAVE AND REVIEW &nbsp&nbsp<span class="glyphicon glyphicon-ok"></span></button> 
                                             </div>
                                             <div class="col-md-6">
                                                 <button class="btn btn-danger">CANCEL&nbsp&nbsp<span class="glyphicon glyphicon-remove"></span></button>
@@ -161,7 +162,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        </form>
                     </div>
                 </div>
             </div>

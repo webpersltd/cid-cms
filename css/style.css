@@ -740,3 +740,35 @@ hr{
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+
+.ui-menu{
+    background-color: #EEEEEE;
+    list-style: none;
+    display: inline-block;
+   
+}
+
+.ui-menu-item{
+    margin-left:-35px; 
+    padding:13px 15px;
+    border-bottom:.5px solid black;
+}
+.ui-menu-item:hover{
+    cursor: pointer;
+}
+
+
+.autoSearch{
+    display: none;
+}
+
+
+
+/* custom checkbox start */
+
+
+
+
+/* custom check box end */

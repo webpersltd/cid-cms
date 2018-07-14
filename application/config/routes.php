@@ -86,7 +86,8 @@ $route['done']                     = 'CID/dissemination/DisseminationFinal/submi
 $route['savetext']                 = 'CID/Text/Text/saveText';
 $route['textController']           = 'CID/Text/Text';
 $route['searchRecord']       = 'CID/Search/Search';
-
+$route['searchPagination/(:num)']       = 'CID/Search/Search/searchPagination/$1';
+$route['reviewText'] = 'CID/Text/Text/reviewText';
 /* CID route defination end here */
 
 

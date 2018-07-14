@@ -68,4 +68,11 @@ class Review_model extends CI_Model {
         $this->db->update('texts');
         return;
     }
+
+    public function getReviewText(){
+        $sql = "SELECT * FROM texts WHERE record_id = ?";
+        $result=$this->db->query($sql, array($_SESSION['record_id']));
+
+        return $result->result();
+    }
 }

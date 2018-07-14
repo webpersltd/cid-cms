@@ -6,6 +6,11 @@ class Dashboard extends CI_Controller {
 	public function __construct()
     {
 		parent::__construct();
+		if (!$this->ion_auth->logged_in()){
+    		$this->session->set_flashdata('message', "Please login first!!");
+    		redirect('login', 'refresh');
+		}
+		$this->load->model('Review_model');
 		$this->load->helper('CID/nav');
 		$this->load->database();		
 	}
@@ -37,7 +42,13 @@ class Dashboard extends CI_Controller {
 
 	public function saveinforeview()
 	{
-		$this->load->view('dashboard/saveinformationandreview');
+		if(isset($_SESSION['record_id'])){
+			$data['text']=$this->Review_model->getReviewText();
+			$this->load->view('dashboard/saveinformationandreview',$data);
+		}else{
+			echo "Something went wrong.....";
+		}
+		
 	}
 	
 	public function search()

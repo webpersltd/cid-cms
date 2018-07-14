@@ -22,7 +22,7 @@ $("#addNewTextBox").click(function(){
     appendText(textBoxNo);    
 });
 function appendText(id) {
-    var txt1 = '<div style="margin-left:-13px" class="col-md-12"><div class="form-group"><label class="control-label col-md-1" for="email">TEXT :</label><div class="col-md-10"><textarea class="text_box" id="'+id+'" rows="5" style="width:100%"></textarea></div><div><h4>GRADING</h5><ul><li id="s'+id+'">0</li><li id="i'+id+'">0</li></ul></div></div></div>';               
+    var txt1 = '<div style="margin-left:-13px" class="col-md-12"><div class="form-group"><label class="control-label col-md-1" for="email">TEXT :</label><div class="col-md-10"><textarea class="text_box" name="texts[]" id="'+id+'" rows="5" style="width:100%"></textarea></div><div><h4>GRADING</h5><ul><li style="margin-left:-2px;width:2%" ><input id="s'+id+'" style="width:213%;border:none;background-color:white" type="text" name="gradingSrc[]" value="0"/></li><li style="margin-left:-2px;width:2%" ><input id="i'+id+'" style="width:213%;border:none;background-color:white" type="text" name="gradingInf[]" value="0" /></li></ul></div></div></div>';               
      // Create with DOM
    $("#text-box").append(txt1); 
    // alert("Hellow")     // Append the new elements 
@@ -47,11 +47,11 @@ addEventListener('click',function(e){
         if(e.target.tagName==="A"){
             console.log("Anchor tag",e.target.textContent[0]);
             gradingsrcArray[+targetArea]=e.target.textContent[0];
-            document.getElementById("s"+targetArea).innerText=e.target.textContent[0];
+            document.getElementById("s"+targetArea).value=e.target.textContent[0];
         }else{
             console.log("Span tag",e.target.textContent);
             gradingsrcArray[+targetArea]=e.target.textContent[0];
-            document.getElementById("s"+targetArea).innerText=e.target.textContent[0];
+            document.getElementById("s"+targetArea).value=e.target.textContent[0];
         }
         
     }
@@ -59,11 +59,11 @@ addEventListener('click',function(e){
         if(e.target.tagName==="A"){
             gradinginfoArray[+targetArea]=e.target.textContent[0];
             console.log("Anchor tag",e.target.textContent[0]);
-            document.getElementById("i"+targetArea).innerText=e.target.textContent[0];
+            document.getElementById("i"+targetArea).value=e.target.textContent[0];
         }else{
             gradinginfoArray[+targetArea]=e.target.textContent;
             console.log("Span tag",e.target.textContent);
-            document.getElementById("i"+targetArea).innerText=e.target.textContent;
+            document.getElementById("i"+targetArea).value=e.target.textContent;
         }
         
     }
