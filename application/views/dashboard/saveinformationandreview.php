@@ -128,6 +128,111 @@
                                         echo '<button disabled style="color:green;font-weight:bold" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Reviewed</button>';
                                     }
                                     
+                                    $src_info='<option value="A" selected>(A) - Always Reliable</option>
+                                    <option value="B">(B) - Mostly Reliable</option>
+                                    <option value="C">(C) - Sometimes Reliable</option>
+                                    <option value="D">(D) - Unreliable</option>
+                                    <option value="E">(E) - Untested source</option>';
+                                   switch($temp->src_eval){
+                                        case "A":
+                                            $src_info='<option value="A" selected>(A) - Always Reliable</option>
+                                                        <option value="B">(B) - Mostly Reliable</option>
+                                                        <option value="C">(C) - Sometimes Reliable</option>
+                                                        <option value="D">(D) - Unreliable</option>
+                                                        <option value="E">(E) - Untested source</option>';
+                                            break;
+                                        
+                                        case "B":
+                                            $src_info='<option value="A">(A) - Always Reliable</option>
+                                                       <option value="B" selected>(B) - Mostly Reliable</option>
+                                                       <option value="C">(C) - Sometimes Reliable</option>
+                                                       <option value="D">(D) - Unreliable</option>
+                                                       <option value="E">(E) - Untested source</option>';
+                                        break;
+
+
+                                        case "C":
+                                            $src_info='<option value="A">(A) - Always Reliable</option>
+                                                       <option value="B">(B) - Mostly Reliable</option>
+                                                       <option value="C" selected>(C) - Sometimes Reliable</option>
+                                                       <option value="D">(D) - Unreliable</option>
+                                                       <option value="E">(E) - Untested source</option>';
+                                        break;
+
+
+
+                                        case "D":
+                                            $src_info='<option value="A">(A) - Always Reliable</option>
+                                                       <option value="B">(B) - Mostly Reliable</option>
+                                                       <option value="C">(C) - Sometimes Reliable</option>
+                                                       <option value="D" selected>(D) - Unreliable</option>
+                                                       <option value="E">(E) - Untested source</option>';
+                                        break;
+
+
+                                        case "E":
+                                            $src_info='<option value="A">(A) - Always Reliable</option>
+                                                       <option value="B">(B) - Mostly Reliable</option>
+                                                       <option value="C">(C) - Sometimes Reliable</option>
+                                                       <option value="D">(D) - Unreliable</option>
+                                                       <option value="E" selected>(E) - Untested source</option>';
+                                        break;
+                                   }
+
+                                    $inf_int_eval='
+                                                <option value="1">(1) - Known to be true without reservation</option>
+                                                <option value="2">(2) - Known personally to the source but not the person reporting </option>
+                                                <option value="3">(3) - Not known personally to the source, but corroborated</option>
+                                                <option value="4">(4) - Cannot be judged</option>
+                                                <option value="5">(5) - Suspected to be false</option>';
+
+
+
+                                                switch($temp->inf_int_eval){
+                                                    case 1:
+                                                        $inf_int_eval='<option value="1" selected>(1) - Known to be true without reservation</option>
+                                                                    <option value="2">(2) - Known personally to the source but not the person reporting </option>
+                                                                    <option value="3">(3) - Not known personally to the source, but corroborated</option>
+                                                                    <option value="4">(4) - Cannot be judged</option>
+                                                                    <option value="5">(5) - Suspected to be false</option>';
+                                                        break;
+                                                    
+                                                    case 2:
+                                                        $inf_int_eval='<option value="1">(1) - Known to be true without reservation</option>
+                                                                    <option value="2" selected>(2) - Known personally to the source but not the person reporting </option>
+                                                                    <option value="3">(3) - Not known personally to the source, but corroborated</option>
+                                                                    <option value="4">(4) - Cannot be judged</option>
+                                                                    <option value="5">(5) - Suspected to be false</option>';
+                                                    break;
+            
+            
+                                                    case 3:
+                                                        $inf_int_eval='<option value="1">(1) - Known to be true without reservation</option>
+                                                                    <option value="2">(2) - Known personally to the source but not the person reporting </option>
+                                                                    <option value="3" selected>(3) - Not known personally to the source, but corroborated</option>
+                                                                    <option value="4">(4) - Cannot be judged</option>
+                                                                    <option value="5">(5) - Suspected to be false</option>';
+            
+                                                        break;
+            
+                                                    case 4:
+                                                            $inf_int_eval='<option value="1">(1) - Known to be true without reservation</option>
+                                                            <option value="2">(2) - Known personally to the source but not the person reporting </option>
+                                                            <option value="3">(3) - Not known personally to the source, but corroborated</option>
+                                                            <option value="4" selected>(4) - Cannot be judged</option>
+                                                            <option value="5">(5) - Suspected to be false</option>';
+                                                    break;
+            
+            
+                                                    case 5:
+                                                        $inf_int_eval='<option value="1" selected>(1) - Known to be true without reservation</option>
+                                                        <option value="2">(2) - Known personally to the source but not the person reporting </option>
+                                                        <option value="3">(3) - Not known personally to the source, but corroborated</option>
+                                                        <option value="4">(4) - Cannot be judged</option>
+                                                        <option value="5" selected>(5) - Suspected to be false</option>';
+                                                    break;
+                                               }            
+
                                     echo '<div class="modal fade" id="'.$temp->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                       <div class="modal-content">
@@ -143,19 +248,11 @@
                                             <input type="text" hidden name="text_id" value="'.$temp->id.'"/>
                                             SOURCE EVALUATION:
                                             <select style="margin-top:10px;margin-bottom:10px;padding:13px" name="source_evaluation">
-                                                <option value="A">(A) - Always Reliable</option>
-                                                <option value="B">(B) - Mostly Reliable</option>
-                                                <option value="C">(C) - Sometimes Reliable</option>
-                                                <option value="D">(D) - Unreliable</option>
-                                                <option value="E">(E) - Untested source</option>
+                                                '.$src_info.'
                                             </select>
                                             </br>INFORMATION INTELLIGENCE EVALUATION : </br>
                                             <select style="margin-top:10px;margin-bottom:10px;padding:13px" name="inf_i_eva">
-                                                <option value="1">(1) - Known to be true without reservation</option>
-                                                <option value="2">(2) - Known personally to the source but not the person reporting </option>
-                                                <option value="3">(3) - Not known personally to the source, but corroborated</option>
-                                                <option value="4">(4) - Cannot be judged</option>
-                                                <option value="5">(5) - Suspected to be false</option>
+                                                '.$inf_int_eval.'
                                             </select>
                                         <div class="modal-footer">
                                             <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>

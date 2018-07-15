@@ -33,6 +33,7 @@ class Text extends CI_Controller{
 			$object['src_eval']     = $this->input->post('gradingSrc[]')[$i];
 			$object['inf_int_eval'] = $this->input->post('gradingInf[]')[$i];
             $object['file']         = "filename.txt";
+            $_SESSION['review_state']=1;
             if($this->db->insert('texts', $object)){
                 $pointer = 1;
 				
@@ -47,6 +48,11 @@ class Text extends CI_Controller{
 
     public function reviewText(){
         print_r(array($this->input->post('summary'),$this->input->post('text_id'),$this->input->post('source_evaluation'),$this->input->post('inf_i_eva')));
+        $sql = "UPDATE texts SET summary= ? , src_eval= ? , inf_int_eval= ? , status=? WHERE id= ?";
+        if($this->db->query($sql, array( $this->input->post('summary'),$this->input->post('source_evaluation'),(int)$this->input->post('inf_i_eva'),1,(int)$this->input->post('text_id')))){
+            redirect('savereview/');
+        }
+
     }
 
 

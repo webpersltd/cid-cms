@@ -6,7 +6,8 @@ class Initial extends CI_Controller{
     function __construct(){
         Parent::__construct();
         $this->load->database();
-        $this->load->library('form_validation');        
+        $this->load->library('form_validation');  
+        
     }
 
     public function handleInitialInfo(){

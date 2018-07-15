@@ -20,7 +20,9 @@ class Dashboard extends CI_Controller {
 	   $data['departments'] = $this->db->get('departments');
 	   $data['inf_src']     = $this->db->order_by('name')->get('inf_sources');
 	   $user                = $this->ion_auth->user()->row();
-
+	   if(isset($_SESSION['record_id'])){
+			redirect('subjects/');
+		}      
 	   $this->load->js(base_url()."js/initials.js");
 	   $this->output->set_output_data("user", $user);	   
 	   $this->output->prepend_title("Initials");
@@ -30,6 +32,12 @@ class Dashboard extends CI_Controller {
 
 	public function subjects()
 	{
+		if(!isset($_SESSION['record_id'])){
+			redirect('initials/');
+		}
+		if(isset($_SESSION['record_id'])){
+			redirect('text/');
+		}  
 		$query = $this->db->get('nationalities');
 		$data['nationalities']=$query;
 		$this->load->view('dashboard/subjects',$data);
@@ -37,16 +45,38 @@ class Dashboard extends CI_Controller {
 
 	public function text()
 	{
-		$this->load->view('dashboard/text');
+		if(isset($_SESSION['record_id'])){
+			if(isset($_SESSION['review_state'])){
+				redirect('savereview/');
+			}
+			$this->load->view('dashboard/text');
+		}else{
+			redirect('subjects/');
+		}
+		
 	}
 
 	public function saveinforeview()
 	{
 		if(isset($_SESSION['record_id'])){
 			$data['text']=$this->Review_model->getReviewText();
-			$this->load->view('dashboard/saveinformationandreview',$data);
+			$status_flag=1;
+			foreach($data['text'] as $temp){
+				
+				if($temp->status==0){
+					$status_flag=0;
+				}
+			}
+			if($status_flag==1){
+				redirect('handlingcode/');
+			}
+
+			if($status_flag==0){
+				$this->load->view('dashboard/saveinformationandreview',$data);
+			}
+			
 		}else{
-			echo "Something went wrong.....";
+			//echo "Something went wrong.....";
 		}
 		
 	}
