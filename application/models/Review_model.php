@@ -21,6 +21,7 @@ class Review_model extends CI_Model {
 
     public function finalReview($data){        
         $data['details_reviewed']  = 1;
+        $data['record_id']         = $_SESSION['record_id'];
         $data['review_started_by'] = $this->ion_auth->user()->row()->id;
         $this->db->insert('final_review', $data);
         return;
