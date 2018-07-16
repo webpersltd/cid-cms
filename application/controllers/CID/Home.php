@@ -53,12 +53,16 @@ class Home extends CI_Controller {
 
     		if($user_id == $this->ion_auth->user()->row()->id){
     			$record_accessible = true;
-    		}else if($this->user_management->has_review_permission($record_id)){
+    		}else if( $this->user_management->has_review_permission($record_id) 
+    						&& ( $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == $this->ion_auth->user()->row()->id 
+    							|| $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == NULL ) ){
+
     			$record_accessible = true;
+
     		}
 
     		if(!$record_accessible){
-    			$this->session->set_flashdata('warning', "Record is not accessible.");
+    			$this->session->set_flashdata('warning', "Access Denied!!");
     			redirect('dashboard','refresh');
     		}
     	}
@@ -69,15 +73,57 @@ class Home extends CI_Controller {
 	}
 
 	public function continue($urn = NULL){
-		$record_id = $this->Home_model->get_record_id($urn);
-		
-		if(!is_null($record_id)){
+		$record_info = $this->Home_model->get_a_record_initial_info($urn);
+
+		if(!is_null($record_info)){
+			$record_id         = $record_info->id;
+			$user_id           = $record_info->user_id;
+			
+			$record_accessible = false;
+
+			if($user_id == $this->ion_auth->user()->row()->id && $this->user_management->has_review_permission($record_id, "check_continue") === "continue"){
+				$record_accessible = true;
+			}
+
+			if(!$record_accessible){
+				$this->session->set_flashdata('warning', "Access Denied!!");
+				redirect('dashboard','refresh');
+			}
+
 			$_SESSION['record_id'] = $record_id;
 			redirect('protectivemark/','refresh');
 		}else{
-			$this->session->set_flashdata('warning', "No data found.");
+			$this->session->set_flashdata('warning', "No Record Found.");
     		redirect('dashboard', 'refresh');
-		}		
+		}
+
 	}
 
+	public function review_approve($urn = NULL){
+
+		$record_info = $this->Home_model->get_a_record_initial_info($urn);
+
+		if(!is_null($record_info)){
+			$record_id         = $record_info->id;
+			$record_accessible = false;
+
+			if( $this->user_management->has_review_permission($record_id) 
+					&& ( $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == $this->ion_auth->user()->row()->id 
+    					|| $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == NULL ) ){
+				$record_accessible = true;
+			}
+			if(!$record_accessible){
+				$this->session->set_flashdata('warning', "Access Denied!!");
+				redirect('dashboard','refresh');
+			}
+
+			$_SESSION['record_id'] = $record_id;
+			redirect('review/','refresh');
+			
+		}else{
+			$this->session->set_flashdata('warning', "No Record Found.");
+    		redirect('dashboard', 'refresh');
+		}
+
+	}
 }

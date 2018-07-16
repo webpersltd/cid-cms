@@ -1,4 +1,17 @@
 <div  class="col-md-13">
+    <?php
+    foreach ($info as $value) {
+    if($this->user_management->this_record_is_already_started_reviewing_by_this_user($value->rid) != $this->ion_auth->user()->row()->id 
+                                && $this->user_management->has_review_permission($value->rid) && !is_null($this->user_management->this_record_is_already_started_reviewing_by_this_user($value->rid)) ){
+    ?>
+    <div class="well">
+        <b>Note: </b>This Record has already Started Reviewing by another Authorized User.
+    </div>
+    <?php
+    }
+    break;
+    }
+    ?>
     <div class="col-md-13">
         <?php
         foreach ($info as $value) {
@@ -42,7 +55,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2"><b>Information Source:</b></div>
+            <div class="col-md-2"><b>Information Source</b></div>
             <div class="col-md-1"><b>:</b></div>
             <div class="col-md-8">
                 <?php
@@ -431,16 +444,17 @@
     ?>
     <?php
     foreach ($info as $value) {
-    if($this->user_management->has_review_permission($value->rid) && $value->fully_submitted == 0){
+    if($this->user_management->has_review_permission($value->rid) && $value->fully_submitted == 0 && ( $this->Home_model->this_record_is_already_started_reviewing_by_this_user($value->rid) == $this->ion_auth->user()->row()->id 
+                                || $this->Home_model->this_record_is_already_started_reviewing_by_this_user($value->rid) == NULL )){
     ?>
     <div class="col-md-8">
-        <a href="#" type="button" class="btn btn-success">Review & Approve&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></a>
+        <a href="<?= base_url() ?>review_approve/<?= $value->urn ?>" type="button" class="btn btn-success">Review & Approve <?= ($this->user_management->check_final_review_exist($value->rid)) ? '(Continue)':'' ?>&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></a>
     </div>
     <?php
     }else if($this->user_management->has_review_permission($value->rid, "check_continue") === "continue"){
     ?>
     <div class="col-md-8">
-        <a href="#" type="button" class="btn btn-success">Continue&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></a>
+        <a href="<?= base_url() ?>continue/<?= $value->urn ?>" type="button" class="btn btn-success">Continue&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></a>
     </div>
     <?php   
     }
@@ -448,6 +462,6 @@
     }
     ?>
     <div class="col-md-4">
-        <a href="<?= base_url() ?>dashboard" type="button" class="btn btn-danger">Cancel&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a>
+        <a href="<?= base_url() ?>dashboard" type="button" class="btn btn-info">Go Back&nbsp;&nbsp;<span class="glyphicon glyphicon-repeat"></span></a>
     </div>
 </div>
