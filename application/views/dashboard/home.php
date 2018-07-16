@@ -63,7 +63,8 @@
                     }else{
                     ?>
                     <a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>">
-                        <span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span>
+                        <span class="glyphicon  glyphicon-eye-open" style="color: <?= ( $this->user_management->this_record_is_already_started_reviewing_by_this_user($value->rid) != $this->ion_auth->user()->row()->id 
+                                && $this->user_management->has_review_permission($value->rid) && !is_null($this->user_management->this_record_is_already_started_reviewing_by_this_user($value->rid)) ) ? 'red':''; ?>" aria-hidden="true">&nbsp</span>
                     </a>
                     <?php
                     }
@@ -94,29 +95,41 @@
     <div style="margin-top:10px" class="table-responsive">
         <table class="table table-bordered">
             <?php
-            if(count($approved) != 0){
+            if(count($for_approval) != 0){
             ?>
             <tr>
                 <th>NO</th>
                 <th>URN</th>
                 <th>Department</th>
                 <th>Officer</th>
-                <th>View</th>
+                <th>Action</th>
                 <th>Approved</th>
             </tr>
             <?php
             }
             if(count($for_approval) != 0){
             $counter = 1;
-            for ($i=0; $i<count($for_approval); $i++) {
+            foreach($for_approval as $value) {
             ?>
             <tr class="danger">
                 <td><?= $counter ?></td>
-                <td><?= $for_approval[$i]['urn'] ?></td>
-                <td><?= $for_approval[$i]['department'] ?></td>
-                <td><?= $for_approval[$i]['officer'] ?></td>
-                <td><a href="<?= base_url() ?>viewRecord/<?= $for_approval[$i]['urn'] ?>"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span></a></td>
-                <td><?= ($for_approval[$i]['fully_submitted'] == 0) ? 'N':'Y' ?></td>
+                <td><?= $value->urn ?></td>
+                <td><?= $value->name ?></td>
+                <td><?= $value->first_name." ".$value->last_name ?></td>
+                <td>
+                    <?php
+                    if($this->user_management->check_final_review_exist($value->rid)){
+                    ?>
+                    <a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>"><span class="glyphicon  glyphicon-forward" aria-hidden="true" style="color: red">&nbsp</span></a>
+                    <?php
+                    }else{
+                    ?>
+                    <a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span></a>
+                    <?php
+                    }
+                    ?>
+                </td>
+                <td><?= ($value->fully_submitted == 0) ? 'N':'Y' ?></td>
             </tr>
             <?php
             $counter++;
@@ -148,7 +161,7 @@
                 <th>URN</th>
                 <th>Department</th>
                 <th>Officer</th>
-                <th>View</th>
+                <th>Action</th>
                 <th>Approved</th>
             </tr>
             <?php

@@ -92,6 +92,7 @@ $route['savetext']                  = 'CID/Text/Text/saveText';
 $route['textController']            = 'CID/Text/Text';
 $route['viewRecord/(:num)']         = 'CID/Home/view_record/$1';
 $route['continue/(:num)']           = 'CID/Home/continue/$1';
+$route['review_approve/(:num)']     = 'CID/Home/review_approve/$1';
 
 /* CID route defination end here */
 

@@ -82,7 +82,7 @@ class Initial extends CI_Controller{
         $data['department']               = $this->input->post("department");
         $data['date_of_report']           = $this->input->post("date_of_report");
         $data['information_source']       = $this->input->post("information_source");
-        $data['other_information_source'] = $this->input->post("other_information_source");
+        $data['other_information_source'] = $this->input->post("information_source_other");
         $data['submitting_person_name']   = $this->input->post("submitting_person_name");
         $data['time_of_report']           = $this->input->post("time_of_report");
         $data['ISR']                      = $this->input->post("ISR");

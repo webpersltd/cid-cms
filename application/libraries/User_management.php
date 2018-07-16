@@ -9,19 +9,20 @@ class User_management
 		$this->load->model('Protective_Marking_Model');
 	}
 
-	/*public function check_protective_marking_exist($record_id){
-		$pro_mark = NULL;
+	public function check_final_review_exist($record_id){
+	    $this->db->select('*');
+	    $this->db->from('texts');
+	    $this->db->join('final_review', 'final_review.text_id = texts.id');
+	    $this->db->where('texts.record_id', $record_id);
 
-		if($this->Protective_Marking_Model->get_protective_marking_for_the_record($record_id)){
-			$pro_mark = $this->Protective_Marking_Model->get_protective_marking_for_the_record($record_id)->name;
-		}
-
-		if(!is_null($pro_mark)){
-			return true;
-		}else{
-			return false;
-		}
-	}*/
+	    $query = $this->db->get();
+	    
+	    if($query->num_rows() == 0){
+	        return false;
+	    }else{
+	        return true;
+	    }
+	}
 
 	public function has_review_permission($record_id = NULL, $check_continue = NULL){
 
@@ -55,6 +56,23 @@ class User_management
 			}
 			return false;
 		}
+	}
+
+	public function this_record_is_already_started_reviewing_by_this_user($record_id){
+	    
+	    $this->db->select('*');
+	    $this->db->from('texts');
+	    $this->db->join('final_review', 'final_review.text_id = texts.id');
+	    $this->db->where('texts.record_id', $record_id);
+	    $this->db->limit(1);
+
+	    $query = $this->db->get();
+
+	    if($query->num_rows() == 0){
+	      return NULL;
+	    }else{
+	      return $query->row()->review_started_by;
+	    }
 	}
 
 	public function has_dissemination_permission(){

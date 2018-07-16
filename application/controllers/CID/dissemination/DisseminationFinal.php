@@ -25,12 +25,17 @@ class DisseminationFinal extends CI_Controller {
 		$dissemination_done = false;
 
 		if(isset($_SESSION['record_id'])){
-			$dissemination_done = $this->Dissemination_model->check_dissemination_is_completed($_SESSION['record_id']);
+			$dissemination_done       = $this->Dissemination_model->check_dissemination_is_completed($_SESSION['record_id']);
+			$record_already_submitted = $this->Dissemination_model->check_this_record_is_already_fully_submitted($_SESSION['record_id']);
 		}
 		
     	if(!$dissemination_done){
     		$this->session->set_flashdata('warning', "Please follow the WARNING instruction.");
     		redirect('dissemination/','refresh');
+    	}else if($record_already_submitted){
+    		unset($_SESSION['record_id']);
+    		$this->session->set_flashdata('warning', "The Record is already Approved.");
+    		redirect('dashboard','refresh')
     	}
     }
 
@@ -79,6 +84,7 @@ class DisseminationFinal extends CI_Controller {
         }else{
         	$data['record_id']       = $_SESSION['record_id'];
         	$data['disseminated_to'] = $this->input->post('user');
+        	$data['disseminated_by'] = $this->ion_auth->user()->row()->id;
         	$data['created_at']      = date('Y-m-d H:i:s');
         	
         	$this->Dissemination_model->final_submission($data);

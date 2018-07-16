@@ -126,7 +126,7 @@
                 <div class="form-group final-button">
                 <div class="row">
                     <div class="col-md-7">
-                        <button type="submit" class="btn btn-success">SAVE INFORMATION AND CONTINUE&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
+                        <button type="submit" class="btn btn-success">REPORT SUBMISSION DONE&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
                     </div>
                     <div class="col-md-3">
                         <a href="#" class="btn btn-danger">CANCEL&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a>

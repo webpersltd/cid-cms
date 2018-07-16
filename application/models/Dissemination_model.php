@@ -185,4 +185,17 @@ class Dissemination_model extends CI_Model {
 
         return $done;
     }
+
+    public function check_this_record_is_already_fully_submitted($record_id){
+        $this->db->where('fully_submitted', 1);
+        $this->db->where('id', $record_id);
+
+        $query = $this->db->get('records');
+
+        if($query->num_rows() == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
