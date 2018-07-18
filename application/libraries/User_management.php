@@ -24,6 +24,25 @@ class User_management
 	    }
 	}
 
+	public function record_on_hold($record_id){
+
+	    $this->db->where('record_id',$record_id);
+	    $query = $this->db->get('review_on_hold');
+
+	    if($query->num_rows() != 0 && $this->time_of_record_hold_on($query->row()->created_at) <= 30){
+	      	return true;
+	    }
+	}
+
+	public function time_of_record_hold_on($created_at){
+	  
+	  	$start = date_create($created_at);
+	  	$end   = date_create(date("Y-m-d H:i:s"));
+	  	$diff  = date_diff($end,$start);
+	  	return $diff->i;
+
+	}
+
 	public function has_review_permission($record_id = NULL, $check_continue = NULL){
 
 		if(is_null($record_id)){

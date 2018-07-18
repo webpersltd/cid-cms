@@ -19,12 +19,30 @@ class Review_model extends CI_Model {
         return $query->row();
     }
 
-    public function finalReview($data){        
-        $data['details_reviewed']  = 1;
-        $data['record_id']         = $_SESSION['record_id'];
-        $data['review_started_by'] = $this->ion_auth->user()->row()->id;
-        $this->db->insert('final_review', $data);
-        return;
+    public function finalReview($data){
+
+        $this->db->where('record_id', $_SESSION['record_id']);
+        $query = $this->db->get('final_review');
+
+        foreach ($query->result() as $value) {
+            $review_started_by = $value->review_started_by;
+            break;
+        }
+
+        if($query->num_rows() != 0 && $review_started_by != $this->ion_auth->user()->row()->id){
+            return false;
+        }else{
+            $this->db->reset_query();
+            $data['details_reviewed']  = 1;
+            $data['record_id']         = $_SESSION['record_id'];
+            $data['review_started_by'] = $this->ion_auth->user()->row()->id;
+            $this->db->insert('final_review', $data);
+            return true;
+        }
+    }
+
+    public function release_record_which_is_holded_by_me($user_id){
+        $this->db->delete('review_on_hold', array('user_id' => $user_id));
     }
 
     public function check_existing_data($record_id){

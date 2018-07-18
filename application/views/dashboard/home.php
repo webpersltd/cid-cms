@@ -124,7 +124,7 @@
                     <?php
                     }else{
                     ?>
-                    <a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span></a>
+                    <a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true" <?= ($this->user_management->record_on_hold($value->rid)) ? 'style="color: orange"':'' ?>>&nbsp</span></a>
                     <?php
                     }
                     ?>

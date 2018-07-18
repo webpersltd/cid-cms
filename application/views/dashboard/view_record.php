@@ -1,5 +1,15 @@
 <div  class="col-md-13">
     <?php
+    if(!empty($this->session->flashdata('warning'))){
+    ?>
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Sorry!</strong> <?= $this->session->flashdata('warning') ?>
+    </div>
+    <?php
+    }
+    ?>
+    <?php
     foreach ($info as $value) {
     if($this->user_management->this_record_is_already_started_reviewing_by_this_user($value->rid) != $this->ion_auth->user()->row()->id 
                                 && $this->user_management->has_review_permission($value->rid) && !is_null($this->user_management->this_record_is_already_started_reviewing_by_this_user($value->rid)) ){

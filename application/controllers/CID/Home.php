@@ -28,6 +28,8 @@ class Home extends CI_Controller {
     	$data['for_approval']   = $this->Home_model->get_records_for_approval();
     	$data['approved']       = $this->Home_model->get_approved_records();
 
+    	$this->Home_model->release_record_which_is_holded_by_me($user->id);
+
 	   	$this->output->set_output_data("user", $user);
 	   	$this->output->set_template('default');
 	   	$this->load->view('dashboard/home', $data);
@@ -47,6 +49,18 @@ class Home extends CI_Controller {
     			$record_id = $value->rid;
     			$user_id   = $value->user_id;
     			break;
+    		}
+
+    		$record_hold['record_id']  = $record_id;
+    		$record_hold['user_id']    = $user->id;
+    		$record_hold['created_at'] = date("Y-m-d H:i:s");
+
+    		if( $this->Home_model->record_on_hold($record_id, $record_hold) 
+    			&& $user_id != $this->ion_auth->user()->row()->id 
+    			&& $this->user_management->has_review_permission($record_id) ){
+
+    			$this->session->set_flashdata('warning', "The record has been holded by another user.");
+    			redirect('dashboard','refresh');
     		}
 
     		$record_accessible = false;
@@ -105,17 +119,30 @@ class Home extends CI_Controller {
 		$record_info = $this->Home_model->get_a_record_initial_info($urn);
 
 		if(!is_null($record_info)){
-			$record_id         = $record_info->id;
+
+			$record_id = $record_info->id;
+
+			$record_hold['record_id']  = $record_id;
+    		$record_hold['user_id']    = $this->ion_auth->user()->row()->id;
+    		$record_hold['created_at'] = date("Y-m-d H:i:s");
+
+			if( $this->user_management->has_review_permission($record_id)
+				&& $this->Home_model->record_on_hold($record_id, $record_hold) ){
+
+				$this->session->set_flashdata('warning', "It's a long time the record has been holding by you. So, the record has been holded by another user now.");
+				redirect( 'dashboard', 'refresh' );
+			}
+
 			$record_accessible = false;
 
 			if( $this->user_management->has_review_permission($record_id) 
-					&& ( $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == $this->ion_auth->user()->row()->id 
-    					|| $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == NULL ) ){
+				&& ( $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == $this->ion_auth->user()->row()->id || $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == NULL ) ){
+
 				$record_accessible = true;
 			}
 
 			if(!$record_accessible){
-				$this->session->set_flashdata('warning', "Access Denied!!");
+				$this->session->set_flashdata('warning', "The Record has been started reviewing by another authorized user.");
 				redirect('dashboard','refresh');
 			}
 

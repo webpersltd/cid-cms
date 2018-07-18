@@ -6,7 +6,10 @@ $(document).ready(function(){
             url, 
             {textid: tid}, 
             function(result){
-                if(result.summaryInfo=="none"){
+                if(result.summaryInfo=="exist"){
+                    alert("Sorry, The record has been holded for a long time and It's started reviewing by another authorized user.");
+                    window.location.href = "http://localhost/CID/dashboard";
+                }else if(result.summaryInfo=="none"){
                     window.location.href = "http://localhost/CID/review_protective_mark/";
                 }else{
                     $("#summary").text(result.summaryInfo);

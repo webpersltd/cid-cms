@@ -80,6 +80,55 @@ class Home_model extends CI_Model {
             LIMIT 0,5";*/
     }
 
+    public function record_on_hold($record_id, $data = NULL){
+
+        $this->db->where('record_id',$record_id);
+        $query = $this->db->get('review_on_hold');
+
+        if($query->num_rows() == 0){
+          
+          if(!is_null($data)){
+            $this->db->insert('review_on_hold', $data);
+          }
+          return false;
+
+        }else if( $this->time_of_record_hold_on($query->row()->created_at) > 30 ){
+
+          $this->db->set('user_id', $this->ion_auth->user()->row()->id);
+          $this->db->set('created_at', date("Y-m-d H:i:s"));
+          $this->db->where('record_id', $record_id);
+          $this->db->update('review_on_hold');
+
+          if($this->db->affected_rows() == 0){
+            $this->db->insert('review_on_hold', $data);
+          }
+
+          return false;
+
+        }else if( $query->row()->user_id == $this->ion_auth->user()->row()->id ){
+
+          return false;
+
+        }else{
+
+          return true;
+
+        }
+    }
+
+    public function time_of_record_hold_on($created_at){
+      
+      $start = date_create($created_at);
+      $end   = date_create(date("Y-m-d H:i:s"));
+      $diff  = date_diff($end,$start);
+      return $diff->i;
+
+    }
+
+    public function release_record_which_is_holded_by_me($user_id){
+      $this->db->delete('review_on_hold', array('user_id' => $user_id));
+    }
+
     public function this_record_is_already_started_reviewing_by_this_user($record_id){
         
         $this->db->select('*');
