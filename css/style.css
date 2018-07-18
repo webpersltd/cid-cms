@@ -770,7 +770,7 @@ hr{
 
 
 .error{
-    padding:7px;
+    padding:10px !important;
 }
 
 /* custom check box end */

@@ -732,3 +732,8 @@ ul#review_page_p_marking li {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+.error{
+    padding:10px;
+}

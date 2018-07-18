@@ -73,7 +73,7 @@ class Subject extends CI_Controller{
 
     //array_push($config);
     $this->form_validation->set_rules($config);
-    $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+    $this->form_validation->set_error_delimiters('<p class="error">', '<span style="float:right;padding:3px;background:black;border-radius:13px 13px 13px" r_error="remove" class="glyphicon glyphicon-remove"></span></p>');
     if($this->form_validation->run() == FALSE){
         $this->session->set_flashdata('firstname', form_error('firstname'));
         $this->session->set_flashdata('fathersname', form_error('fathersname'));
