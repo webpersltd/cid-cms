@@ -61,7 +61,7 @@
                 <?php
                 foreach ($info as $value) {
                 ?>
-                <b><?= $value->inf_src_name ?></b>
+                <b><?= (strpos($value->inf_src_name, 'Other') !== false) ? $value->other_source : $value->inf_src_name ?></b>
                 <?php
                 break;
                 }

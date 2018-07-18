@@ -165,18 +165,16 @@
                 <th>Approved</th>
             </tr>
             <?php
-            }
-            if(count($approved) != 0){
             $counter = 1;
-            for ($i=0; $i<count($approved); $i++) {
+            foreach($approved as $value) {
             ?>
             <tr class="success">
                 <td><?= $counter ?></td>
-                <td><?= $approved[$i]['urn'] ?></td>
-                <td><?= $approved[$i]['department'] ?></td>
-                <td><?= $approved[$i]['officer'] ?></td>
-                <td><a href="<?= base_url() ?>viewRecord/<?= $approved[$i]['urn'] ?>"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span></a></td>
-                <td><?= ($approved[$i]['fully_submitted'] == 0) ? 'N':'Y' ?></td>
+                <td><?= $value->urn ?></td>
+                <td><?= $value->name ?></td>
+                <td><?= $value->first_name." ".$value->last_name ?></td>
+                <td><a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span></a></td>
+                <td><?= ($value->fully_submitted == 0) ? 'N':'Y' ?></td>
             </tr>
             <?php
             $counter++;

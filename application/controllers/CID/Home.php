@@ -72,6 +72,7 @@ class Home extends CI_Controller {
 	   	$this->load->view('dashboard/view_record', $data);
 	}
 
+	/*The record will get the continue opprotunity if and only if the record is inputted by me. This function will work for only my records inputted. The "has_review_permission" function will return 'Continue' when the record will not have protective marking selected.*/
 	public function continue($urn = NULL){
 		$record_info = $this->Home_model->get_a_record_initial_info($urn);
 
@@ -112,6 +113,7 @@ class Home extends CI_Controller {
     					|| $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == NULL ) ){
 				$record_accessible = true;
 			}
+
 			if(!$record_accessible){
 				$this->session->set_flashdata('warning', "Access Denied!!");
 				redirect('dashboard','refresh');

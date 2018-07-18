@@ -114,25 +114,17 @@ class Home_model extends CI_Model {
     }
 
     public function get_approved_records(){
-        
-        $collect_records = $this->get_all_records("approved_record");
-        $result          = array();
+        $this->db->select('*');
+        $this->db->from('records');
+        $this->db->join('departments', 'departments.id = records.department');
+        $this->db->join('users', 'users.id = records.user_id');
+        $this->db->join('dissemination_reviews', 'dissemination_reviews.record_id = records.id');
+        $this->db->where('disseminated_by', $this->ion_auth->user()->row()->id);
+        $this->db->order_by('records.created_at','desc');
+        $this->db->limit(5,0);
 
-        foreach ($collect_records as $value) {
-            $data      = array();
-            $record_id = $value->rid;            
-            if($this->user_management->has_review_permission($record_id) && $value->disseminated_by == $this->ion_auth->user()->row()->id){
-                $data['urn']             = $value->urn;
-                $data['department']      = $value->name;
-                $data['officer']         = $value->first_name." ".$value->last_name;
-                $data['fully_submitted'] = $value->fully_submitted;
-            }
-
-            if(count($data) != 0){
-                array_push($result, $data);
-            }
-        }
-        return $result;
+        $query = $this->db->get();
+        return $query->result();
     }
 
     public function get_current_view_for_the_record($urn){
