@@ -7,12 +7,88 @@ class Subject extends CI_Controller{
         Parent::__construct();
         $this->load->database();
         $this->load->model('./CID/Initial/Initial');
+        $this->load->library('form_validation'); 
         
     }
 
 
 
     public function handleSubject(){
+        $config=array(
+            array(
+                    'field' => 'firstname',
+                    'label' => 'Firstname',
+                    'rules' => 'required'
+            ),
+            array(
+                    'field' => 'fathersname',
+                    'label' => 'Father name',
+                    'rules' => 'required',
+                    
+            ),
+            array(
+                    'field' => 'dob',
+                    'label' => 'Date of Birth',
+                    'rules' => 'required'
+            ),
+            array(
+                'field' => 'identificationtype',
+                'label' => 'Identification ',
+                'rules' => 'required'
+            ),
+
+            array(
+                'field' => 'surname',
+                'label' => 'Surname',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'gender',
+                'label' => 'Gender',
+                'rules' => 'required'
+            ),
+
+            array(
+                'field' => 'birthplace',
+                'label' => 'Birthplace',
+                'rules' => 'required'
+            ),
+
+            array(
+                'field' => 'nationality',
+                'label' => 'Nationality',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'idnumber',
+                'label' => 'ID Number',
+                'rules' => 'required'
+            ),
+            array(
+                    'field' => 'age',
+                    'label' => 'Age',
+                    'rules' => 'required'
+            )
+    );
+
+    //array_push($config);
+    $this->form_validation->set_rules($config);
+    $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+    if($this->form_validation->run() == FALSE){
+        $this->session->set_flashdata('firstname', form_error('firstname'));
+        $this->session->set_flashdata('fathersname', form_error('fathersname'));
+        $this->session->set_flashdata('dob', form_error('dob'));
+        $this->session->set_flashdata('identificationtype', form_error('identificationtype'));
+        $this->session->set_flashdata('surname', form_error('surname'));
+        $this->session->set_flashdata('gender', form_error('gender'));
+        $this->session->set_flashdata('birthplace', form_error('birthplace'));
+        $this->session->set_flashdata('nationality', form_error('nationality'));
+        $this->session->set_flashdata('age', form_error('age'));
+        $this->session->set_flashdata('idnumber', form_error('idnumber'));
+        $this->session->set_flashdata('old_value', $_POST);
+
+        redirect('subjects/','refresh');
+    }
         $data['firstname']=$this->input->post("firstname");
         $data['fathersname']=$this->input->post("fathersname");
         $data['dob']=$this->input->post("dob");

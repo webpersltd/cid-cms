@@ -32,13 +32,15 @@ class Dashboard extends CI_Controller {
 
 	public function subjects()
 	{
+		$user=$this->ion_auth->user()->row();
 		if(!isset($_SESSION['record_id'])){
 			redirect('initials/');
 		}
-		if(isset($_SESSION['record_id'])){
+		if(isset($_SESSION['review_state'])){
 			redirect('text/');
 		}  
 		$query = $this->db->get('nationalities');
+		$data['user']=$user;
 		$data['nationalities']=$query;
 		$this->load->view('dashboard/subjects',$data);
 	}

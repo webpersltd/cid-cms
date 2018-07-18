@@ -769,6 +769,8 @@ hr{
 /* custom checkbox start */
 
 
-
+.error{
+    padding:7px;
+}
 
 /* custom check box end */

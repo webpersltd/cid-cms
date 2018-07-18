@@ -38,12 +38,12 @@
                         <ul class="nav navbar-nav navbar-right">
                           
                           <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp</span>Hi , Jon Doe <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp</span>Hi ,<?php echo $user->username; ?> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                               <li><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true">&nbsp</span>Change password</a></li>
                               
                               <li role="separator" class="divider"></li>
-                              <li><a href="#"><span class="glyphicon glyphicon-off" aria-hidden="true">&nbsp</span>Log out</a></li>
+                              <li><a href="<?php echo base_url(); ?>logout"><span class="glyphicon glyphicon-off" aria-hidden="true">&nbsp</span>Log out</a></li>
                             </ul>
                           </li>
                         </ul>
@@ -64,6 +64,7 @@
                 <li class="list-group-item"><a href="<?php echo base_url(); ?>search/"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp&nbspSearch</a></li>
                 <li class="list-group-item"><a href="<?php echo base_url(); ?>viewlog/"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp&nbspView log</a></li>
             </ul>
+           
             </div>
             <div class="col-md-8 container">
                 <nav class="breadcrumb">
@@ -78,6 +79,39 @@
                
                 <div class="col-md-10">
                     <p class="well"><span>Completion note : </span>You must ensure that each material fact and statement is entered in a new line of text and the information evaluated </h2>
+                    <div style="border:2px solid transperant;margin-bottom:10px;margin-top:10px;padding:11px">
+                        <?php
+                            
+                            if( !empty($this->session->flashdata('firstname')) ){
+                                echo $this->session->flashdata('firstname');
+                            }
+
+                            if( !empty($this->session->flashdata('fathersname')) ){
+                                echo $this->session->flashdata('fathersname');
+                            }
+                            if( !empty($this->session->flashdata('dob')) ){
+                                echo $this->session->flashdata('dob');
+                            }
+                            if( !empty($this->session->flashdata('age')) ){
+                                echo $this->session->flashdata('age');
+                            }
+                            if( !empty($this->session->flashdata('identificationtype')) ){
+                                echo $this->session->flashdata('identificationtype');
+                            } 
+                            
+                            if( !empty($this->session->flashdata('gender')) ){
+                                echo $this->session->flashdata('gender');
+                            }
+
+                            if( !empty($this->session->flashdata('gender')) ){
+                                echo $this->session->flashdata('gender');
+                            }
+                            if( !empty($this->session->flashdata('idnumber')) ){
+                                echo $this->session->flashdata('idnumber');
+                            }
+                        ?>
+                    </div>
+                    
                 </div>
                 <div class="col-md-2"></div>
                
@@ -93,38 +127,61 @@
                                 
                                 <div class="col-md-5">
                                     <div class="row">
+                                            
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="firstName">FIRST NAME :</label>
+                                                
+                                                <label for="firstName">FIRST NAME : </label>
                                                 
                                             </div>
                                             <div class="form-group">
-                                                <label style="margin-top:18px" for="fathersName">FATHER'S NAME :</label>
+                                                
+                                                <label style="margin-top:18px" for="fathersName">FATHER'S NAME : </label>
+                                               
                                             </div>
                                             <div class="form-group">
-                                                <label style="margin-top:18px" for="dob">DATE OF BIRTH :</label>
+                                                
+                                                <label style="margin-top:18px" for="dob">DATE OF BIRTH : </label>
+                                                
                                             </div>
                                             <div class="form-group">
-                                                <label style="margin-top:18px" for="approgAge">APPROX.AGE(IF DOB UNKNOWN):</label>
+                                               
+                                                <label style="margin-top:18px" for="approgAge">APPROX.AGE(IF DOB UNKNOWN): </label>
+                                                
                                             </div>
                                             <div class="form-group">
-                                                <label style="margin-top:18px" for="idType">IDENTIFICATION TYPE :</label>
+                                                
+                                                <label style="margin-top:18px" for="idType">IDENTIFICATION TYPE : </label>
+                                                
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                
                                                 <input type="text" class="form-control" name="firstname" id="firstname">
                                             </div>
                                             <div class="form-group">
+                                                <?php
+                                                   
+                                                ?>
                                                 <input type="text" class="form-control" name="fathersname" id="fathersname" placeholder="SUBJECT FATHER NAME">
                                             </div>
                                             <div class="form-group">
+                                                <?php
+                                                    
+                                                ?>
                                                 <input type="date" style="margin-bottom:40px" name="dob" class="form-control" id="dob">
                                             </div>
                                             <div class="form-group">
+                                                <?php
+                                                    
+                                                ?>
                                                     <input type="text" name="age" style="margin-bottom:40px"  class="form-control" id="approgAge" placeholder="APPROX AGE">
                                             </div>
                                             <div class="form-group">
+                                                <?php
+                                                    
+                                                ?>
                                                     <input type="text" name="identificationtype" class="form-control" id="idType" placeholder="IDENTIFICATION TYPE">
                                             </div>
                                         </div>
@@ -139,7 +196,7 @@
                                                         
                                             </div>
                                             <div class="form-group">
-                                                <label style="margin-top:18px" for="subjectName">GENDER :</label>
+                                                <label style="margin-top:18px" for="subjectName">SELECT GENDER :</label>
                                             </div>
                                             <div class="form-group">
                                                 <label style="margin-top:18px" for="nationality">PLACE OF BIRTH :</label>
@@ -156,14 +213,19 @@
                                                 <input type="text" name="surname" class="form-control" id="surName">
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" name="gender" style="margin-bottom:30px" class="form-control" id="subjectName" placeholder="GENDER">
+                                                <!-- <input type="text" name="gender" style="margin-bottom:30px" class="form-control" id="subjectName" placeholder="GENDER"> -->
+                                                <select name="gender" style="margin-bottom:30px" class="form-control" id="subjectGender" placeholder="GENDER">Select gender
+                                                    <option value='male'>Male</option>
+                                                    <option value='female'>Female</option>
+                                                    <option value='other'>Other</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" name="birthplace" style="margin-bottom:20px" class="form-control" id="pob" placeholder="PLACE OF BIRTH">
                                             </div>
                                             <div class="form-group">
                                                 <!--- <input type="text" name="nationality" class="form-control" id="nationality" placeholder="NATIONALITY">-->
-                                                <select name="nationality">
+                                                <select style="margin-bottom:30px"class="form-control" name="nationality">
                                                     <?php
                                                         foreach ($nationalities->result() as $row)
                                                         {
