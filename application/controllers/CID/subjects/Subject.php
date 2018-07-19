@@ -85,6 +85,8 @@ class Subject extends CI_Controller{
         $this->session->set_flashdata('nationality', form_error('nationality'));
         $this->session->set_flashdata('age', form_error('age'));
         $this->session->set_flashdata('idnumber', form_error('idnumber'));
+        $this->session->set_flashdata('surname', form_error('surname'));
+        $this->session->set_flashdata('birthplace', form_error('birthplace'));
         $this->session->set_flashdata('old_value', $_POST);
 
         redirect('subjects/','refresh');

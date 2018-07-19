@@ -773,4 +773,9 @@ hr{
     padding:10px !important;
 }
 
+
+.ui-helper-hidden-accessible{
+    display: none !important;
+}
+
 /* custom check box end */

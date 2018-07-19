@@ -55,7 +55,7 @@ class Search extends CI_Controller {
     public function searchPagination($page){
         //$a=array("red","green","blue","yellow","brown");
         $data['pages']=count($_SESSION['records']);
-        $data['paginatedData']=array_slice($_SESSION['records'],($page==0?$page:$page+1),3);
+        $data['paginatedData']=array_slice($_SESSION['records'],($page==0?$page:$page+3),3);
         $this->load->view('./dashboard/search',$data);
     }
 

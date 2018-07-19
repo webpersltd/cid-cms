@@ -231,7 +231,7 @@
                     </form>
                     <h1 style="visibility:hidden">Nothing </h1>
                     <?php 
-                      if(isset($records)){ ?>
+                      if(isset($records)){ //echo "<pre>" ; print_r($records); ?>
                     <h3>RESULTS :</h3>
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -642,7 +642,7 @@
 
 
                     
-                   
+                      
                 
                    
             /*================ Ajax call Ended ===============*/

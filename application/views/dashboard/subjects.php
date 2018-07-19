@@ -86,12 +86,21 @@
                                 echo $this->session->flashdata('firstname');
                             }
 
+                            if( !empty($this->session->flashdata('surname')) ){
+                                echo $this->session->flashdata('surname');
+                            }
+
                             if( !empty($this->session->flashdata('fathersname')) ){
                                 echo $this->session->flashdata('fathersname');
                             }
                             if( !empty($this->session->flashdata('dob')) ){
                                 echo $this->session->flashdata('dob');
                             }
+
+                            if( !empty($this->session->flashdata('birthplace')) ){
+                                echo $this->session->flashdata('birthplace');
+                            }
+
                             if( !empty($this->session->flashdata('age')) ){
                                 echo $this->session->flashdata('age');
                             }
