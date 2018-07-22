@@ -219,6 +219,7 @@
                     <div>
                         <h4 style="color:white;display:block;background-color:#337ab7;padding-top:10px;padding-bottom:10px;padding-left:0px">Search Recodrs</h5>
                         <div class="row">
+                            <form action="#" method="post">
                             <div class="col-md-6">
                                 <div>
                                     <h5>URN</h5>
@@ -233,6 +234,9 @@
                                <div>
                                     <h5>Date of Birth</h5>
                                     <input style="margin-top:10px;display:inline-block;width:52%;padding-top:7px;padding-bottom:7px;" type="date" name="time"/>
+                               </div>
+                               <div>
+                                <input type="submit" class="btn btn-primary"/>
                                </div>
                             </div>
                             <div class="col-md-6">
@@ -264,6 +268,8 @@
                                     </select>
                                </div>
                             </div>
+                            
+                            </form>
                         </div>
                     </div>
                 </div>
