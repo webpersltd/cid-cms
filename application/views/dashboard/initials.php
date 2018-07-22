@@ -161,7 +161,7 @@
                 <div class="col-md-3">                                     
                 </div>
                 <div class="col-md-3">
-                    <a href="#" class="btn btn-danger">CANCEL&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a>
+                    <a href="<?= base_url() ?>dashboard" class="btn btn-danger">CANCEL&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a>
                 </div>
             </div>
         </div>        

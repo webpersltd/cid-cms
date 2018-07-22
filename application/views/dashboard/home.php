@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div style="margin-top:10px" class="table-responsive">
+    <div id="myRecord" style="margin-top:10px; height: 246px;" class="table-responsive">
         <table class="table table-bordered">
             <?php
             if(count($my_records) != 0){
@@ -86,13 +86,23 @@
         </table>
     </div>
 
+    <div id="pagination_myRecord">
+        <?php
+        $this->pagination->initialize($paginationConfigForMyRecords);
+        echo $this->pagination->create_links();
+        ?>
+    </div>
+
+    <?php
+    if($this->ion_auth->get_users_groups()->row()->name != "Level-1"){
+    ?>
     <div class="row">
         <div class="col-md-2">
             <button class='btn btn-danger btn-radious'><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true">&nbsp</span>For Approval</button>
         </div>
     </div>
 
-    <div style="margin-top:10px" class="table-responsive">
+    <div id="approval" style="margin-top:10px; height: 246px;" class="table-responsive">
         <table class="table table-bordered">
             <?php
             if(count($for_approval) != 0){
@@ -124,7 +134,7 @@
                     <?php
                     }else{
                     ?>
-                    <a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span></a>
+                    <a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true" <?= ($this->user_management->record_on_hold($value->rid)) ? 'style="color: orange"':'' ?>>&nbsp</span></a>
                     <?php
                     }
                     ?>
@@ -145,13 +155,26 @@
         </table>
     </div>
 
+    <div id="pagination_approval">
+        <?php
+        $this->pagination->initialize($paginationConfigForApproval);
+        echo $this->pagination->create_links();
+        ?>
+    </div>
+    <?php
+    }
+    ?>
+
+    <?php
+    if($this->ion_auth->get_users_groups()->row()->name != "Level-1"){
+    ?>
     <div class="row">
         <div class="col-md-2">
             <button class='btn btn-success btn-radious'><span class="glyphicon glyphicon-ok" aria-hidden="true">&nbsp</span>Approved</button>
         </div>
     </div>
-
-    <div style="margin-top:10px" class="table-responsive">
+    
+    <div id="approved" style="margin-top:10px; height: 246px;" class="table-responsive">
         <table class="table table-bordered">
             <?php
             if(count($approved) != 0){
@@ -165,18 +188,16 @@
                 <th>Approved</th>
             </tr>
             <?php
-            }
-            if(count($approved) != 0){
             $counter = 1;
-            for ($i=0; $i<count($approved); $i++) {
+            foreach($approved as $value) {
             ?>
             <tr class="success">
                 <td><?= $counter ?></td>
-                <td><?= $approved[$i]['urn'] ?></td>
-                <td><?= $approved[$i]['department'] ?></td>
-                <td><?= $approved[$i]['officer'] ?></td>
-                <td><a href="<?= base_url() ?>viewRecord/<?= $approved[$i]['urn'] ?>"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span></a></td>
-                <td><?= ($approved[$i]['fully_submitted'] == 0) ? 'N':'Y' ?></td>
+                <td><?= $value->urn ?></td>
+                <td><?= $value->name ?></td>
+                <td><?= $value->first_name." ".$value->last_name ?></td>
+                <td><a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>"><span class="glyphicon glyphicon-eye-open" aria-hidden="true">&nbsp</span></a></td>
+                <td><?= ($value->fully_submitted == 0) ? 'N':'Y' ?></td>
             </tr>
             <?php
             $counter++;
@@ -191,6 +212,16 @@
             ?> 
         </table>
     </div>
+
+    <div id="pagination_approved">
+        <?php
+        $this->pagination->initialize($paginationConfigForApproved);
+        echo $this->pagination->create_links();
+        ?>
+    </div>
+    <?php
+    }
+    ?>
 
     <!-- <div class="container-fluid" style="background-color:black">
         <div class="col-md-12" >

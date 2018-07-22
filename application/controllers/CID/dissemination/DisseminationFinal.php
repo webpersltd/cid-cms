@@ -10,32 +10,33 @@ class DisseminationFinal extends CI_Controller {
 		if (!$this->ion_auth->logged_in()){
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
-    	}else if(isset($_SESSION['record_id']) 
-    				&& $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id'])
-    				&& !$this->user_management->has_dissemination_permission()){
+    	}else if(isset($_SESSION['record_id'])){
+    		if( $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id'])
+    			&& !$this->user_management->has_dissemination_permission() ){
 
-			$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
-    		redirect('dashboard', 'refresh');    		
-		}
+				$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
+	    		redirect('dashboard', 'refresh');
+			}
 
-    	$this->load->helper('CID/nav');
-		$this->load->library('form_validation');
-		$this->load->model('Dissemination_model');
+	    	$this->load->helper('CID/nav');
+			$this->load->library('form_validation');
+			$this->load->model('Dissemination_model');
 
-		$dissemination_done = false;
-
-		if(isset($_SESSION['record_id'])){
+			$dissemination_done       = false;
 			$dissemination_done       = $this->Dissemination_model->check_dissemination_is_completed($_SESSION['record_id']);
 			$record_already_submitted = $this->Dissemination_model->check_this_record_is_already_fully_submitted($_SESSION['record_id']);
-		}
-		
-    	if(!$dissemination_done){
-    		$this->session->set_flashdata('warning', "Please follow the WARNING instruction.");
-    		redirect('dissemination/','refresh');
-    	}else if($record_already_submitted){
-    		unset($_SESSION['record_id']);
-    		$this->session->set_flashdata('warning', "The Record is already Approved.");
-    		redirect('dashboard','refresh')
+			
+	    	if(!$dissemination_done){
+	    		$this->session->set_flashdata('warning', "Please follow the WARNING instruction.");
+	    		redirect('dissemination/','refresh');
+	    	}else if($record_already_submitted){
+	    		unset($_SESSION['record_id']);
+	    		$this->session->set_flashdata('warning', "The Record is already Approved.");
+	    		redirect('dashboard','refresh')
+	    	}
+    	}else{
+    		$this->session->set_flashdata('warning', "Please start to input a record first.");
+			redirect('dashboard','refresh');
     	}
     }
 

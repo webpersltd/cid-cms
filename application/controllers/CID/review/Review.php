@@ -7,40 +7,54 @@ class Review extends CI_Controller {
     {
     	parent::__construct();
     	$this->load->model('Protective_Marking_Model');
+    	$this->load->model('Home_model');
 		
 		if (!$this->ion_auth->logged_in()){
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
-    	}else if(isset($_SESSION['record_id']) 
-    				&& $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id']) 
-    				&& !$this->user_management->has_review_permission()){
+    	}else if(isset($_SESSION['record_id'])){
 
-			$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
-    		redirect('dashboard', 'refresh');
-    		
-		}
+    		if($this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id']) 
+    			&& !$this->user_management->has_review_permission()){
 
-    	$this->load->helper('CID/nav');
-		$this->load->library('form_validation');
-		$this->load->model('Review_model');
+				$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
+	    		redirect('dashboard', 'refresh');
+	    		
+			}
 
-		$protective_marking_done = 0;
+			$record_hold['record_id']  = $_SESSION['record_id'];
+			$record_hold['user_id']    = $this->ion_auth->user()->row()->id;
+			$record_hold['created_at'] = date("Y-m-d H:i:s");
 
-		if(isset($_SESSION['record_id'])){
+			if( $this->Home_model->record_on_hold($_SESSION['record_id'], $record_hold) ){
+				$this->session->set_flashdata('warning', "The record has been holded for a long time and It's started reviewing by another authorized user");
+				redirect('dashboard','refresh');
+			}
+
+	    	$this->load->helper('CID/nav');
+			$this->load->library('form_validation');
+			$this->load->model('Review_model');
+
+			$protective_marking_done = 0;
 			$protective_marking_done = $this->Review_model->protective_marking_done($_SESSION['record_id']);
-		}
-		
-    	if($protective_marking_done == 0){
-    		$this->session->set_flashdata('warning', "Please select a protective mark to process further.");
-    		redirect('protectivemark/','refresh');
+			
+	    	if($protective_marking_done == 0){
+	    		$this->session->set_flashdata('warning', "Please select a protective mark to process further.");
+	    		redirect('protectivemark/','refresh');
+	    	}
+
+			$remaining_review = $this->Review_model->count_final_review_data($_SESSION['record_id']);
+			$total_text       = $this->Review_model->total_text($_SESSION['record_id']);
+
+			if($remaining_review == $total_text){
+				redirect('review_protective_mark/','refresh');
+			}
+    	}else{
+
+    		$this->session->set_flashdata('warning', "Please start to input a record first.");
+			redirect('dashboard','refresh');
+
     	}
-
-		$remaining_review = $this->Review_model->count_final_review_data($_SESSION['record_id']);
-		$total_text       = $this->Review_model->total_text($_SESSION['record_id']);
-
-		if($remaining_review == $total_text){
-			redirect('review_protective_mark/','refresh');
-		}
     }
 
     public function index()
@@ -63,28 +77,35 @@ class Review extends CI_Controller {
 			$data            = array();			
 			$data['text_id'] = $this->input->post('textid');
 
-			$this->Review_model->finalReview($data);
-
-			$review               = $this->Review_model->get_details($_SESSION['record_id']);
-			$remaining_text       = $this->Review_model->count_final_review_data($_SESSION['record_id']);  
-			$remaining_text_count = $remaining_text + 1;
-
-			if(is_null($review)){
+			$this->Review_model->release_record_which_is_holded_by_me($this->ion_auth->user()->row()->id);
+			
+			if(!$this->Review_model->finalReview($data)){
 				$finalOutput = array(
-					'summaryInfo'    => "none"
+					'summaryInfo'    => "exist"
 				);
 				echo json_encode($finalOutput);
 			}else{
-				$finalOutput = array(
-					'summaryInfo'   => $review->summary,
-					'src_eval'      => $review->src_eval,
-					'inf_int_eval'  => $review->inf_int_eval,
-					'codeInfo'      => $review->code,
-					'instruction'   => $review->instruction,
-					'txtID'         => $review->txtID,
-					'remainingText' => $remaining_text_count
-				);
-				echo json_encode($finalOutput);
+				$review               = $this->Review_model->get_details($_SESSION['record_id']);
+				$remaining_text       = $this->Review_model->count_final_review_data($_SESSION['record_id']);  
+				$remaining_text_count = $remaining_text + 1;
+
+				if(is_null($review)){
+					$finalOutput = array(
+						'summaryInfo'    => "none"
+					);
+					echo json_encode($finalOutput);
+				}else{
+					$finalOutput = array(
+						'summaryInfo'   => $review->summary,
+						'src_eval'      => $review->src_eval,
+						'inf_int_eval'  => $review->inf_int_eval,
+						'codeInfo'      => $review->code,
+						'instruction'   => $review->instruction,
+						'txtID'         => $review->txtID,
+						'remainingText' => $remaining_text_count
+					);
+					echo json_encode($finalOutput);
+				}
 			}
 		}
 	}
