@@ -24,7 +24,7 @@ class Home_model extends CI_Model {
         return $query->result();
     }
 
-    public function get_my_records()
+    public function get_my_records($start = NULL)
     {
         $this->db->select('*, records.id as rid');
         $this->db->from('records');
@@ -33,13 +33,16 @@ class Home_model extends CI_Model {
         $this->db->join('protective_markings', 'protective_markings.record_id = records.id', 'left');
         $this->db->where('user_id', $this->ion_auth->user()->row()->id);
         $this->db->order_by('records.created_at', 'desc');
-        $this->db->limit(5);
+        
+        if(!is_null($start)){
+          $this->db->limit(5, $start);
+        }
 
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function get_records_for_approval(){
+    public function get_records_for_approval($start = NULL){
         
         $user_level = $this->ion_auth->get_users_groups()->row()->name;
         $sub_query  = "SELECT record_id FROM final_review WHERE review_started_by != ".$this->ion_auth->user()->row()->id." GROUP BY record_id ";
@@ -56,7 +59,10 @@ class Home_model extends CI_Model {
         $this->db->where("records.id NOT IN (".$sub_query.")",NULL,false);
         $this->db->group_by('rid');
         $this->db->order_by('records.created_at', 'desc');
-        $this->db->limit(5,0);
+        
+        if(!is_null($start)){
+          $this->db->limit(5,$start);
+        }
 
         $query = $this->db->get();
         return $query->result();
@@ -87,19 +93,25 @@ class Home_model extends CI_Model {
 
         if($query->num_rows() == 0){
           
-          if(!is_null($data)){
+          if( !is_null($data) 
+              && $this->user_management->has_review_permission($record_id) 
+              && is_null($this->this_record_is_already_started_reviewing_by_this_user($record_id)) ){
+            
             $this->db->insert('review_on_hold', $data);
+
           }
           return false;
 
-        }else if( $this->time_of_record_hold_on($query->row()->created_at) > 30 ){
+        }else if( $this->time_of_record_hold_on($query->row()->created_at) > 30 
+                  && $this->user_management->has_review_permission($record_id) 
+                  && is_null($this->this_record_is_already_started_reviewing_by_this_user($record_id)) ){
 
           $this->db->set('user_id', $this->ion_auth->user()->row()->id);
           $this->db->set('created_at', date("Y-m-d H:i:s"));
           $this->db->where('record_id', $record_id);
           $this->db->update('review_on_hold');
 
-          if($this->db->affected_rows() == 0){
+          if( $this->db->affected_rows() == 0 ){
             $this->db->insert('review_on_hold', $data);
           }
 
@@ -162,7 +174,7 @@ class Home_model extends CI_Model {
         }
     }
 
-    public function get_approved_records(){
+    public function get_approved_records($start = NULL){
         $this->db->select('*');
         $this->db->from('records');
         $this->db->join('departments', 'departments.id = records.department');
@@ -170,7 +182,10 @@ class Home_model extends CI_Model {
         $this->db->join('dissemination_reviews', 'dissemination_reviews.record_id = records.id');
         $this->db->where('disseminated_by', $this->ion_auth->user()->row()->id);
         $this->db->order_by('records.created_at','desc');
-        $this->db->limit(5,0);
+
+        if(!is_null($start)){
+          $this->db->limit(5,$start);
+        }
 
         $query = $this->db->get();
         return $query->result();

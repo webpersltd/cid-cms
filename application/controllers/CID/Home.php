@@ -22,16 +22,20 @@ class Home extends CI_Controller {
 
 	public function index()
     {
-    	$user                   = $this->ion_auth->user()->row();
-    	$data['top_navigation'] = 0;
-    	$data['my_records']     = $this->Home_model->get_my_records();
-    	$data['for_approval']   = $this->Home_model->get_records_for_approval();
-    	$data['approved']       = $this->Home_model->get_approved_records();
+    	$user                                 = $this->ion_auth->user()->row();
+    	$data['top_navigation']               = 0;
+    	$data['my_records']                   = $this->Home_model->get_my_records(0);
+    	$data['for_approval']                 = $this->Home_model->get_records_for_approval(0);
+    	$data['approved']                     = $this->Home_model->get_approved_records(0);
+    	$data['paginationConfigForMyRecords'] = $this->pagination_configuration(count($this->Home_model->get_my_records()), 'myRecord');
+    	$data['paginationConfigForApproval']  = $this->pagination_configuration(count($this->Home_model->get_records_for_approval()), 'approval');
+    	$data['paginationConfigForApproved']  = $this->pagination_configuration(count($this->Home_model->get_approved_records()), 'approved');
 
     	$this->Home_model->release_record_which_is_holded_by_me($user->id);
 
 	   	$this->output->set_output_data("user", $user);
 	   	$this->output->set_template('default');
+	   	$this->load->js('js/home.js');
 	   	$this->load->view('dashboard/home', $data);
 	}
 
@@ -68,8 +72,8 @@ class Home extends CI_Controller {
     		if($user_id == $this->ion_auth->user()->row()->id){
     			$record_accessible = true;
     		}else if( $this->user_management->has_review_permission($record_id) 
-    						&& ( $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == $this->ion_auth->user()->row()->id 
-    							|| $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == NULL ) ){
+    					&& ( $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == $this->ion_auth->user()->row()->id 
+    						|| $this->Home_model->this_record_is_already_started_reviewing_by_this_user($record_id) == NULL ) ){
 
     			$record_accessible = true;
 
@@ -152,6 +156,131 @@ class Home extends CI_Controller {
 		}else{
 			$this->session->set_flashdata('warning', "No Record Found.");
     		redirect('dashboard', 'refresh');
+		}
+
+	}
+
+	public function pagination_configuration($total_rows, $pagination_for){
+
+    	$config                     = array();
+		$config["base_url"]         = "#_".$pagination_for;
+		$config["total_rows"]       = $total_rows;
+		$config["per_page"]         = 5;
+		$config["use_page_numbers"] = TRUE;
+		$config["full_tag_open"]    = '<ul class="pagination">';
+		$config["full_tag_close"]   = '</ul>';
+		$config["first_tag_open"]   = '<li>';
+		$config["first_tag_close"]  = '</li>';
+		$config["last_tag_open"]    = '<li>';
+		$config["last_tag_close"]   = '</li>';
+		$config["next_link"]        = '&gt;';
+		$config["next_tag_open"]    = '<li>';
+		$config["next_tag_close"]   = '</li>';
+		$config["prev_link"]        = '&lt;';
+		$config["prev_tag_open"]    = '<li>';
+		$config["prev_tag_close"]   = '</li>';
+		$config["cur_tag_open"]     = '<li class="active"><a href="#">';
+		$config["cur_tag_close"]    = '</a></li>';
+		$config["num_tag_open"]     = '<li>';
+		$config["num_tag_close"]    = '</li>';
+		$config["num_links"]        = 1;
+
+    	return $config;
+	}
+
+	public function get_info_by_pagination(){
+
+		$page     = $this->input->post('start');
+		$info_for = $this->input->post('info_for'); 
+		
+		$start = ($page-1) * 5;
+
+		if (!$this->input->is_ajax_request()){
+		   show_404();
+		}else if($info_for == 'myRecord'){
+
+			$data = $this->Home_model->get_my_records($start);
+
+			if(!is_null($data)){
+				$output = '<table id="myRecord" class="table table-bordered">';
+				$output .= "<tr>
+				                <th>NO</th>
+				                <th>URN</th>
+				                <th>Department</th>
+				                <th>Officer</th>
+				                <th>Action</th>
+				                <th>Approved</th>
+				            </tr>";
+
+				$counter = 1;
+
+				foreach ($data as $value) {
+					
+					if($counter%2 == 0){
+						$output .= '<tr class="danger">';
+					}else{
+						$output .= '<tr class="success">';
+					}
+
+					$output .= "<td>".$counter."</td>";
+					$output .= "<td>".$value->urn."</td>";
+					$output .= "<td>".$value->name."</td>";
+					$output .= "<td>".$value->first_name." ".$value->last_name."</td>";
+
+					//5th column start
+					$output .= "<td>";
+					
+					if(is_null($value->protective_id)){
+						$output .= '<a href="'.base_url()."viewRecord/".$value->urn.'">
+                        				<span class="glyphicon  glyphicon-forward" aria-hidden="true" style="color: red">&nbsp</span>
+                    				</a>';
+					}else{
+						$output .= '<a href="'.base_url()."viewRecord/".$value->urn.'">';
+						
+						if( $this->user_management->this_record_is_already_started_reviewing_by_this_user($value->rid) != $this->ion_auth->user()->row()->id 
+                            && $this->user_management->has_review_permission($value->rid) 
+                            && !is_null($this->user_management->this_record_is_already_started_reviewing_by_this_user($value->rid)) ){
+
+							$output .= '<span class="glyphicon  glyphicon-eye-open" style="color: red" aria-hidden="true">&nbsp</span>';
+
+						}else{
+							$output .= '<span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span>';	
+						}
+
+						$output .= '</a>';
+					}
+
+					$output .= "</td>";
+					//5th column end
+
+					if( $value->fully_submitted == 0 ){
+						$output .= "<td>N</td>";
+					}else{
+						$output .= "<td>Y</td>";
+					}
+
+					$output .= "</table>";
+
+					$counter++;
+				}
+			}
+
+			$config = $this->pagination_configuration(count($this->Home_model->get_my_records()), 'myRecord');
+			$this->pagination->initialize($config);		
+
+			$finalOutput = array(
+				'pagination_link'   => $this->pagination->create_links(),
+				'information_table' => $output
+			);
+
+			echo json_encode($finalOutput);
+
+		}else if($info_for == 'approval'){
+			echo 2;
+		}else if($info_for == 'approved'){
+			echo 3;
+		}else{
+			show_404();
 		}
 
 	}

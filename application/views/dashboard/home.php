@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div style="margin-top:10px" class="table-responsive">
+    <div id="myRecord" style="margin-top:10px" class="table-responsive">
         <table class="table table-bordered">
             <?php
             if(count($my_records) != 0){
@@ -86,6 +86,16 @@
         </table>
     </div>
 
+    <div id="pagination_myRecord">
+        <?php
+        $this->pagination->initialize($paginationConfigForMyRecords);
+        echo $this->pagination->create_links();
+        ?>
+    </div>
+
+    <?php
+    if($this->ion_auth->get_users_groups()->row()->name != "Level-1"){
+    ?>
     <div class="row">
         <div class="col-md-2">
             <button class='btn btn-danger btn-radious'><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true">&nbsp</span>For Approval</button>
@@ -145,6 +155,19 @@
         </table>
     </div>
 
+    <div id="pagination_approval">
+        <?php
+        $this->pagination->initialize($paginationConfigForApproval);
+        echo $this->pagination->create_links();
+        ?>
+    </div>
+    <?php
+    }
+    ?>
+
+    <?php
+    if($this->ion_auth->get_users_groups()->row()->name != "Level-1"){
+    ?>
     <div class="row">
         <div class="col-md-2">
             <button class='btn btn-success btn-radious'><span class="glyphicon glyphicon-ok" aria-hidden="true">&nbsp</span>Approved</button>
@@ -189,6 +212,16 @@
             ?> 
         </table>
     </div>
+
+    <div id="pagination_approved">
+        <?php
+        $this->pagination->initialize($paginationConfigForApproved);
+        echo $this->pagination->create_links();
+        ?>
+    </div>
+    <?php
+    }
+    ?>
 
     <!-- <div class="container-fluid" style="background-color:black">
         <div class="col-md-12" >

@@ -10,28 +10,30 @@ class Review_Protective_Mark extends CI_Controller {
 		if (!$this->ion_auth->logged_in()){
     		$this->session->set_flashdata('message', "Please login first!!");
     		redirect('login', 'refresh');
-    	}else if(isset($_SESSION['record_id']) 
-    				&& $this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id'])
-    				&& !$this->user_management->has_review_permission()){
+    	}else if(isset($_SESSION['record_id'])){
 
-			$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
-    		redirect('dashboard', 'refresh');
-    		
-		}
+    		if($this->Protective_Marking_Model->get_protective_marking_for_the_record($_SESSION['record_id'])
+    			&& !$this->user_management->has_review_permission()){
 
-    	$this->load->helper('CID/nav');
-		$this->load->library('form_validation');
-		$this->load->model('Protective_Marking_Model');
+				$this->session->set_flashdata('warning', "You don't have access to complete the operation.");
+	    		redirect('dashboard', 'refresh');
+	    		
+			}
 
-		$review_completed = 0;
+	    	$this->load->helper('CID/nav');
+			$this->load->library('form_validation');
+			$this->load->model('Protective_Marking_Model');
 
-		if(isset($_SESSION['record_id'])){
+			$review_completed = 0;
 			$review_completed = $this->Protective_Marking_Model->check_review_is_completed($_SESSION['record_id']);
-		}
-		
-    	if(!$review_completed){
-    		$this->session->set_flashdata('warning', "Please follow the completion note.");
-    		redirect('review/','refresh');
+			
+	    	if(!$review_completed){
+	    		$this->session->set_flashdata('warning', "Please follow the completion note.");
+	    		redirect('review/','refresh');
+	    	}
+    	}else{
+    		$this->session->set_flashdata('warning', "Please start to input a record first.");
+			redirect('dashboard','refresh');
     	}    	
     }
 

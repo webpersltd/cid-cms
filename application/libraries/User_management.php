@@ -122,7 +122,7 @@ class User_management
 	}
 
 	public function has_user_log_permission(){
-		if($this->ion_auth->in_group( array("Level-3","Level-4") ) ){
+		if( $this->ion_auth->in_group( array("Level-3","Level-4") ) ){
 			return true;
 		}else{
 			return false;
