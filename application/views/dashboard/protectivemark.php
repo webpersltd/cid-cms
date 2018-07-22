@@ -198,7 +198,7 @@
                                 <button type="submit" id="save_protective_code_data" class="btn btn-success">SAVE INFORMATION AND CONTINUE &nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
                             </div>
                             <div class="col-md-3">
-                                <a href="#" class="btn btn-danger">CANCEL&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a>
+                                <a href="<?= base_url() ?>dashboard" onclick="alert('Do you really want to cancel?');" class="btn btn-danger">CANCEL&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span></a>
                             </div>
                         </div>
                     </div>

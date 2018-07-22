@@ -191,9 +191,8 @@ class Home extends CI_Controller {
 	public function get_info_by_pagination(){
 
 		$page     = $this->input->post('start');
-		$info_for = $this->input->post('info_for'); 
-		
-		$start = ($page-1) * 5;
+		$info_for = $this->input->post('info_for');		
+		$start    = ($page-1) * 5;
 
 		if (!$this->input->is_ajax_request()){
 		   show_404();
@@ -202,7 +201,7 @@ class Home extends CI_Controller {
 			$data = $this->Home_model->get_my_records($start);
 
 			if(!is_null($data)){
-				$output = '<table id="myRecord" class="table table-bordered">';
+				$output = '<table class="table table-bordered">';
 				$output .= "<tr>
 				                <th>NO</th>
 				                <th>URN</th>
@@ -212,7 +211,7 @@ class Home extends CI_Controller {
 				                <th>Approved</th>
 				            </tr>";
 
-				$counter = 1;
+				$counter = $start + 1;
 
 				foreach ($data as $value) {
 					
@@ -259,10 +258,11 @@ class Home extends CI_Controller {
 						$output .= "<td>Y</td>";
 					}
 
-					$output .= "</table>";
+					$output .= "</tr>";
 
 					$counter++;
 				}
+				$output .= "</table>";
 			}
 
 			$config = $this->pagination_configuration(count($this->Home_model->get_my_records()), 'myRecord');
@@ -276,12 +276,124 @@ class Home extends CI_Controller {
 			echo json_encode($finalOutput);
 
 		}else if($info_for == 'approval'){
-			echo 2;
+
+			$data = $this->Home_model->get_records_for_approval($start);
+
+			if(!is_null($data)){
+				$output = '<table class="table table-bordered">';
+				$output .= "<tr>
+				                <th>NO</th>
+				                <th>URN</th>
+				                <th>Department</th>
+				                <th>Officer</th>
+				                <th>Action</th>
+				                <th>Approved</th>
+				            </tr>";
+
+				$counter = $start + 1;
+
+				foreach ($data as $value) {
+					
+					$output .= '<tr class="danger">';
+					$output .= "<td>".$counter."</td>";
+					$output .= "<td>".$value->urn."</td>";
+					$output .= "<td>".$value->name."</td>";
+					$output .= "<td>".$value->first_name." ".$value->last_name."</td>";
+
+					//5th column start
+					$output .= "<td>";
+					
+					if( $this->user_management->check_final_review_exist($value->rid) ){
+						$output .= '<a href="'.base_url().'viewRecord/'.$value->urn.'"><span class="glyphicon  glyphicon-forward" aria-hidden="true" style="color: red">&nbsp</span></a>';
+					}else{
+
+						if( $this->user_management->record_on_hold($value->rid) ){
+							$output .= '<a href="'.base_url().'viewRecord/'.$value->urn.'"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true" style="color: orange">&nbsp</span></a>';
+						}else{
+							$output .= '<a href="'.base_url().'viewRecord/'.$value->urn.'"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span></a>';
+						}
+
+					}
+
+					$output .= "</td>";
+					//5th column end
+
+					if( $value->fully_submitted == 0 ){
+						$output .= "<td>N</td>";
+					}else{
+						$output .= "<td>Y</td>";
+					}
+
+					$output .= "</tr>";
+
+					$counter++;
+				}
+				$output .= "</table>";
+			}
+
+			$config = $this->pagination_configuration(count($this->Home_model->get_records_for_approval()), 'approval');
+			$this->pagination->initialize($config);		
+
+			$finalOutput = array(
+				'pagination_link'   => $this->pagination->create_links(),
+				'information_table' => $output
+			);
+
+			echo json_encode($finalOutput);
+
 		}else if($info_for == 'approved'){
-			echo 3;
+
+			$data = $this->Home_model->get_approved_records($start);
+
+			if(!is_null($data)){
+				$output = '<table class="table table-bordered">';
+				$output .= "<tr>
+				                <th>NO</th>
+				                <th>URN</th>
+				                <th>Department</th>
+				                <th>Officer</th>
+				                <th>Action</th>
+				                <th>Approved</th>
+				            </tr>";
+
+				$counter = $start + 1;
+
+				foreach ($data as $value) {
+					
+					$output .= '<tr class="danger">';
+					$output .= "<td>".$counter."</td>";
+					$output .= "<td>".$value->urn."</td>";
+					$output .= "<td>".$value->name."</td>";
+					$output .= "<td>".$value->first_name." ".$value->last_name."</td>";
+
+					//5th column start
+					$output .= '<td><a href="'.base_url().'viewRecord/'.$value->urn.'"><span class="glyphicon glyphicon-eye-open" aria-hidden="true">&nbsp</span></a></td>';
+					//5th column end
+
+					if( $value->fully_submitted == 0 ){
+						$output .= "<td>N</td>";
+					}else{
+						$output .= "<td>Y</td>";
+					}
+
+					$output .= "</tr>";
+
+					$counter++;
+				}
+				$output .= "</table>";
+			}
+
+			$config = $this->pagination_configuration(count($this->Home_model->get_approved_records()), 'approved');
+			$this->pagination->initialize($config);		
+
+			$finalOutput = array(
+				'pagination_link'   => $this->pagination->create_links(),
+				'information_table' => $output
+			);
+
+			echo json_encode($finalOutput);
 		}else{
 			show_404();
 		}
-
 	}
 }

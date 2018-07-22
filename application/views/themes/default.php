@@ -131,4 +131,5 @@
         /** -- to here -- */
         ?>    
 	</body>
+    <div class="loader"></div>
 </html>

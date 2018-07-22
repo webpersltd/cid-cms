@@ -725,10 +725,13 @@ hr{
   height: 120px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
-  z-index: 10000;
-  margin-left: 618px;
-  margin-top: -164px;
+  z-index: 9999;
+ /* margin-left: 618px;
+  margin-top: -164px;*/
   display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
 }
 
 @-webkit-keyframes spin {

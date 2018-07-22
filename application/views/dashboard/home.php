@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div id="myRecord" style="margin-top:10px" class="table-responsive">
+    <div id="myRecord" style="margin-top:10px; height: 246px;" class="table-responsive">
         <table class="table table-bordered">
             <?php
             if(count($my_records) != 0){
@@ -102,7 +102,7 @@
         </div>
     </div>
 
-    <div style="margin-top:10px" class="table-responsive">
+    <div id="approval" style="margin-top:10px; height: 246px;" class="table-responsive">
         <table class="table table-bordered">
             <?php
             if(count($for_approval) != 0){
@@ -173,8 +173,8 @@
             <button class='btn btn-success btn-radious'><span class="glyphicon glyphicon-ok" aria-hidden="true">&nbsp</span>Approved</button>
         </div>
     </div>
-
-    <div style="margin-top:10px" class="table-responsive">
+    
+    <div id="approved" style="margin-top:10px; height: 246px;" class="table-responsive">
         <table class="table table-bordered">
             <?php
             if(count($approved) != 0){
@@ -196,7 +196,7 @@
                 <td><?= $value->urn ?></td>
                 <td><?= $value->name ?></td>
                 <td><?= $value->first_name." ".$value->last_name ?></td>
-                <td><a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>"><span class="glyphicon  glyphicon-eye-open" aria-hidden="true">&nbsp</span></a></td>
+                <td><a href="<?= base_url() ?>viewRecord/<?= $value->urn ?>"><span class="glyphicon glyphicon-eye-open" aria-hidden="true">&nbsp</span></a></td>
                 <td><?= ($value->fully_submitted == 0) ? 'N':'Y' ?></td>
             </tr>
             <?php
